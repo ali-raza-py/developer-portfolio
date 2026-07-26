@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     'Personal portfolio of Ali Raza, a Class XI Computer Science student at PECHS Education Foundation Government Degree Science College — Python developer exploring web development, DevOps, cloud computing, and AI.',
   icons: {
-    icon: '/icon.svg',
+    icon: '/ar-icon.svg',
     apple: '/apple-icon.png',
   },
 }
