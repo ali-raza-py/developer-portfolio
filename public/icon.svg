@@ -1,26 +1,9 @@
-<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    @media (prefers-color-scheme: light) {
-      .background { fill: black; }
-      .foreground { fill: white; }
-    }
-    @media (prefers-color-scheme: dark) {
-      .background { fill: white; }
-      .foreground { fill: black; }
-    }
-  </style>
-  <g clip-path="url(#clip0_7960_43945)">
-    <rect class="background" width="180" height="180" rx="37" />
-    <g style="transform: scale(95%); transform-origin: center">
-      <path class="foreground"
-        d="M101.141 53H136.632C151.023 53 162.689 64.6662 162.689 79.0573V112.904H148.112V79.0573C148.112 78.7105 148.098 78.3662 148.072 78.0251L112.581 112.898C112.701 112.902 112.821 112.904 112.941 112.904H148.112V126.672H112.941C98.5504 126.672 86.5638 114.891 86.5638 100.5V66.7434H101.141V100.5C101.141 101.15 101.191 101.792 101.289 102.422L137.56 66.7816C137.255 66.7563 136.945 66.7434 136.632 66.7434H101.141V53Z" />
-      <path class="foreground"
-        d="M65.2926 124.136L14 66.7372H34.6355L64.7495 100.436V66.7372H80.1365V118.47C80.1365 126.278 70.4953 129.958 65.2926 124.136Z" />
-    </g>
-  </g>
-  <defs>
-    <clipPath id="clip0_7960_43945">
-      <rect width="180" height="180" fill="white" />
-    </clipPath>
-  </defs>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="14" fill="white"/>
+  <circle cx="32" cy="32" r="22" stroke="#222222" stroke-width="4"/>
+  <circle cx="32" cy="32" r="20" stroke="#222222" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="10 6"/>
+  <path d="M18 39L27.2 24H31.3L22.1 39H18Z" fill="#222222"/>
+  <path d="M28.8 39L35.8 24H40.2L33.2 39H28.8Z" fill="#222222"/>
+  <path d="M37.5 24H41.2L44.9 39H41.1L40.4 35.8H35.6L34.3 39H30.6L37.5 24Z" fill="#222222"/>
+  <path d="M42.7 24H49.3C52 24 54 25.7 54 28.2C54 30.1 52.8 31.8 50.7 32.4L54.2 39H50.1L46.9 33H44.4V39H40.9V24H42.7ZM44.4 26.8V30.5H48.7C49.9 30.5 50.7 29.7 50.7 28.7C50.7 27.5 49.9 26.8 48.6 26.8H44.4Z" fill="#222222"/>
 </svg>
