@@ -16,7 +16,7 @@ const focusItems = [
     icon: Braces,
     title: 'Python & Object-Oriented Programming',
     description:
-      'Strengthening core Python concepts while improving clean code practices and OOP principles.',
+      'Strengthening core Python concepts, OOP principles, and problem-solving confidence.',
   },
   {
     icon: Network,
@@ -26,21 +26,21 @@ const focusItems = [
   },
   {
     icon: Globe,
-    title: 'Modern Web Development',
+    title: 'Python Libraries',
     description:
-      'Building responsive web applications while learning Next.js, TypeScript, and Tailwind CSS.',
+      'Building applied projects with NumPy, Pandas, and Matplotlib while deepening technical fundamentals.',
   },
   {
     icon: GraduationCap,
     title: 'Computer Science Preparation',
     description:
-      'Preparing for university by strengthening programming fundamentals, logical reasoning, and software engineering concepts.',
+      'Preparing for university by strengthening programming fundamentals, logical reasoning, and software engineering concepts at PECHS Government Science College, Karachi.',
   },
   {
     icon: FolderGit2,
-    title: 'GitHub Portfolio',
+    title: 'C++',
     description:
-      'Continuously improving GitHub repositories with well-documented projects and clean commit history.',
+      'Strengthening core c++ concepts learning problem solving and algorithm.',
   },
   {
     icon: Cloud,

@@ -6,7 +6,7 @@ export function SiteFooter() {
           Class XI Computer Science Student
         </p>
         <p className="text-sm text-muted-foreground">
-          PECHS Education Foundation Government Degree Science College
+          Building software with focus and consistency.
         </p>
         <p className="mt-4 font-mono text-xs text-muted-foreground">
           Fundamentals before Frameworks.

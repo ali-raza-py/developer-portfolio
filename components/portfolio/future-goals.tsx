@@ -32,10 +32,6 @@ const milestones = [
     icon: Code,
     title: 'Develop expertise in Software Engineering',
   },
-  {
-    icon: Cloud,
-    title: 'Specialize in DevOps and Cloud Engineering',
-  },
 ]
 
 export function FutureGoals() {

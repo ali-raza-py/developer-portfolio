@@ -5,11 +5,11 @@ import { SectionHeading } from './section-heading'
 
 const badges = [
   'Class XI Computer Science Student',
-  '84% SSC (Matric)',
+  'Completed Matriculation at QBHSS',
+  'PECHS Government Science College, Karachi',
   'Python Developer',
-  'Learning Data Structures & Algorithms',
-  'Exploring AI',
-  'Exploring Cloud Computing',
+  'C++ and Python Libraries',
+  'NumPy • Pandas • Matplotlib',
   'Continuous Learner',
 ]
 

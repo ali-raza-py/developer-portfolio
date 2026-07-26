@@ -32,34 +32,35 @@ function LinkedInIcon(props: SVGProps<SVGSVGElement>) {
 
 const rotatingTitles = [
   'Software Engineering Student',
-  'Python Developer',
+  'Python & C++ Developer',
   'Future Computer Scientist',
 ]
 
 const techBadges = [
   { label: 'Python', icon: Code2 },
-  { label: 'Next.js', icon: Sparkles },
-  { label: 'TypeScript', icon: Code2 },
+  { label: 'C++', icon: Sparkles },
+  { label: 'NumPy', icon: Code2 },
   { label: 'Git', icon: GitBranch },
-  { label: 'GitHub', icon: Code2 },
+  { label: 'Pandas', icon: Code2 },
+  { label: 'Matplotlib', icon: Sparkles },
   { label: 'AI', icon: Sparkles },
   { label: 'Cloud', icon: Cloud },
   { label: 'DevOps', icon: Server },
 ]
 
 const snippetWords = [
-  'const app = () => <Hero />',
-  "type Stack = 'React' | 'TS'",
+  'vector<int> build(const vector<int>& data)',
+  'import pandas as pd',
+  'import numpy as np',
+  'plt.plot(x, y)',
   'def solve(problem): return iterate(problem)',
-  'export default function Portfolio() {}',
-  'pnpm dev  # next.js',
 ]
 
 const stats = [
-  { value: '84%', label: 'SSC (Matric)' },
+  { value: 'Tools', label: 'Git, Github & Vs code' },
   { value: 'Class XI', label: 'Computer Science' },
   { value: 'Python', label: 'Developer' },
-  { value: 'Learning', label: 'Next.js & DSA' },
+  { value: 'Learning', label: 'C++, NumPy & Pandas' },
 ]
 
 function useTypewriter(words: string[]) {
@@ -200,7 +201,7 @@ export function Hero() {
           </div>
 
           <p className="mt-7 max-w-2xl text-pretty text-base leading-relaxed text-[#A1A1AA] md:text-lg">
-            Motivated Class XI Computer Science student at PECHS Education Foundation Government Degree Science College with a passion for software engineering, Python development, and modern web technologies. I enjoy building real-world projects, mastering computer science fundamentals, and continuously learning through hands-on development.
+            I'm Ali Raza, a Computer Science student at PECHS Government Science College, Karachi, passionate about building software that solves real-world problems. My current focus is full-stack web development with Python, Next.js, TypeScript, and C++, while exploring AI, cloud computing, and DevOps. I enjoy turning ideas into polished projects, sharing what I learn, and continuously improving as a software engineer.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -337,16 +338,16 @@ export function Hero() {
       >
         {[
           {
-            href: 'https://github.com/ali-raza-py',
+              href: 'https://github.com/ali-raza-py',
             icon: GitHubIcon,
             label: 'GitHub',
           },
           {
-            href: 'https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME',
+              href: 'https://www.linkedin.com/in/ali-r-a8a144391',
             icon: LinkedInIcon,
             label: 'LinkedIn',
           },
-          { href: 'mailto:btwaliraza110@gmail.com', icon: Mail, label: 'Email' },
+            { href: 'mailto:btwaliraza110@gmail.com', icon: Mail, label: 'Email' },
         ].map((social) => {
           const Icon = social.icon
 
