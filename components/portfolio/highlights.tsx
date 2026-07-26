@@ -7,10 +7,8 @@ const badges = [
   'Class XI Computer Science Student',
   '84% SSC (Matric)',
   'Python Developer',
-  'Active GitHub Portfolio',
   'Learning Data Structures & Algorithms',
   'Exploring AI',
-  'Exploring DevOps',
   'Exploring Cloud Computing',
   'Continuous Learner',
 ]
