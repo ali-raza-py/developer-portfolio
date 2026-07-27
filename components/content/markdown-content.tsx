@@ -5,36 +5,36 @@ import remarkGfm from 'remark-gfm'
 
 export function MarkdownContent({ content }: { content: string }) {
   return (
-    <div className="prose prose-invert max-w-none prose-headings:scroll-mt-24 prose-a:text-[#9BE9B3] prose-strong:text-white prose-p:text-white/78 prose-li:text-white/78 prose-table:text-white/78 prose-th:text-white prose-td:text-white/78">
+    <div className="prose max-w-none dark:prose-invert prose-headings:scroll-mt-24 prose-a:text-primary prose-strong:text-foreground prose-p:text-foreground/78 prose-li:text-foreground/78 prose-table:text-foreground/78 prose-th:text-foreground prose-td:text-foreground/78">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeSlug, rehypeAutolinkHeadings]}
         components={{
           h2: ({ ...props }) => (
-            <h2 className="mt-12 text-2xl font-semibold tracking-tight text-white" {...props} />
+            <h2 className="mt-12 text-2xl font-semibold tracking-tight text-foreground" {...props} />
           ),
           h3: ({ ...props }) => (
-            <h3 className="mt-8 text-xl font-semibold tracking-tight text-white" {...props} />
+            <h3 className="mt-8 text-xl font-semibold tracking-tight text-foreground" {...props} />
           ),
-          p: ({ ...props }) => <p className="leading-8 text-white/75" {...props} />,
+          p: ({ ...props }) => <p className="leading-8 text-foreground/75" {...props} />,
           ul: ({ ...props }) => <ul className="space-y-3 pl-5" {...props} />,
           ol: ({ ...props }) => <ol className="space-y-3 pl-5" {...props} />,
-          li: ({ ...props }) => <li className="marker:text-[#22C55E]" {...props} />,
+          li: ({ ...props }) => <li className="marker:text-primary" {...props} />,
           blockquote: ({ ...props }) => (
             <blockquote
-              className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white/75"
+              className="rounded-2xl border border-border bg-muted/20 px-5 py-4 text-foreground/75"
               {...props}
             />
           ),
           a: ({ ...props }) => (
             <a
-              className="font-medium text-[#9BE9B3] underline decoration-white/20 underline-offset-4 transition hover:decoration-[#9BE9B3]"
+              className="font-medium text-primary underline-offset-4 transition hover:underline decoration-primary"
               {...props}
             />
           ),
           code: ({ className, children, ...props }) => (
             <code
-              className={`${className ?? ''} rounded-md border border-white/10 bg-white/[0.06] px-1.5 py-0.5 font-mono text-[0.9em] text-[#E4FFE7]`}
+              className={`${className ?? ''} rounded-md border border-border bg-muted/30 px-1.5 py-0.5 font-mono text-[0.9em] text-foreground`}
               {...props}
             >
               {children}
@@ -42,15 +42,15 @@ export function MarkdownContent({ content }: { content: string }) {
           ),
           pre: ({ ...props }) => (
             <pre
-              className="overflow-x-auto rounded-3xl border border-white/10 bg-[#090909] p-5 text-sm leading-7 text-white/80"
+              className="overflow-x-auto rounded-3xl border border-border bg-muted/30 p-5 text-sm leading-7 text-foreground/80"
               {...props}
             />
           ),
           img: ({ ...props }) => (
-            <img className="rounded-3xl border border-white/10" {...props} />
+            <img className="rounded-3xl border border-border" {...props} />
           ),
           table: ({ ...props }) => (
-            <div className="overflow-x-auto rounded-3xl border border-white/10">
+            <div className="overflow-x-auto rounded-3xl border border-border">
               <table className="w-full" {...props} />
             </div>
           ),

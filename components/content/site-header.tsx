@@ -1,18 +1,32 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 import { ThemeToggle } from '@/components/theme-toggle'
 
 const navItems = [
   { href: '/', label: 'Home' },
-  { href: '/#about', label: 'About' },
   { href: '/projects', label: 'Projects' },
   { href: '/blog', label: 'Blog' },
   { href: '/#contact', label: 'Contact' },
 ]
 
 export function SiteHeader({ className }: { className?: string }) {
+  const pathname = usePathname()
+
+  const isActive = (href: string) => {
+    if (href === '/') {
+      return pathname === '/'
+    }
+    if (href.startsWith('/#')) {
+      return pathname === '/'
+    }
+    return pathname.startsWith(href)
+  }
+
   return (
     <header
       className={cn(
@@ -37,21 +51,29 @@ export function SiteHeader({ className }: { className?: string }) {
         </Link>
 
         <nav className="hidden items-center gap-1 sm:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-full px-4 py-2 text-sm text-muted-foreground transition hover:bg-muted hover:text-foreground"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const active = isActive(item.href)
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'rounded-full px-4 py-2 text-sm transition',
+                  active
+                    ? 'bg-muted text-foreground'
+                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                )}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <Link
-            href="mailto:btwaliraza110@gmail.com"
+            href="mailto:btwaliraza110@gmail.com?subject=Hello Ali"
             className="hidden rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition hover:bg-primary/20 sm:inline-flex"
           >
             Contact

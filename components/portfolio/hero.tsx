@@ -8,11 +8,13 @@ import {
   Download,
   GitBranch,
   Mail,
-  MessageCircle,
+  Moon,
   Server,
   Sparkles,
+  Sun,
 } from 'lucide-react'
 import { type SVGProps, useEffect, useState } from 'react'
+import { useTheme } from '@/components/theme-provider'
 
 function GitHubIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -107,21 +109,24 @@ function useTypewriter(words: string[]) {
 export function Hero() {
   const typedTitle = useTypewriter(rotatingTitles)
   const reduceMotion = useReducedMotion()
+  const { theme, toggleTheme } = useTheme()
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#0B0B0C] px-6 pb-28 pt-24 text-[#FAFAFA] md:px-10 md:pt-20 lg:px-14">
+    <section className="relative min-h-screen overflow-hidden bg-background px-6 pb-28 pt-24 text-foreground md:px-10 md:pt-20 lg:px-14 transition-colors duration-300">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(34,197,94,0.08),transparent_35%),radial-gradient(circle_at_84%_8%,rgba(255,255,255,0.06),transparent_30%)]"
+        className="pointer-events-none absolute inset-0 bg-[var(--hero-radial)]"
       />
 
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:52px_52px]" />
+        <div
+          className="absolute inset-0 opacity-25 dark:opacity-10 [background-image:var(--hero-grid)]"
+        />
 
         {Array.from({ length: 14 }).map((_, index) => (
           <motion.span
             key={`line-${index}`}
-            className="absolute h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            className="absolute h-px bg-gradient-to-r from-transparent via-muted to-transparent"
             style={{
               top: `${8 + index * 7}%`,
               left: `${(index * 6) % 30}%`,
@@ -139,7 +144,7 @@ export function Hero() {
         {snippetWords.map((snippet, index) => (
           <motion.div
             key={snippet}
-            className="absolute rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-[10px] text-white/45"
+            className="absolute rounded-md border border-border/50 bg-muted/30 px-2.5 py-1 font-mono text-[10px] text-muted-foreground"
             style={{
               top: `${13 + index * 14}%`,
               left: `${index % 2 === 0 ? 5 : 58}%`,
@@ -162,7 +167,7 @@ export function Hero() {
         {Array.from({ length: 22 }).map((_, index) => (
           <motion.span
             key={`dot-${index}`}
-            className="absolute size-1 rounded-full bg-white/45"
+            className="absolute size-1 rounded-full bg-muted-foreground/50"
             style={{
               top: `${4 + ((index * 11) % 88)}%`,
               left: `${3 + ((index * 17) % 92)}%`,
@@ -173,7 +178,7 @@ export function Hero() {
         ))}
       </div>
 
-      <div className="pointer-events-none absolute right-[52%] top-9 h-28 w-28 rounded-full bg-[#22C55E]/10 blur-3xl" />
+      <div className="pointer-events-none absolute right-[52%] top-9 h-28 w-28 rounded-full bg-primary/10 blur-3xl" />
 
       <div className="relative mx-auto grid min-h-[calc(100vh-7rem)] w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.12fr_0.88fr]">
         <motion.div
@@ -182,25 +187,25 @@ export function Hero() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="order-2 lg:order-1"
         >
-          <p className="mb-5 inline-flex rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs tracking-[0.22em] text-[#A1A1AA] uppercase">
+          <p className="mb-5 inline-flex rounded-full border border-border/50 bg-muted/50 px-4 py-1.5 text-xs tracking-[0.22em] text-muted-foreground uppercase">
             Editorial Developer Portfolio
           </p>
 
-          <h1 className="font-sans text-6xl leading-[0.9] font-black tracking-[-0.04em] text-[#FAFAFA] sm:text-7xl md:text-8xl xl:text-9xl">
+          <h1 className="font-sans text-6xl leading-[0.9] font-black tracking-[-0.04em] text-foreground sm:text-7xl md:text-8xl xl:text-9xl">
             ALI RAZA
           </h1>
 
-          <div className="mt-6 flex min-h-9 items-center gap-1 text-base font-medium text-[#A1A1AA] sm:text-xl">
+          <div className="mt-6 flex min-h-9 items-center gap-1 text-base font-medium text-muted-foreground sm:text-xl">
             <span>{typedTitle}</span>
             <motion.span
               aria-hidden="true"
-              className="inline-block h-6 w-0.5 rounded bg-[#22C55E]"
+              className="inline-block h-6 w-0.5 rounded bg-primary"
               animate={reduceMotion ? undefined : { opacity: [0.25, 1, 0.25] }}
               transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
             />
           </div>
 
-          <p className="mt-7 max-w-2xl text-pretty text-base leading-relaxed text-[#A1A1AA] md:text-lg">
+          <p className="mt-7 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
             I'm Ali Raza, a Computer Science student at PECHS Government Science College, Karachi, passionate about building software that solves real-world problems. My current focus is full-stack web development with Python, Next.js, TypeScript, and C++, while exploring AI, cloud computing, and DevOps. I enjoy turning ideas into polished projects, sharing what I learn, and continuously improving as a software engineer.
           </p>
 
@@ -209,15 +214,16 @@ export function Hero() {
               whileHover={reduceMotion ? undefined : { y: -2, scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
               href="#highlights"
-              className="rounded-xl border border-[#22C55E]/55 bg-[#22C55E] px-6 py-3 text-sm font-semibold text-[#0B0B0C] shadow-[0_8px_28px_-14px_rgba(34,197,94,0.7)] transition-all duration-300 hover:shadow-[0_14px_36px_-12px_rgba(34,197,94,0.88)]"
+              className="rounded-xl border border-primary/50 bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold shadow-lg transition-all duration-300 hover:shadow-xl"
             >
               View Projects
             </motion.a>
             <motion.a
               whileHover={reduceMotion ? undefined : { y: -2, scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
-              href="/resume.pdf"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.02] px-6 py-3 text-sm font-semibold text-[#FAFAFA] transition-all duration-300 hover:bg-white/[0.06]"
+              href="/Ali_Raza_Resume.docx"
+              download
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-muted/50 px-6 py-3 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-muted"
             >
               <Download className="size-4" />
               Download Resume
@@ -225,12 +231,25 @@ export function Hero() {
             <motion.a
               whileHover={reduceMotion ? undefined : { y: -2, x: 1 }}
               whileTap={{ scale: 0.98 }}
-              href="mailto:btwaliraza110@gmail.com"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-6 py-3 text-sm font-medium text-[#A1A1AA] transition-all duration-300 hover:border-white/30 hover:text-[#FAFAFA]"
+              href="mailto:btwaliraza110@gmail.com?subject=Hello Ali"
+              className="inline-flex items-center gap-2 rounded-xl border border-border px-6 py-3 text-sm font-medium text-muted-foreground transition-all duration-300 hover:border-foreground/30 hover:text-foreground"
             >
-              <MessageCircle className="size-4" />
+              <Mail className="size-4" />
               Contact Me
             </motion.a>
+            <motion.button
+              whileHover={reduceMotion ? undefined : { y: -2, scale: 1.01 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={toggleTheme}
+              className="inline-flex items-center justify-center rounded-xl border border-border bg-muted/50 p-2.5 text-foreground transition-all duration-300 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              {theme === 'light' ? (
+                <Moon className="size-4 transition-transform duration-300" />
+              ) : (
+                <Sun className="size-4 transition-transform duration-300" />
+              )}
+            </motion.button>
           </div>
 
           <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:max-w-2xl">
@@ -240,10 +259,10 @@ export function Hero() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 + index * 0.1, duration: 0.5 }}
-                className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#111111] px-4 py-3"
+                className="rounded-2xl border border-border bg-card px-4 py-3"
               >
-                <h3 className="text-lg font-semibold text-[#FAFAFA]">{stat.value}</h3>
-                <p className="text-sm text-[#A1A1AA]">{stat.label}</p>
+                <h3 className="text-lg font-semibold text-foreground">{stat.value}</h3>
+                <p className="text-sm text-muted-foreground">{stat.label}</p>
               </motion.article>
             ))}
           </div>
@@ -260,7 +279,7 @@ export function Hero() {
               animate={reduceMotion ? undefined : { y: [0, -10, 0] }}
               transition={{ duration: 6.2, repeat: Infinity, ease: 'easeInOut' }}
               whileHover={reduceMotion ? undefined : { y: -4, scale: 1.01 }}
-              className="relative overflow-hidden rounded-full border border-white/20 bg-[#111111] p-2 shadow-[0_22px_62px_-24px_rgba(0,0,0,0.85)]"
+              className="relative overflow-hidden rounded-full border border-border bg-muted p-2 shadow-[var(--shadow-floating)]"
             >
               <Image
                 src="/images/portrait.png"
@@ -272,7 +291,7 @@ export function Hero() {
               />
             </motion.div>
 
-            <div className="pointer-events-none absolute inset-0 rounded-full border border-white/10" />
+            <div className="pointer-events-none absolute inset-0 rounded-full border border-border" />
 
             {techBadges.map((badge, index) => {
               const Icon = badge.icon
@@ -290,7 +309,7 @@ export function Hero() {
               return (
                 <motion.div
                   key={badge.label}
-                  className={`absolute ${pos} rounded-full border border-white/20 bg-[#111111]/95 px-3 py-1.5 text-xs font-medium text-[#FAFAFA] shadow-[0_12px_30px_-14px_rgba(0,0,0,0.75)] backdrop-blur-sm`}
+                  className={`absolute ${pos} rounded-full border border-border bg-card/95 px-3 py-1.5 text-xs font-medium text-foreground shadow-[var(--shadow-floating-strong)] backdrop-blur-sm`}
                   animate={
                     reduceMotion
                       ? undefined
@@ -300,7 +319,7 @@ export function Hero() {
                   whileHover={reduceMotion ? undefined : { scale: 1.05, y: -2 }}
                 >
                   <span className="inline-flex items-center gap-1.5">
-                    <Icon className="size-3.5 text-[#22C55E]" />
+                    <Icon className="size-3.5 text-primary" />
                     {badge.label}
                   </span>
                 </motion.div>
@@ -317,37 +336,37 @@ export function Hero() {
         className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
       >
         <motion.div
-          className="flex h-10 w-6 items-start justify-center rounded-full border border-white/20 p-1"
+          className="flex h-10 w-6 items-start justify-center rounded-full border border-border p-1"
           animate={reduceMotion ? undefined : { y: [0, 3, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
         >
           <motion.span
-            className="block size-1.5 rounded-full bg-[#22C55E]"
+            className="block size-1.5 rounded-full bg-primary"
             animate={reduceMotion ? undefined : { y: [0, 14, 0], opacity: [1, 0.45, 1] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
-        <p className="text-xs tracking-[0.18em] text-[#A1A1AA] uppercase">Scroll to Explore</p>
+        <p className="text-xs tracking-[0.18em] text-muted-foreground uppercase">Scroll to Explore</p>
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.72, duration: 0.6 }}
-        className="fixed bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/15 bg-[#111111]/88 px-2 py-2 shadow-[0_12px_30px_-18px_rgba(0,0,0,0.85)] backdrop-blur-md"
+        className="fixed bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full border border-border bg-card/88 px-2 py-2 shadow-[var(--shadow-floating-strong)] backdrop-blur-md"
       >
         {[
           {
-              href: 'https://github.com/ali-raza-py',
+            href: 'https://github.com/ali-raza-py',
             icon: GitHubIcon,
             label: 'GitHub',
           },
           {
-              href: 'https://www.linkedin.com/in/ali-r-a8a144391',
+            href: 'https://www.linkedin.com/in/ali-r-a8a144391',
             icon: LinkedInIcon,
             label: 'LinkedIn',
           },
-            { href: 'mailto:btwaliraza110@gmail.com', icon: Mail, label: 'Email' },
+          { href: 'mailto:btwaliraza110@gmail.com?subject=Hello Ali', icon: Mail, label: 'Email' },
         ].map((social) => {
           const Icon = social.icon
 
@@ -360,10 +379,10 @@ export function Hero() {
               aria-label={social.label}
               whileHover={reduceMotion ? undefined : { y: -3, scale: 1.06 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative rounded-full border border-white/10 bg-[#0B0B0C] p-2.5 text-[#FAFAFA] transition-all hover:border-[#22C55E]/60 hover:shadow-[0_0_0_4px_rgba(34,197,94,0.12)]"
+              className="group relative rounded-full border border-border bg-card p-2.5 text-foreground transition-all hover:border-primary/60 hover:ring-2 hover:ring-primary/30"
             >
               <Icon className="size-4" />
-              <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md border border-white/10 bg-[#111111] px-2 py-1 text-[10px] tracking-[0.12em] text-[#A1A1AA] opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+              <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md border border-border bg-card px-2 py-1 text-[10px] tracking-[0.12em] text-muted-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                 {social.label}
               </span>
             </motion.a>
@@ -373,14 +392,14 @@ export function Hero() {
 
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-12 right-12 hidden items-center gap-1 text-[11px] text-white/40 md:flex"
+        className="pointer-events-none absolute bottom-12 right-12 hidden items-center gap-1 text-[11px] text-muted-foreground/40 md:flex"
         animate={reduceMotion ? undefined : { opacity: [0.3, 0.75, 0.3] }}
         transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
       >
         <span>{'>'}</span>
         <span>terminal</span>
         <motion.span
-          className="h-3.5 w-1 rounded-sm bg-[#22C55E]"
+          className="h-3.5 w-1 rounded-sm bg-primary"
           animate={reduceMotion ? undefined : { opacity: [0.2, 1, 0.2] }}
           transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
         />

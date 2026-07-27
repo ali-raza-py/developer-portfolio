@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { BadgeCheck, GitBranch, Mail, Twitter, Linkedin } from 'lucide-react'
+import { BadgeCheck, GitBranch, Mail } from 'lucide-react'
 import { SectionHeading } from './section-heading'
 
 const items = [

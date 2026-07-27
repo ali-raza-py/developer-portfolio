@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { Geist_Mono } from 'next/font/google'
 import './globals.css'
 
+import { ThemeProvider } from '@/components/theme-provider'
+
 const _geistMono = Geist_Mono({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: 'light dark',
-  themeColor: '#F8F6F1',
+  themeColor: '#FAFAFA',
 }
 
 export default function RootLayout({
@@ -35,10 +37,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                const theme = localStorage.getItem('theme');
-                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const shouldBeDark = theme === 'dark' || (!theme && systemDark);
-                if (shouldBeDark) {
+                const theme = localStorage.getItem('theme') || 'light';
+                if (theme === 'dark') {
                   document.documentElement.classList.add('dark');
                 }
               } catch (e) {}
@@ -47,7 +47,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-serif antialiased transition-colors duration-300">
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   )

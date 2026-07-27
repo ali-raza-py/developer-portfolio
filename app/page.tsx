@@ -7,10 +7,12 @@ import { PortfolioLinks } from '@/components/portfolio/portfolio-links'
 import { AdditionalInfo } from '@/components/portfolio/additional-info'
 import { FutureGoals } from '@/components/portfolio/future-goals'
 import { SiteFooter } from '@/components/portfolio/site-footer'
+import { SiteHeader } from '@/components/content/site-header'
 
 export default function Page() {
   return (
     <main className="min-h-screen">
+      <SiteHeader />
       <Hero />
       <Education />
       <CurrentFocus />

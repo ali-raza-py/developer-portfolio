@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
-import { ProjectBrowser } from '@/components/content/project-browser'
+import { EmptyProjectsState } from '@/components/content/empty-projects'
 import { SiteHeader } from '@/components/content/site-header'
-import { getAllProjects } from '@/lib/content.server'
+import { SiteFooter } from '@/components/portfolio/site-footer'
 import { siteConfig } from '@/lib/site'
 
 export const metadata: Metadata = {
@@ -13,13 +13,14 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function ProjectsPage() {
-  const projects = await getAllProjects()
-
+export default function ProjectsPage() {
   return (
-    <main className="min-h-screen bg-[#050505]">
+    <>
       <SiteHeader />
-      <ProjectBrowser projects={projects} />
-    </main>
+      <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
+        <EmptyProjectsState />
+        <SiteFooter />
+      </main>
+    </>
   )
 }

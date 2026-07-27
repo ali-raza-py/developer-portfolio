@@ -65,17 +65,24 @@ export type BlogFrontmatter = {
   openGraphImage?: string
 }
 
-export type ProjectEntry = ProjectFrontmatter & {
+export type ProjectEntry = Omit<
+  ProjectFrontmatter,
+  'tags' | 'techStack' | 'gallery'
+> & {
   slug: string
   content: string
   readingTime: string
+  tags: string[]
+  techStack: string[]
+  gallery: string[]
 }
 
-export type BlogEntry = BlogFrontmatter & {
+export type BlogEntry = Omit<BlogFrontmatter, 'tags'> & {
   slug: string
   content: string
   readingTime: string
   headings: Heading[]
+  tags: string[]
 }
 
 export function toArray(value: string[] | string | undefined): string[] {

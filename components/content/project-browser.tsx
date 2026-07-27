@@ -30,7 +30,9 @@ const categories: Array<'All' | ProjectCategory> = [
 
 export function ProjectBrowser({ projects }: { projects: ProjectEntry[] }) {
   const [query, setQuery] = useState('')
-  const [activeCategory, setActiveCategory] = useState<(typeof categories)[number]>('All')
+  const [activeCategory, setActiveCategory] = useState<(
+    typeof categories
+  )[number]>('All')
 
   if (projects.length === 0) {
     return <EmptyProjectsState />
@@ -40,12 +42,15 @@ export function ProjectBrowser({ projects }: { projects: ProjectEntry[] }) {
     const loweredQuery = query.toLowerCase()
 
     return projects.filter((project) => {
-      const matchesCategory = activeCategory === 'All' || project.category === activeCategory
+      const matchesCategory =
+        activeCategory === 'All' || project.category === activeCategory
       const matchesQuery =
         project.title.toLowerCase().includes(loweredQuery) ||
         project.description.toLowerCase().includes(loweredQuery) ||
         project.tags.some((tag) => tag.toLowerCase().includes(loweredQuery)) ||
-        project.techStack.some((tech) => tech.toLowerCase().includes(loweredQuery))
+        project.techStack.some((tech) =>
+          tech.toLowerCase().includes(loweredQuery)
+        )
 
       return matchesCategory && matchesQuery
     })
@@ -54,22 +59,19 @@ export function ProjectBrowser({ projects }: { projects: ProjectEntry[] }) {
   return (
     <section className="relative overflow-hidden bg-background text-foreground transition-colors duration-300">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,197,94,0.08),transparent_30%),radial-gradient(circle_at_top_right,rgba(34,197,94,0.04),transparent_24%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(34,197,94,0.12),transparent_30%),radial-gradient(circle_at_top_right,rgba(255,255,255,0.06),transparent_24%)]" />
-      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <div className="mb-10 flex flex-col gap-6 rounded-[36px] border border-border bg-card/50 p-6 backdrop-blur-xl lg:p-8 transition-colors duration-300">
-          <div className="max-w-3xl space-y-4">
+      <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+        <div className="mb-8 space-y-5">
+          <div className="space-y-2">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
               Projects
             </p>
-            <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              Premium case studies, build logs, and live demos.
+            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Premium case studies and build logs.
             </h1>
-            <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-              A content-driven project library with smooth filtering, search, and detail pages generated from markdown files.
-            </p>
           </div>
 
           <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
-            <label className="flex items-center gap-3 rounded-2xl border border-border bg-muted/30 px-4 py-3 transition-colors duration-300">
+            <label className="flex items-center gap-3 rounded-2xl border border-border bg-muted/30 px-4 py-2.5 transition-colors duration-300">
               <Search className="size-4 text-muted-foreground" />
               <input
                 value={query}
@@ -141,7 +143,9 @@ export function ProjectBrowser({ projects }: { projects: ProjectEntry[] }) {
                   <h2 className="text-2xl font-semibold tracking-tight text-foreground">
                     {project.title}
                   </h2>
-                  <p className="text-sm leading-6 text-muted-foreground">{project.description}</p>
+                  <p className="text-sm leading-6 text-muted-foreground">
+                    {project.description}
+                  </p>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
