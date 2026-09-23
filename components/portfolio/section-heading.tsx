@@ -22,26 +22,18 @@ export function SectionHeading({
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className={
-        centered
-          ? 'mb-14 flex flex-col items-center gap-5 text-center'
-          : 'mb-14 flex flex-col gap-5'
+        centered ? 'mb-14 flex flex-col items-center gap-5 text-center' : 'mb-14 flex flex-col gap-5'
       }
     >
-      <span
-        className={
-          centered
-            ? 'flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.28em] text-primary'
-            : 'flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.28em] text-primary'
-        }
-      >
-        <span aria-hidden="true" className="h-px w-8 bg-primary/50" />
+      <span className="tech-label flex items-center gap-3">
+        <span aria-hidden="true" className="h-px w-8 bg-accent/60" />
         {eyebrow}
       </span>
-      <h2 className="max-w-3xl text-balance text-4xl font-normal leading-[1.05] tracking-tight text-foreground md:text-6xl">
+      <h2 className="max-w-3xl text-balance font-semibold leading-[0.95] tracking-[-0.03em] text-foreground text-[clamp(2.2rem,5vw,3.75rem)]">
         {title}
       </h2>
       {lede ? (
-        <p className="max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
+        <p className="max-w-xl text-pretty text-base leading-7 text-muted-foreground sm:text-lg">
           {lede}
         </p>
       ) : null}

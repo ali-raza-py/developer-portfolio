@@ -1,12 +1,3 @@
-export type ProjectStatus = 'Completed' | 'In Progress'
-export type ProjectCategory =
-  | 'Web'
-  | 'Python'
-  | 'AI'
-  | 'DevOps'
-  | 'Open Source'
-  | 'Hackathon'
-
 export type BlogCategory =
   | 'Next.js'
   | 'Portfolio'
@@ -20,33 +11,6 @@ export type Heading = {
   id: string
   text: string
   level: number
-}
-
-type RawFile<T> = {
-  slug: string
-  frontmatter: T & { slug?: string }
-  content: string
-  readingTime: string
-}
-
-export type ProjectFrontmatter = {
-  title: string
-  description: string
-  date: string
-  status: ProjectStatus
-  category: ProjectCategory
-  tags: string[] | string
-  techStack: string[] | string
-  thumbnail: string
-  heroImage: string
-  githubUrl: string
-  liveUrl: string
-  featured?: boolean
-  gallery?: string[] | string
-  metrics?: { label: string; value: string }[]
-  seoTitle?: string
-  seoDescription?: string
-  ogImage?: string
 }
 
 export type BlogFrontmatter = {
@@ -63,18 +27,6 @@ export type BlogFrontmatter = {
   seoTitle?: string
   seoDescription?: string
   openGraphImage?: string
-}
-
-export type ProjectEntry = Omit<
-  ProjectFrontmatter,
-  'tags' | 'techStack' | 'gallery'
-> & {
-  slug: string
-  content: string
-  readingTime: string
-  tags: string[]
-  techStack: string[]
-  gallery: string[]
 }
 
 export type BlogEntry = Omit<BlogFrontmatter, 'tags'> & {

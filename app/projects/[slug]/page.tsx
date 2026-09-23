@@ -1,197 +1,426 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowUpRight, CalendarDays, Layers3 } from 'lucide-react'
 
-import { MarkdownContent } from '@/components/content/markdown-content'
+import { ArchitectureDiagram } from '@/components/projects/architecture-diagram'
 import { SiteHeader } from '@/components/content/site-header'
-import { formatDate } from '@/lib/content'
-import { getAllProjects, getProjectBySlug } from '@/lib/content.server'
+import { SiteFooter } from '@/components/portfolio/site-footer'
+import { getProject, projects, type Project } from '@/lib/projects'
 import { siteConfig } from '@/lib/site'
-
-function GitHubIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="size-4">
-      <path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6V21c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.4-5.5-6A4.7 4.7 0 0 1 6.6 8c-.1-.3-.6-1.6.1-3.3 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 3 .1 3.3a4.7 4.7 0 0 1 1.3 3.3c0 4.6-2.8 5.6-5.5 6 .4.4.8 1.1.8 2.3v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z" />
-    </svg>
-  )
-}
 
 type Params = { slug: string }
 
-export async function generateStaticParams() {
-  const projects = await getAllProjects()
+export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }))
 }
 
-export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>
+}): Promise<Metadata> {
   const { slug } = await params
-  const project = await getProjectBySlug(slug)
-
+  const project = getProject(slug)
   if (!project) return {}
 
-  const title = project.seoTitle ?? `${project.title} | ${siteConfig.name} Projects`
-  const description = project.seoDescription ?? project.description
+  const title = `${project.title} — Case Study`
+  const description = project.tagline
 
   return {
     title,
     description,
-    alternates: {
-      canonical: `/projects/${project.slug}`,
-    },
+    alternates: { canonical: `/projects/${project.slug}` },
     openGraph: {
       title,
       description,
       url: `${siteConfig.url}/projects/${project.slug}`,
-      images: [{ url: project.ogImage ?? project.heroImage }],
+      type: 'article',
     },
   }
 }
 
-export default async function ProjectPage({ params }: { params: Promise<Params> }) {
-  const { slug } = await params
-  const project = await getProjectBySlug(slug)
+function SectionLabel({ index, children }: { index: string; children: React.ReactNode }) {
+  return (
+    <p className="tech-label mb-5 flex items-center gap-3">
+      <span className="text-accent">{index}</span>
+      <span aria-hidden="true" className="h-px w-8 bg-accent/60" />
+      {children}
+    </p>
+  )
+}
 
+function Prose({ paragraphs }: { paragraphs: string[] }) {
+  return (
+    <div className="max-w-2xl space-y-4">
+      {paragraphs.map((paragraph) => (
+        <p key={paragraph} className="text-base leading-7 text-muted-foreground">
+          {paragraph}
+        </p>
+      ))}
+    </div>
+  )
+}
+
+export default async function CaseStudyPage({
+  params,
+}: {
+  params: Promise<Params>
+}) {
+  const { slug } = await params
+  const project: Project | undefined = getProject(slug)
   if (!project) notFound()
 
-  const breadcrumbs = [
-    { label: 'Home', href: '/' },
-    { label: 'Projects', href: '/projects' },
-    { label: project.title, href: `/projects/${project.slug}` },
-  ]
+  const projectIndex = projects.findIndex((item) => item.slug === project.slug)
+  const previous = projects[projectIndex - 1]
+  const next = projects[projectIndex + 1]
 
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
+    '@type': 'SoftwareSourceCode',
     name: project.title,
-    description: project.description,
+    description: project.tagline,
     url: `${siteConfig.url}/projects/${project.slug}`,
-    image: project.heroImage,
-    dateCreated: project.date,
+    codeRepository: project.githubUrl,
+    author: { '@type': 'Person', name: siteConfig.name },
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
+    <>
       <SiteHeader />
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <nav className="mb-8 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-          {breadcrumbs.map((item, index) => (
-            <span key={item.href} className="flex items-center gap-2">
-              <Link href={item.href} className="transition hover:text-foreground">
-                {item.label}
+      <main className="min-h-screen">
+        {/* Masthead */}
+        <section className="grain relative border-b border-border px-6 pb-16 pt-12 sm:px-10 lg:px-16 lg:pb-20 lg:pt-16">
+          <div className="relative mx-auto max-w-[100rem]">
+            <nav
+              aria-label="Breadcrumb"
+              className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground"
+            >
+              <Link href="/projects" className="transition-colors hover:text-foreground">
+                Archive
               </Link>
-              {index < breadcrumbs.length - 1 && <span>/</span>}
-            </span>
-          ))}
-        </nav>
+              <span aria-hidden="true">/</span>
+              <span className="text-foreground">{project.title}</span>
+            </nav>
 
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-6">
-            <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.24em] text-muted-foreground">
-              <span>{project.category}</span>
-              <span>•</span>
-              <span>{project.status}</span>
-              <span>•</span>
-              <span>{formatDate(project.date)}</span>
-            </div>
-            <h1 className="text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
-              {project.title}
-            </h1>
-            <p className="max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
-              {project.description}
-            </p>
-          </div>
-
-          <div className="overflow-hidden rounded-[36px] border border-border bg-card backdrop-blur-xl">
-            <div className="relative aspect-[4/3]">
-              <Image src={project.heroImage} alt={project.title} fill className="object-cover" />
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-10 grid gap-8 xl:grid-cols-[1fr_320px]">
-          <article className="rounded-[36px] border border-border bg-card p-6 backdrop-blur-xl lg:p-8">
-            <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {project.metrics?.map((metric) => (
-                <div key={metric.label} className="rounded-3xl border border-border bg-muted/20 p-4">
-                  <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">{metric.label}</p>
-                  <p className="mt-2 text-2xl font-semibold text-foreground">{metric.value}</p>
-                </div>
-              ))}
-            </div>
-
-            <MarkdownContent content={project.content} />
-
-            <section className="mt-10 rounded-[30px] border border-dashed border-border/50 bg-muted/10 p-6">
-              <div className="mb-4 flex items-center gap-2 text-sm uppercase tracking-[0.24em] text-muted-foreground">
-                <Layers3 className="size-4" />
-                Architecture diagram placeholder
-              </div>
-              <div className="grid min-h-52 place-items-center rounded-[24px] border border-border bg-muted/20 text-center text-muted-foreground">
-                Replace this box with your architecture diagram, flowchart, or system sketch.
-              </div>
-            </section>
-
-            {project.gallery.length > 0 && (
-              <section className="mt-10">
-                <h2 className="text-2xl font-semibold text-foreground">Screenshots Gallery</h2>
-                <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                  {project.gallery.map((image) => (
-                    <div key={image} className="overflow-hidden rounded-[24px] border border-border">
-                      <Image src={image} alt={`${project.title} screenshot`} width={800} height={600} className="h-full w-full object-cover" />
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-          </article>
-
-          <aside className="space-y-6">
-            <div className="rounded-[30px] border border-border bg-card p-5 backdrop-blur-xl">
-              <h2 className="text-lg font-semibold text-foreground">Quick Links</h2>
-              <div className="mt-4 space-y-3">
-                <Link
-                  href={project.liveUrl}
-                  target="_blank"
-                  className="flex items-center justify-between rounded-2xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-primary transition hover:bg-primary/20"
-                >
-                  <span>Live Demo</span>
-                  <ArrowUpRight className="size-4" />
-                </Link>
-                <Link
-                  href={project.githubUrl}
-                  target="_blank"
-                  className="flex items-center justify-between rounded-2xl border border-border bg-muted/20 px-4 py-3 text-sm text-muted-foreground transition hover:bg-muted/30 hover:text-foreground"
-                >
-                  <span>GitHub Repository</span>
-                  <GitHubIcon />
-                </Link>
-              </div>
-            </div>
-
-            <div className="rounded-[30px] border border-border bg-card p-5 backdrop-blur-xl">
-              <h2 className="text-lg font-semibold text-foreground">Tech Stack</h2>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {project.techStack.map((tech) => (
-                  <span key={tech} className="rounded-full border border-border bg-muted/20 px-3 py-1 text-xs text-muted-foreground">
-                    {tech}
+            <div className="mt-8 grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end lg:gap-16">
+              <div>
+                <div className="flex items-baseline gap-5">
+                  <span className="display text-4xl leading-none text-accent">
+                    {project.index}
                   </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                    {project.category} · {project.year}
+                  </span>
+                </div>
+                <h1 className="mt-4 text-[clamp(2.75rem,8vw,6.5rem)] font-semibold uppercase leading-[0.9] tracking-[-0.035em] text-foreground">
+                  {project.title}
+                </h1>
+                <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground sm:text-xl">
+                  {project.tagline}
+                </p>
+              </div>
+
+              {/* Spec sheet */}
+              <dl className="grid grid-cols-2 gap-px border border-border bg-border text-sm">
+                <div className="bg-background px-4 py-4">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                    Status
+                  </dt>
+                  <dd className="mt-1.5 text-foreground">{project.statusLabel}</dd>
+                </div>
+                <div className="bg-background px-4 py-4">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                    Year
+                  </dt>
+                  <dd className="mt-1.5 text-foreground">{project.year}</dd>
+                </div>
+                <div className="col-span-2 bg-background px-4 py-4">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                    Role
+                  </dt>
+                  <dd className="mt-1.5 text-foreground">{project.role}</dd>
+                </div>
+                <div className="col-span-2 flex flex-wrap gap-3 bg-background px-4 py-4">
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-cursor="open"
+                    className="inline-flex items-center gap-2 border border-border px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:text-accent"
+                  >
+                    GitHub ↗
+                  </a>
+                  {project.liveUrl ? (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-cursor="open"
+                      className="inline-flex items-center gap-2 border border-accent/60 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-accent/20"
+                    >
+                      Live demo ↗
+                    </a>
+                  ) : null}
+                </div>
+              </dl>
+            </div>
+          </div>
+        </section>
+        {/* Context + Problem + Approach */}
+        <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+          <div className="mx-auto grid max-w-[100rem] gap-14 lg:grid-cols-[1fr_1fr] lg:gap-20">
+            <div>
+              <SectionLabel index="01">Context</SectionLabel>
+              <Prose paragraphs={project.description} />
+            </div>
+            <div>
+              <SectionLabel index="02">Problem</SectionLabel>
+              <Prose paragraphs={project.problem} />
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+          <div className="mx-auto max-w-[100rem]">
+            <div className="grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+              <div>
+                <SectionLabel index="03">Approach</SectionLabel>
+                <Prose paragraphs={project.approach} />
+              </div>
+
+              {/* Architecture diagram */}
+              <div>
+                <SectionLabel index="04">Architecture</SectionLabel>
+                <ArchitectureDiagram
+                  caption={project.architecture.caption}
+                  steps={project.architecture.steps}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Stack */}
+        <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+          <div className="mx-auto max-w-[100rem]">
+            <SectionLabel index="05">Stack</SectionLabel>
+            <ul className="flex flex-wrap gap-x-8 gap-y-4">
+              {project.stack.map((technology) => (
+                <li
+                  key={technology}
+                  className="text-lg tracking-tight text-foreground sm:text-xl"
+                >
+                  {technology}
+                </li>
+              ))}
+            </ul>
+            {project.stackNote ? (
+              <p className="mt-4 font-mono text-[11px] leading-5 tracking-[0.06em] text-muted-foreground/70">
+                Note — {project.stackNote}
+              </p>
+            ) : null}
+          </div>
+        </section>
+        {/* Features */}
+        <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+          <div className="mx-auto max-w-[100rem]">
+            <SectionLabel index="06">Features</SectionLabel>
+            <ul className="grid gap-px border border-border bg-border md:grid-cols-2">
+              {project.features.map((feature, index) => (
+                <li key={feature} className="flex gap-4 bg-background px-5 py-5">
+                  <span className="font-mono text-[10px] leading-6 text-accent/80">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-sm leading-6 text-muted-foreground">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Project state — honest implemented / in progress / planned split */}
+        {project.state ? (
+          <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+            <div className="mx-auto max-w-[100rem]">
+              <SectionLabel index="07">Project state</SectionLabel>
+              <div className="grid gap-px border border-border bg-border lg:grid-cols-3">
+                {[
+                  {
+                    label: 'Implemented',
+                    items: project.state.implemented,
+                    tone: 'text-accent',
+                  },
+                  {
+                    label: 'In progress',
+                    items: project.state.inProgress,
+                    tone: 'text-foreground',
+                  },
+                  {
+                    label: 'Planned',
+                    items: project.state.planned,
+                    tone: 'text-muted-foreground',
+                  },
+                ].map((column) => (
+                  <div key={column.label} className="bg-background px-5 py-6">
+                    <p
+                      className={`font-mono text-[11px] uppercase tracking-[0.22em] ${column.tone}`}
+                    >
+                      {column.label}
+                    </p>
+                    <ul className="mt-4 space-y-3">
+                      {column.items.map((item) => (
+                        <li
+                          key={item}
+                          className="flex gap-3 text-sm leading-6 text-muted-foreground"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-2 size-1 shrink-0 bg-accent/70"
+                          />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
               </div>
             </div>
-
-            <div className="rounded-[30px] border border-border bg-card p-5 backdrop-blur-xl">
-              <h2 className="text-lg font-semibold text-foreground">Performance Metrics</h2>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                Track Lighthouse, bundle size, API latency, Core Web Vitals, or deployment gains here.
-              </p>
+          </section>
+        ) : null}
+        {/* Decisions + Challenges */}
+        <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+          <div className="mx-auto grid max-w-[100rem] gap-14 lg:grid-cols-2 lg:gap-20">
+            <div>
+              <SectionLabel index={project.state ? '08' : '07'}>
+                Engineering decisions
+              </SectionLabel>
+              <ol className="border-t border-border">
+                {project.decisions.map((decision, index) => (
+                  <li key={decision.title} className="border-b border-border py-5">
+                    <div className="flex items-baseline gap-4">
+                      <span className="font-mono text-[10px] text-accent/80">
+                        D{String(index + 1).padStart(2, '0')}
+                      </span>
+                      <div>
+                        <h3 className="text-base font-semibold tracking-tight text-foreground">
+                          {decision.title}
+                        </h3>
+                        <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
+                          {decision.body}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
-          </aside>
-        </div>
-      </section>
 
-      <script type="application/ld+json" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-    </main>
+            <div>
+              <SectionLabel index={project.state ? '09' : '08'}>Challenges</SectionLabel>
+              <ol className="border-t border-border">
+                {project.challenges.map((challenge, index) => (
+                  <li key={challenge.title} className="border-b border-border py-5">
+                    <div className="flex items-baseline gap-4">
+                      <span className="font-mono text-[10px] text-accent/80">
+                        C{String(index + 1).padStart(2, '0')}
+                      </span>
+                      <div>
+                        <h3 className="text-base font-semibold tracking-tight text-foreground">
+                          {challenge.title}
+                        </h3>
+                        <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
+                          {challenge.body}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+        {/* Result + Lessons */}
+        <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+          <div className="mx-auto grid max-w-[100rem] gap-14 lg:grid-cols-2 lg:gap-20">
+            <div>
+              <SectionLabel index={project.state ? '10' : '09'}>Result</SectionLabel>
+              <ul className="space-y-4">
+                {project.outcome.map((item) => (
+                  <li
+                    key={item}
+                    className="flex gap-4 text-base leading-7 text-muted-foreground"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-3 size-1.5 shrink-0 rotate-45 border border-accent"
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <SectionLabel index={project.state ? '11' : '10'}>What I learned</SectionLabel>
+              <ul className="space-y-5">
+                {project.lessons.map((lesson) => (
+                  <li
+                    key={lesson}
+                    className="display text-xl italic leading-snug text-foreground sm:text-2xl"
+                  >
+                    “{lesson}”
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Prev / next case study */}
+        <nav
+          aria-label="Case study navigation"
+          className="grid gap-px border-b border-border bg-border sm:grid-cols-2"
+        >
+          {previous ? (
+            <Link
+              href={`/projects/${previous.slug}`}
+              data-cursor="view"
+              className="group flex flex-col gap-2 bg-background px-6 py-8 transition-colors hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 sm:px-10 lg:px-16"
+            >
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                ← Previous — {previous.index}
+              </span>
+              <span className="text-xl font-semibold uppercase tracking-[-0.02em] text-foreground transition-colors group-hover:text-accent">
+                {previous.title}
+              </span>
+            </Link>
+          ) : (
+            <span className="bg-background" aria-hidden="true" />
+          )}
+          {next ? (
+            <Link
+              href={`/projects/${next.slug}`}
+              data-cursor="view"
+              className="group flex flex-col gap-2 bg-background px-6 py-8 text-right transition-colors hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 sm:px-10 lg:px-16"
+            >
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                Next — {next.index} →
+              </span>
+              <span className="text-xl font-semibold uppercase tracking-[-0.02em] text-foreground transition-colors group-hover:text-accent">
+                {next.title}
+              </span>
+            </Link>
+          ) : (
+            <span className="bg-background" aria-hidden="true" />
+          )}
+        </nav>
+      </main>
+      <SiteFooter />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+    </>
   )
 }

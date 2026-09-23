@@ -56,8 +56,7 @@ export function BlogBrowser({ posts }: { posts: BlogEntry[] }) {
   const popularPosts = posts.filter((post) => post.popular || post.featured).slice(0, 3)
 
   return (
-    <section className="relative overflow-hidden bg-background text-foreground transition-colors duration-300">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,197,94,0.08),transparent_30%),radial-gradient(circle_at_top_right,rgba(34,197,94,0.04),transparent_24%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(34,197,94,0.12),transparent_30%),radial-gradient(circle_at_top_right,rgba(255,255,255,0.06),transparent_24%)]" />
+    <section className="relative overflow-hidden bg-background text-foreground">
       <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
         <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
           <div className="space-y-5">

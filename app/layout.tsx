@@ -1,16 +1,59 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist_Mono } from 'next/font/google'
+import { Geist_Mono, Instrument_Serif, Inter, Montserrat } from 'next/font/google'
 import './globals.css'
 
 import { ThemeProvider } from '@/components/theme-provider'
+import { Cursor } from '@/components/cursor'
+import { SmoothScroll } from '@/components/smooth-scroll'
+import { siteConfig } from '@/lib/site'
 
-const _geistMono = Geist_Mono({ subsets: ['latin'] })
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-body',
+})
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-display',
+})
+
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-technical',
+})
+
+/**
+ * Montserrat — the geometric headline face. Tight tracking, wide weights:
+ * architectural, premium, and a deliberate pairing with Inter for body copy.
+ */
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+})
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ali-raza-py.me'),
-  title: 'Ali Raza — Building software. Learning continuously.',
-  description:
-    'Personal portfolio of Ali Raza, a Class XI Computer Science student at PECHS Government Science College, Karachi with completed matriculation from QBHSS — Python and C++ developer exploring AI, DevOps, and cloud computing.',
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: '%s | Ali Raza',
+  },
+  description: siteConfig.description,
+  keywords: [
+    'Ali Raza',
+    'software engineering student',
+    'developer portfolio',
+    'Python developer',
+    'Next.js',
+    'AI projects',
+    'MediCare AI',
+    'Algorify',
+  ],
   icons: {
     icon: '/ar-icon.svg',
     apple: '/apple-icon.png',
@@ -18,11 +61,30 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  openGraph: {
+    type: 'website',
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [
+      {
+        url: '/images/portrait.png',
+        alt: 'Portrait of Ali Raza',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: ['/images/portrait.png'],
+  },
 }
 
 export const viewport: Viewport = {
   colorScheme: 'light dark',
-  themeColor: '#FAFAFA',
+  themeColor: '#F4F1EA',
 }
 
 export default function RootLayout({
@@ -31,7 +93,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background">
+    <html
+      lang="en"
+      className={`${inter.variable} ${instrumentSerif.variable} ${geistMono.variable} ${montserrat.variable}`}
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -46,8 +111,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-serif antialiased transition-colors duration-300">
-        <ThemeProvider>{children}</ThemeProvider>
+      <body className="antialiased">
+        <ThemeProvider>
+          <SmoothScroll />
+          <Cursor />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

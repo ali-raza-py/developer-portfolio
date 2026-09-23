@@ -6,7 +6,7 @@ import { siteConfig } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: `Resume | ${siteConfig.name}`,
-  description: 'Resume and professional experience of Ali Raza.',
+  description: 'Resume and academic background of Ali Raza, software engineering student.',
   alternates: {
     canonical: '/resume',
   },
@@ -18,7 +18,6 @@ export default function ResumePage() {
       <SiteHeader />
       <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
         <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,197,94,0.08),transparent_30%),radial-gradient(circle_at_top_right,rgba(34,197,94,0.04),transparent_24%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(34,197,94,0.12),transparent_30%),radial-gradient(circle_at_top_right,rgba(255,255,255,0.06),transparent_24%)]" />
           <div className="relative mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
             <div className="mb-12 space-y-6">
               <div className="space-y-3">

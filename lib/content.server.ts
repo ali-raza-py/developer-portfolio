@@ -9,8 +9,6 @@ import readingTime from 'reading-time'
 import {
   type BlogEntry,
   type BlogFrontmatter,
-  type ProjectEntry,
-  type ProjectFrontmatter,
   extractHeadings,
   toArray,
 } from './content'
@@ -49,27 +47,6 @@ async function readMarkdownCollection<T>(folder: string): Promise<Array<RawFile<
   } catch {
     return []
   }
-}
-
-export async function getAllProjects(): Promise<ProjectEntry[]> {
-  const files = await readMarkdownCollection<ProjectFrontmatter>('projects')
-
-  return files
-    .map(({ slug, frontmatter, content, readingTime: time }) => ({
-      slug,
-      ...frontmatter,
-      tags: toArray(frontmatter.tags),
-      techStack: toArray(frontmatter.techStack),
-      gallery: toArray(frontmatter.gallery),
-      readingTime: time,
-      content,
-    }))
-    .sort((left, right) => +new Date(right.date) - +new Date(left.date))
-}
-
-export async function getProjectBySlug(slug: string): Promise<ProjectEntry | undefined> {
-  const projects = await getAllProjects()
-  return projects.find((project) => project.slug === slug)
 }
 
 export async function getAllBlogPosts(): Promise<BlogEntry[]> {

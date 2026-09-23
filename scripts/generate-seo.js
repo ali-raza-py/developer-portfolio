@@ -39,14 +39,24 @@ function generateRobots() {
   )
 }
 
+function readProjectSlugs() {
+  const source = path.join(process.cwd(), 'lib', 'projects.ts')
+  if (!fs.existsSync(source)) return []
+  return [...fs.readFileSync(source, 'utf8').matchAll(/slug:\s*'([^']+)'/g)].map(
+    (match) => match[1],
+  )
+}
+
 function generateSitemap() {
-  const projects = readMarkdownFiles('projects')
+  // Case-study slugs come from lib/projects.ts (single source of truth);
+  // markdown blog posts are read from content/blog.
+  const projectSlugs = readProjectSlugs()
   const posts = readMarkdownFiles('blog')
   const urls = [
     `${siteUrl}/`,
     `${siteUrl}/projects`,
     `${siteUrl}/blog`,
-    ...projects.map((project) => `${siteUrl}/projects/${project.slug}`),
+    ...projectSlugs.map((slug) => `${siteUrl}/projects/${slug}`),
     ...posts.map((post) => `${siteUrl}/blog/${post.slug}`),
   ]
 
