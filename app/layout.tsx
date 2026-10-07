@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist_Mono, Instrument_Serif, Inter, Montserrat } from 'next/font/google'
+import { Anton, Geist_Mono, Instrument_Serif, Inter, Montserrat } from 'next/font/google'
 import './globals.css'
 
 import { ThemeProvider } from '@/components/theme-provider'
@@ -37,6 +37,13 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 })
 
+const anton = Anton({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-display-sans',
+})
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -46,13 +53,13 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   keywords: [
     'Ali Raza',
-    'software engineering student',
     'developer portfolio',
-    'Python developer',
+    'product designer',
+    'full-stack developer',
     'Next.js',
-    'AI projects',
-    'MediCare AI',
-    'Algorify',
+    'AI tools',
+    'experiential design',
+    'creative developer',
   ],
   icons: {
     icon: '/ar-icon.svg',
@@ -69,8 +76,8 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [
       {
-        url: '/images/portrait.png',
-        alt: 'Portrait of Ali Raza',
+        url: '/images/portrait-placeholder.svg',
+        alt: 'Abstract portrait illustration',
       },
     ],
   },
@@ -78,13 +85,13 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
-    images: ['/images/portrait.png'],
+    images: ['/images/portrait-placeholder.svg'],
   },
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
-  themeColor: '#F4F1EA',
+  colorScheme: 'dark',
+  themeColor: '#0C0D0C',
 }
 
 export default function RootLayout({
@@ -95,17 +102,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${instrumentSerif.variable} ${geistMono.variable} ${montserrat.variable}`}
+      className={`${inter.variable} ${instrumentSerif.variable} ${geistMono.variable} ${montserrat.variable} ${anton.variable}`}
     >
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                const theme = localStorage.getItem('theme') || 'light';
-                if (theme === 'dark') {
-                  document.documentElement.classList.add('dark');
-                }
+                document.documentElement.classList.add('dark');
+                document.documentElement.style.colorScheme = 'dark';
               } catch (e) {}
             `,
           }}

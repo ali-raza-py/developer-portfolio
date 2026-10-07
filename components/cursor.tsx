@@ -109,7 +109,7 @@ export function Cursor() {
         className="pointer-events-none fixed left-0 top-0 z-[9999] hidden [@media(pointer:fine)]:block"
       >
         <span
-          className="absolute -left-[13px] -top-[13px] grid size-[26px] place-items-center rounded-full border border-foreground/45 bg-background/40 backdrop-blur-[2px] transition-[width,height,left,top,opacity] duration-300"
+          className="cursor-ring-visual absolute -left-[13px] -top-[13px] grid size-[26px] place-items-center rounded-full border border-foreground/45 bg-background/40 backdrop-blur-[2px] transition-[width,height,left,top,background-color,border-color] duration-300"
           data-ring-visual=""
         >
           <span

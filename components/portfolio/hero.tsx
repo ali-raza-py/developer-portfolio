@@ -41,6 +41,7 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
+      id="intro"
       className="grain relative overflow-hidden border-b border-border"
       aria-label="Introduction"
     >
@@ -49,40 +50,39 @@ export function Hero() {
         <ImageBackdrop />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-[100rem] grid-cols-1 gap-12 px-6 pb-24 pt-16 sm:px-10 lg:min-h-[calc(100svh-6.5rem)] lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-8 lg:px-16 lg:pb-32 lg:pt-14 xl:grid-cols-[0.9fr_1.25fr]">
+      <div className="relative mx-auto flex min-h-[100svh] w-full max-w-[100rem] flex-col justify-center px-6 pb-20 pt-28 sm:px-10 lg:px-16">
         {/* LEFT: editorial column */}
         <motion.div
           style={reduced ? undefined : { y: textY, opacity: textOpacity }}
-          className="relative z-10 max-w-xl"
+          className="relative z-10 max-w-5xl"
         >
           <motion.p {...rise(0.05)} className="tech-label flex items-center gap-3">
             <span aria-hidden="true" className="h-px w-10 bg-accent/70" />
-            Portfolio — 2026
+            Aster Vale — Portfolio 2026
           </motion.p>
 
           <motion.h1
             {...rise(0.14)}
-            className="mt-6 text-[clamp(3.4rem,9vw,7.5rem)] font-semibold uppercase leading-[0.9] tracking-[-0.035em] text-foreground"
+            className="mt-6 text-[clamp(4.5rem,16vw,15rem)] font-semibold uppercase leading-[0.78] tracking-[-0.075em] text-foreground"
           >
-            Ali
+            Aster
             <br />
-            Raza
+            Vale
             <span className="text-accent">.</span>
           </motion.h1>
 
-          <motion.div {...rise(0.26)} className="mt-7 flex items-center gap-4">
+          <motion.div {...rise(0.26)} className="mt-10 flex items-center gap-4">
             <span aria-hidden="true" className="h-px w-12 bg-border" />
             <p className="text-base font-medium tracking-tight text-foreground sm:text-lg">
-              Software Engineering Student
+              Product designer · creative developer · systems thinker
             </p>
           </motion.div>
 
           <motion.p
             {...rise(0.34)}
-            className="mt-5 max-w-md text-pretty text-lg leading-8 text-muted-foreground"
+            className="mt-6 max-w-xl text-pretty text-lg leading-8 text-muted-foreground sm:text-xl"
           >
-            I build software, explore AI, and turn what I learn into working
-            systems.
+            I design and build refined digital experiences, turning complex ideas into thoughtful, usable products.
           </motion.p>
 
           <motion.div
@@ -103,7 +103,7 @@ export function Hero() {
               </span>
             </Link>
             <a
-              href="https://github.com/ali-raza-py"
+              href="https://github.com/your-handle"
               target="_blank"
               rel="noreferrer"
               data-cursor="open"
@@ -123,13 +123,13 @@ export function Hero() {
             {...rise(0.54)}
             className="mt-12 max-w-xs font-mono text-[10px] leading-5 tracking-[0.14em] text-muted-foreground/70"
           >
-            CLASS XI COMPUTER SCIENCE — KARACHI, PK
+              BASED IN LONDON • AVAILABLE FOR SELECT CLIENTS
             <br />
-            PYTHON / C++ / FULL-STACK / AI
+              DESIGN / ENGINEERING / PRODUCT THINKING
           </motion.p>
         </motion.div>
         {/* RIGHT: the 3D portrait object */}
-        <div className="relative z-0 flex justify-center lg:justify-end">
+        <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-end opacity-30 lg:opacity-50">
           <motion.div
             style={
               reduced
@@ -144,7 +144,7 @@ export function Hero() {
                     transformPerspective: 1600,
                   }
             }
-            className="w-full max-w-[26rem] sm:max-w-md lg:max-w-lg xl:max-w-xl"
+            className="w-full max-w-[22rem] translate-y-20 sm:max-w-md lg:max-w-lg xl:max-w-xl"
           >
             {!reduced ? (
               <motion.div
@@ -182,13 +182,13 @@ function ImageBackdrop() {
   return (
     <div className="absolute inset-0">
       <img
-        src="/images/portrait.png"
+        src="/images/portrait-placeholder.svg"
         alt=""
         aria-hidden="true"
         className="absolute -right-[12%] top-1/2 w-[70vw] max-w-[1100px] -translate-y-1/2 scale-110 opacity-[0.16] blur-[64px] grayscale dark:opacity-[0.2]"
       />
       <img
-        src="/images/portrait.png"
+        src="/images/portrait-placeholder.svg"
         alt=""
         aria-hidden="true"
         className="absolute bottom-[-18%] right-[6%] hidden w-[26vw] max-w-[380px] -rotate-3 opacity-[0.07] grayscale blur-[1px] lg:block dark:opacity-[0.1]"

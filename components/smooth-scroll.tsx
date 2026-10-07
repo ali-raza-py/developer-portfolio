@@ -1,9 +1,12 @@
 'use client'
 
 import { useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 
 let lenisInstance: Lenis | null = null
+gsap.registerPlugin(ScrollTrigger)
 
 /**
  * Smooth scrolling via Lenis — fine pointers only, never under
@@ -18,12 +21,11 @@ export function SmoothScroll() {
     const lenis = new Lenis({ lerp: 0.11 })
     lenisInstance = lenis
 
-    let raf = 0
-    const loop = (time: number) => {
-      lenis.raf(time)
-      raf = requestAnimationFrame(loop)
-    }
-    raf = requestAnimationFrame(loop)
+    const onTick = (time: number) => lenis.raf(time * 1000)
+    const onScroll = () => ScrollTrigger.update()
+    gsap.ticker.add(onTick)
+    lenis.on('scroll', onScroll)
+    gsap.ticker.lagSmoothing(0)
 
     const onClick = (event: MouseEvent) => {
       const anchor = (event.target as Element | null)?.closest?.<HTMLAnchorElement>('a[href^="#"]')
@@ -39,7 +41,8 @@ export function SmoothScroll() {
     document.addEventListener('click', onClick)
 
     return () => {
-      cancelAnimationFrame(raf)
+      gsap.ticker.remove(onTick)
+      lenis.off('scroll', onScroll)
       document.removeEventListener('click', onClick)
       lenis.destroy()
       lenisInstance = null

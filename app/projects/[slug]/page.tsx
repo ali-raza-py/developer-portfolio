@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { ArchitectureDiagram } from '@/components/projects/architecture-diagram'
+import { ProjectDemo } from '@/components/projects/project-demo'
+import { ProjectVideo } from '@/components/projects/project-video'
 import { SiteHeader } from '@/components/content/site-header'
 import { SiteFooter } from '@/components/portfolio/site-footer'
 import { getProject, projects, type Project } from '@/lib/projects'
@@ -166,16 +168,16 @@ export default async function CaseStudyPage({
             </div>
           </div>
         </section>
-        {/* Context + Problem + Approach */}
+        {/* Problem + Solution */}
         <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
           <div className="mx-auto grid max-w-[100rem] gap-14 lg:grid-cols-[1fr_1fr] lg:gap-20">
             <div>
-              <SectionLabel index="01">Context</SectionLabel>
-              <Prose paragraphs={project.description} />
+              <SectionLabel index="01">Problem</SectionLabel>
+              <Prose paragraphs={project.problem} />
             </div>
             <div>
-              <SectionLabel index="02">Problem</SectionLabel>
-              <Prose paragraphs={project.problem} />
+              <SectionLabel index="02">Solution</SectionLabel>
+              <Prose paragraphs={project.approach.slice(0, 3)} />
             </div>
           </div>
         </section>
@@ -184,13 +186,13 @@ export default async function CaseStudyPage({
           <div className="mx-auto max-w-[100rem]">
             <div className="grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
               <div>
-                <SectionLabel index="03">Approach</SectionLabel>
-                <Prose paragraphs={project.approach} />
+                <SectionLabel index="03">Implementation</SectionLabel>
+                <Prose paragraphs={project.approach.slice(3)} />
               </div>
 
               {/* Architecture diagram */}
               <div>
-                <SectionLabel index="04">Architecture</SectionLabel>
+                <SectionLabel index="03A">Technical flow</SectionLabel>
                 <ArchitectureDiagram
                   caption={project.architecture.caption}
                   steps={project.architecture.steps}
@@ -200,10 +202,10 @@ export default async function CaseStudyPage({
           </div>
         </section>
 
-        {/* Stack */}
+        {/* Technology */}
         <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
           <div className="mx-auto max-w-[100rem]">
-            <SectionLabel index="05">Stack</SectionLabel>
+            <SectionLabel index="04">Technology</SectionLabel>
             <ul className="flex flex-wrap gap-x-8 gap-y-4">
               {project.stack.map((technology) => (
                 <li
@@ -224,7 +226,7 @@ export default async function CaseStudyPage({
         {/* Features */}
         <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
           <div className="mx-auto max-w-[100rem]">
-            <SectionLabel index="06">Features</SectionLabel>
+            <SectionLabel index="05">Features</SectionLabel>
             <ul className="grid gap-px border border-border bg-border md:grid-cols-2">
               {project.features.map((feature, index) => (
                 <li key={feature} className="flex gap-4 bg-background px-5 py-5">
@@ -238,11 +240,58 @@ export default async function CaseStudyPage({
           </div>
         </section>
 
+        {/* Visual Evidence */}
+        <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+          <div className="mx-auto max-w-[100rem]">
+            <SectionLabel index="06">Visual evidence</SectionLabel>
+            {project.images.length || project.video ? (
+              <div className="grid gap-4 sm:grid-cols-2">
+                {project.images.map((image) => (
+                  <figure key={image} className="overflow-hidden border border-border bg-card">
+                    <img src={image} alt={`${project.title} interface evidence`} loading="lazy" className="h-auto w-full" />
+                  </figure>
+                ))}
+                {project.video ? (
+                  <figure className="overflow-hidden border border-border bg-card sm:col-span-2">
+                    <ProjectVideo
+                      src={project.video}
+                      title={project.title}
+                      playbackRate={project.slug === 'medicare-ai' ? 2 : 1}
+                    />
+                    <figcaption className="border-t border-border px-4 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                      Demonstration · autoplay loop · {project.slug === 'medicare-ai' ? '2×' : '1×'}
+                    </figcaption>
+                  </figure>
+                ) : null}
+              </div>
+            ) : (
+              <div className="border border-dashed border-border px-5 py-6">
+                <p className="text-sm leading-6 text-muted-foreground">
+                  No verified screenshot or recording is attached to this project record yet. The working interaction below is the available local evidence.
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <ProjectDemo slug={project.slug} />
+
+        {/* Links */}
+        <section className="border-b border-border px-6 py-12 sm:px-10 lg:px-16">
+          <div className="mx-auto flex max-w-[100rem] flex-wrap items-center justify-between gap-5">
+            <SectionLabel index="07">Links</SectionLabel>
+            <div className="flex flex-wrap gap-3">
+              <a href={project.githubUrl} target="_blank" rel="noreferrer" className="border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent hover:text-accent">GitHub ↗</a>
+              {project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noreferrer" className="border border-accent/60 bg-accent/10 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-accent/20">Live demo ↗</a> : <span className="border border-dashed border-border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">Live demo not available</span>}
+            </div>
+          </div>
+        </section>
+
         {/* Project state — honest implemented / in progress / planned split */}
         {project.state ? (
           <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
             <div className="mx-auto max-w-[100rem]">
-              <SectionLabel index="07">Project state</SectionLabel>
+              <SectionLabel index="A">Project state</SectionLabel>
               <div className="grid gap-px border border-border bg-border lg:grid-cols-3">
                 {[
                   {
@@ -291,7 +340,7 @@ export default async function CaseStudyPage({
         <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
           <div className="mx-auto grid max-w-[100rem] gap-14 lg:grid-cols-2 lg:gap-20">
             <div>
-              <SectionLabel index={project.state ? '08' : '07'}>
+              <SectionLabel index="B">
                 Engineering decisions
               </SectionLabel>
               <ol className="border-t border-border">
@@ -316,7 +365,7 @@ export default async function CaseStudyPage({
             </div>
 
             <div>
-              <SectionLabel index={project.state ? '09' : '08'}>Challenges</SectionLabel>
+              <SectionLabel index="C">Challenges</SectionLabel>
               <ol className="border-t border-border">
                 {project.challenges.map((challenge, index) => (
                   <li key={challenge.title} className="border-b border-border py-5">
@@ -343,7 +392,7 @@ export default async function CaseStudyPage({
         <section className="border-b border-border px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
           <div className="mx-auto grid max-w-[100rem] gap-14 lg:grid-cols-2 lg:gap-20">
             <div>
-              <SectionLabel index={project.state ? '10' : '09'}>Result</SectionLabel>
+              <SectionLabel index="D">Result</SectionLabel>
               <ul className="space-y-4">
                 {project.outcome.map((item) => (
                   <li
@@ -361,7 +410,7 @@ export default async function CaseStudyPage({
             </div>
 
             <div>
-              <SectionLabel index={project.state ? '11' : '10'}>What I learned</SectionLabel>
+              <SectionLabel index="E">What I learned</SectionLabel>
               <ul className="space-y-5">
                 {project.lessons.map((lesson) => (
                   <li

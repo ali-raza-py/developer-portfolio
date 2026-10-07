@@ -9,7 +9,7 @@ import { SiteFooter } from '@/components/portfolio/site-footer'
 export const metadata: Metadata = {
   title: `Writing | ${siteConfig.name}`,
   description:
-    'Notes on building software, learning algorithms, and shipping projects — by Ali Raza.',
+    'Notes on building software, learning algorithms, and shipping projects — by Aster Vale.',
   alternates: {
     canonical: '/blog',
   },

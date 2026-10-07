@@ -45,6 +45,7 @@ export type Project = {
   githubUrl: string
   liveUrl?: string
   images: string[]
+  video?: string
   featured: boolean
 }
 
@@ -163,6 +164,7 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/ali-raza-py/medicare-ai',
     liveUrl: 'https://medicare-ai-sigma.vercel.app',
     images: [],
+    video: '/videos/medicare-ai-demo.mp4',
     featured: true,
   },
   {
@@ -266,7 +268,9 @@ export const projects: Project[] = [
       'The most valuable engineering in a knowledge base is the machinery that proves it is still true.',
     ],
     githubUrl: 'https://github.com/ali-raza-py/AI-HUB',
+    liveUrl: 'https://ali-raza-py.github.io/AI-HUB/',
     images: [],
+    video: '/videos/ai-hub-demo.mp4',
     featured: true,
   },
   {
@@ -481,7 +485,9 @@ export const projects: Project[] = [
       'Building the algorithm yourself (Lomuto partition, merge buffers) is how the details stop being memorized and start being understood.',
     ],
     githubUrl: 'https://github.com/ali-raza-py/Algorify',
+    liveUrl: 'https://v0-algovizer.vercel.app/',
     images: [],
+    video: '/videos/algorify-demo.mp4',
     featured: false,
   },
 ]

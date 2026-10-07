@@ -3,7 +3,7 @@ title: How I Ship Fast with Python and Data Workflows
 description: A practical look at how I structure pages, content, and deployment for quick iteration.
 date: 2026-06-28
 coverImage: /images/coding-desk.png
-author: Ali Raza
+author: Aster Vale
 tags:
   - Python
   - NumPy
@@ -14,7 +14,7 @@ tags:
 category: Content
 popular: true
 slug: ship-fast-with-nextjs
-seoTitle: How I Ship Fast with Python and Data Workflows | Ali Raza
+seoTitle: How I Ship Fast with Python and Data Workflows | Aster Vale
 seoDescription: A practical workflow for building and deploying projects quickly with Python-driven content systems.
 openGraphImage: /images/coding-desk.png
 ---

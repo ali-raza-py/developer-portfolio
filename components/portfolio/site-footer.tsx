@@ -7,15 +7,15 @@ export function SiteFooter() {
             Ali Raza<span className="text-accent">.</span>
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Software Engineering Student — building, learning, documenting.
+            Product-minded developer — designing, shipping, and refining interfaces.
           </p>
         </div>
         <div className="flex flex-col gap-2 sm:items-end">
           <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-            Fundamentals before frameworks.
+            Thoughtful systems over noise.
           </p>
           <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground/70">
-            © {new Date().getFullYear()} Ali Raza — Karachi, PK
+            © {new Date().getFullYear()} Ali Raza — Karachi, Pakistan
           </p>
         </div>
       </div>

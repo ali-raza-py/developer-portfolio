@@ -3,7 +3,7 @@ title: Building Content-First Portfolios That Stay Fresh
 description: Why markdown-based portfolios scale better than manual editing and how to ship one cleanly.
 date: 2026-07-10
 coverImage: /images/coding-desk.png
-author: Ali Raza
+author: Aster Vale
 tags:
   - C++
   - Portfolio
@@ -13,7 +13,7 @@ category: Portfolio
 featured: true
 popular: true
 slug: building-content-first-portfolios
-seoTitle: Building Content-First Portfolios | Ali Raza
+seoTitle: Building Content-First Portfolios | Aster Vale
 seoDescription: How to keep a portfolio fresh with markdown content, automatic routes, and great SEO.
 openGraphImage: /images/coding-desk.png
 ---

@@ -2,7 +2,7 @@ const fs = require('node:fs')
 const path = require('node:path')
 const matter = require('gray-matter')
 
-const siteUrl = 'https://ali-raza-py.me'
+const siteUrl = 'https://example.com'
 const contentRoot = path.join(process.cwd(), 'content')
 const publicRoot = path.join(process.cwd(), 'public')
 
@@ -78,7 +78,7 @@ function generateRss() {
     )
     .join('\n')
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0">\n<channel>\n  <title>Ali Raza Blog</title>\n  <link>${siteUrl}/blog</link>\n  <description>Markdown-first developer blog updates.</description>\n${items}\n</channel>\n</rss>\n`
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0">\n<channel>\n  <title>Aster Vale Notes</title>\n  <link>${siteUrl}/blog</link>\n  <description>Markdown-first developer notes and product writing.</description>\n${items}\n</channel>\n</rss>\n`
 
   writeFile('rss.xml', xml)
 }

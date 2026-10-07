@@ -1,9 +1,9 @@
-# Ali Raza Portfolio
+# Aster Vale Portfolio
 
-Official portfolio of Ali Raza showcasing software engineering projects, technical blogs, and development journey.
+Official portfolio of Aster Vale showcasing product design, web engineering, technical blogs, and case studies.
 
-**Author:** Ali Raza  
-**Website:** https://ali-raza-py.me
+**Author:** Aster Vale  
+**Website:** https://example.com
 
 ## Overview
 
@@ -90,4 +90,4 @@ scripts/                # Build scripts (SEO generation)
 
 ## License
 
-Personal portfolio of Ali Raza. All rights reserved.
+Personal portfolio of Aster Vale. All rights reserved.

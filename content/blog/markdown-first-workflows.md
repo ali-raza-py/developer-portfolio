@@ -3,7 +3,7 @@ title: Markdown-First Workflows for Student Developers
 description: How markdown gives you a reliable publishing system with zero backend overhead.
 date: 2026-05-30
 coverImage: /images/portrait.png
-author: Ali Raza
+author: Aster Vale
 tags:
   - Content
   - Markdown
@@ -11,7 +11,7 @@ tags:
 category: Content
 popular: false
 slug: markdown-first-workflows
-seoTitle: Markdown-First Workflows for Student Developers | Ali Raza
+seoTitle: Markdown-First Workflows for Product Developers | Aster Vale
 seoDescription: Learn how markdown-first publishing keeps a portfolio or blog simple, fast, and maintainable.
 openGraphImage: /images/portrait.png
 ---

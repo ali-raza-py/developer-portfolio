@@ -1,0 +1,95 @@
+/*
+ * Ali Raza portfolio design tokens
+ *
+ * Keep visual decisions here so future sections can compose the system
+ * without inventing one-off colors, radii, or motion curves.
+ */
+:root {
+  color-scheme: dark;
+
+  --color-canvas: #0c0d0c;
+  --color-surface: #141514;
+  --color-surface-raised: #1b1c1a;
+  --color-surface-inset: #101110;
+  --color-ink: #f2eee5;
+  --color-ink-soft: #c9c4b9;
+  --color-muted: #9d978b;
+  --color-faint: #6f6c64;
+  --color-line: rgba(242, 238, 229, 0.16);
+  --color-line-strong: rgba(242, 238, 229, 0.28);
+  --color-accent: #c7a24a;
+  --color-accent-strong: #e0b451;
+  --color-accent-ink: #17130c;
+  --color-paper: #f1ede3;
+
+  --font-display-role: var(--font-display-sans), Impact, sans-serif;
+  --font-editorial-role: var(--font-display), Georgia, serif;
+  --font-interface-role: var(--font-body), Arial, sans-serif;
+  --font-technical-role: var(--font-technical), monospace;
+
+  --text-display-xl: clamp(5.5rem, 14vw, 12rem);
+  --text-display-lg: clamp(3rem, 7vw, 6rem);
+  --text-display-md: clamp(2rem, 4vw, 3.8rem);
+  --text-body: 1rem;
+  --text-meta: 0.68rem;
+
+  --space-section: clamp(5rem, 10vw, 8rem);
+  --space-gutter: clamp(1.25rem, 5vw, 5rem);
+  --radius-sm: 0.35rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-pill: 999px;
+
+  --ease-physical: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inertia: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 720ms;
+}
+
+@theme inline {
+  --color-background: var(--color-canvas);
+  --color-foreground: var(--color-ink);
+  --color-card: var(--color-surface);
+  --color-card-foreground: var(--color-ink);
+  --color-muted: var(--color-surface-raised);
+  --color-muted-foreground: var(--color-muted);
+  --color-border: var(--color-line);
+  --color-input: var(--color-line);
+  --color-ring: var(--color-accent);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: var(--color-accent-ink);
+}
+
+.type-display {
+  font-family: var(--font-display-role);
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.type-editorial {
+  font-family: var(--font-editorial-role);
+  letter-spacing: -0.04em;
+}
+
+.type-interface {
+  font-family: var(--font-interface-role);
+}
+
+.type-meta {
+  color: var(--color-muted);
+  font-family: var(--font-technical-role);
+  font-size: var(--text-meta);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.editorial-rule {
+  background: var(--color-line);
+  height: 1px;
+}
+
+.surface-frame {
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+}

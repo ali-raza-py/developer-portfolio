@@ -27,6 +27,7 @@ export function SelectedWork() {
 
         {/* 01: dominant entry */}
         <motion.div
+          id={primary.slug}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -95,6 +96,7 @@ export function SelectedWork() {
           {secondary.map((project, index) => (
             <motion.div
               key={project.slug}
+              id={project.slug}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}

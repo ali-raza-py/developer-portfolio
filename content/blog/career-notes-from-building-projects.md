@@ -3,7 +3,7 @@ title: Career Notes from Building Projects in Public
 description: What recruiters notice when they review a portfolio built with real effort and consistency.
 date: 2026-05-05
 coverImage: /images/coding-desk.png
-author: Ali Raza
+author: Aster Vale
 tags:
   - Career
   - Design
@@ -12,7 +12,7 @@ tags:
 category: Career
 popular: false
 slug: career-notes-from-building-projects
-seoTitle: Career Notes from Building Projects in Public | Ali Raza
+seoTitle: Career Notes from Building Projects in Public | Aster Vale
 seoDescription: Lessons from publishing projects publicly and iterating in view of recruiters and peers.
 openGraphImage: /images/coding-desk.png
 ---

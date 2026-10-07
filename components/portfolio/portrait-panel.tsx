@@ -169,7 +169,7 @@ export function PortraitPanel() {
         cursor: reduced ? 'default' : 'grab',
       }}
       role="img"
-      aria-label="Interactive 3D portrait panel of Ali Raza — drag to rotate"
+      aria-label="Interactive 3D portrait panel — drag to rotate"
     >
       {/* Technical annotations around the object — extremely subtle */}
       <div aria-hidden="true">
@@ -216,7 +216,7 @@ export function PortraitPanel() {
             style={{ transform: 'translateZ(-52px)' }}
           >
             <Image
-              src="/images/portrait.png"
+              src="/images/portrait-placeholder.svg"
               alt=""
               fill
               sizes="40vw"
@@ -231,7 +231,7 @@ export function PortraitPanel() {
             style={{ transform: 'translateZ(-34px)' }}
           >
             <Image
-              src="/images/portrait.png"
+              src="/images/portrait-placeholder.svg"
               alt=""
               fill
               sizes="40vw"
@@ -270,8 +270,8 @@ export function PortraitPanel() {
           >
             {imageOk ? (
               <Image
-                src="/images/portrait.png"
-                alt="Portrait of Ali Raza in a dark suit"
+                src="/images/portrait-placeholder.svg"
+                alt="Abstract portrait illustration in a dark frame"
                 fill
                 priority
                 sizes="(max-width: 640px) 90vw, (max-width: 1024px) 40vw, 34vw"
@@ -281,9 +281,9 @@ export function PortraitPanel() {
             ) : (
               /* Static fallback plate — never a blank surface */
               <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-[#141416] text-center">
-                <span className="display text-7xl text-white/85">AR</span>
+                <span className="display text-7xl text-white/85">AV</span>
                 <span className="font-mono text-[10px] tracking-[0.3em] text-white/50">
-                  ALI RAZA — PORTRAIT
+                  ASTER VALE — PORTRAIT
                 </span>
               </div>
             )}
@@ -316,7 +316,7 @@ export function PortraitPanel() {
               <span className="absolute bottom-3 left-3 h-3 w-3 border-b border-l border-white/35" />
               <span className="absolute bottom-3 right-3 h-3 w-3 border-b border-r border-white/35" />
               <span className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[9px] tracking-[0.4em] text-white/45">
-                AR — 01
+                AV — 01
               </span>
               <span className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 font-mono text-[9px] tracking-[0.3em] text-white/35">
                 PORTRAIT / 2026
@@ -327,7 +327,7 @@ export function PortraitPanel() {
       </div>
 
       <figcaption className="mt-6 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-        <span>Fig. 01 — Ali Raza</span>
+        <span>Fig. 01 — Aster Vale</span>
         {!reduced && <span className="text-accent">Drag to rotate</span>}
       </figcaption>
     </div>

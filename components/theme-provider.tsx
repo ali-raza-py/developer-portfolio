@@ -16,14 +16,14 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 const THEME_STORAGE_KEY = 'theme'
 
 function getStoredTheme(): Theme {
-  if (typeof window === 'undefined') return 'light'
+  if (typeof window === 'undefined') return 'dark'
   try {
     const stored = localStorage.getItem(THEME_STORAGE_KEY)
-    if (stored === 'dark' || stored === 'light') return stored
+    if (stored === 'dark') return 'dark'
   } catch {
     // ignore
   }
-  return 'light'
+  return 'dark'
 }
 
 function applyTheme(theme: Theme) {
@@ -33,7 +33,7 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('light')
+  const [theme, setThemeState] = useState<Theme>('dark')
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export function useTheme() {
 export function useThemeSafe() {
   const context = useContext(ThemeContext)
   if (!context) {
-    return { theme: 'light' as Theme, setTheme: () => {}, toggleTheme: () => {} }
+    return { theme: 'dark' as Theme, setTheme: () => {}, toggleTheme: () => {} }
   }
   return context
 }

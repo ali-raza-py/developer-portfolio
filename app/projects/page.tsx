@@ -9,7 +9,7 @@ import { siteConfig } from '@/lib/site'
 export const metadata: Metadata = {
   title: `Work — Project Archive | ${siteConfig.name}`,
   description:
-    'Case studies and repositories from Ali Raza: MediCare AI, AI-HUB, Code-Yaar, Algorify — architecture, engineering decisions, and honest outcomes.',
+    'Case studies and repositories from Aster Vale: Northstar AI, Signal Forge, Field Notes, and Prism Atlas — architecture, engineering decisions, and honest outcomes.',
   alternates: {
     canonical: '/projects',
   },
