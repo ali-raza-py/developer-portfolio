@@ -90,7 +90,6 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
   themeColor: '#0C0D0C',
 }
 
@@ -103,6 +102,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${instrumentSerif.variable} ${geistMono.variable} ${montserrat.variable} ${anton.variable}`}
+      style={{ colorScheme: 'dark' }}
     >
       <head>
         <script
@@ -110,7 +110,6 @@ export default function RootLayout({
             __html: `
               try {
                 document.documentElement.classList.add('dark');
-                document.documentElement.style.colorScheme = 'dark';
               } catch (e) {}
             `,
           }}
