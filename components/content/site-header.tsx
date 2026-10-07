@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 
 import { projects } from '@/lib/projects'
 import { cn } from '@/lib/utils'
+import { ProjectsDropdown } from '@/components/content/projects-dropdown'
 
 export function SiteHeader({ className }: { className?: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -33,7 +34,7 @@ export function SiteHeader({ className }: { className?: string }) {
         <div className="flex items-center rounded-full border border-white/15 bg-[#151515]/80 p-1.5 shadow-2xl backdrop-blur-xl">
           <nav className="hidden items-center gap-1 md:flex">
             <Link href="/#about" className="rounded-full px-4 py-2 text-xs text-white/70 transition-colors hover:text-white">About</Link>
-            <Link href="/#work" className="rounded-full px-4 py-2 text-xs text-white/70 transition-colors hover:text-white">Projects</Link>
+            <ProjectsDropdown triggerClassName="rounded-full px-4 py-2 text-xs text-white/70 transition-colors hover:text-white aria-expanded:text-white" />
           </nav>
           <span aria-hidden="true" className="mx-1 hidden h-7 w-px bg-white/10 md:block" />
           <button
@@ -46,6 +47,11 @@ export function SiteHeader({ className }: { className?: string }) {
             {menuOpen ? <X size={18} strokeWidth={1.8} /> : <Menu size={18} strokeWidth={1.8} />}
             <span>{menuOpen ? 'Close' : 'Menu'}</span>
           </button>
+          <ProjectsDropdown
+            menuOpen={menuOpen}
+            onNavigate={() => setMenuOpen(false)}
+            triggerClassName="rounded-full px-4 py-3 text-sm font-semibold text-[#f4f0e7] transition-colors hover:bg-white/10 md:hidden"
+          />
           <span aria-hidden="true" className="mx-1 h-9 w-px bg-white/10 md:hidden" />
           <span aria-hidden="true" className="hidden size-9 items-center justify-center rounded-full bg-[#242424] text-[#c7a24a] md:flex">
             <span className="flex items-end gap-0.5">

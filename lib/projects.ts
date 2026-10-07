@@ -13,6 +13,14 @@ export type ProjectState = {
   planned: string[]
 }
 
+/** One entry in the navbar Projects dropdown. Add or remove entries here. */
+export type NavProject = {
+  slug: string
+  name: string
+  description: string
+  href: string
+}
+
 export type Project = {
   slug: string
   index: string
@@ -545,3 +553,41 @@ export const experiments: Array<{
 export function getProject(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug)
 }
+
+/**
+ * Navbar Projects dropdown entries.
+ * Add or remove projects here — the dropdown reads this list.
+ */
+export const navProjects: NavProject[] = [
+  {
+    slug: 'ai-hub',
+    name: 'AI-HUB',
+    description: 'AI tools platform',
+    href: '/projects/ai-hub',
+  },
+  {
+    slug: 'medicare-ai',
+    name: 'MediCare AI',
+    description: 'AI-powered healthcare assistant',
+    href: '/projects/medicare-ai',
+  },
+  {
+    slug: 'algorify',
+    name: 'Algorify',
+    description: 'Interactive sorting visualizer',
+    href: '/projects/algorify',
+  },
+  {
+    slug: 'dsa-vizer',
+    name: 'DSA Vizer',
+    description: 'Data structures & algorithms visualizer',
+    // No case-study page yet — DSA Vizer is showcased in the homepage project selector.
+    href: '/#projects',
+  },
+  {
+    slug: 'code-yaar',
+    name: 'Code Yaar',
+    description: 'AI-native software engineering education platform',
+    href: '/projects/code-yaar',
+  },
+]

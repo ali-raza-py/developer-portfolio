@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { portfolioProjects } from '@/lib/portfolio-projects'
 import { projects as caseStudyProjects } from '@/lib/projects'
 import { SignatureDeck } from '@/components/portfolio/signature-deck'
+import { ProjectsDropdown } from '@/components/content/projects-dropdown'
 
 const selectedProjects = ['medicare-ai', 'ai-hub', 'algorify', 'dsa-vizer'].map((slug, index) => {
   const project = caseStudyProjects.find((item) => item.slug === slug)
@@ -232,7 +233,11 @@ export function ReferenceHome() {
           </div>
           <div className={`reference-nav-links ${menuOpen ? 'is-open' : ''}`}>
             <a href="#about" onClick={closeMenu} className={activeSection === 'about' ? 'is-active' : ''} aria-current={activeSection === 'about' ? 'location' : undefined}>About</a>
-            <a href="#projects" onClick={closeMenu} className={activeSection === 'projects' ? 'is-active' : ''} aria-current={activeSection === 'projects' ? 'location' : undefined}>Projects <span>⌄</span></a>
+            <ProjectsDropdown
+              triggerClassName={`reference-nav-projects${activeSection === 'projects' ? ' is-active' : ''}`}
+              menuOpen={menuOpen}
+              onNavigate={closeMenu}
+            />
           </div>
           <button type="button" className={`reference-sound ${soundOn ? 'is-on' : ''}`} onClick={toggleSound} aria-pressed={soundOn} aria-label={soundOn ? 'Turn ambient sound off' : 'Turn ambient sound on'} title={soundOn ? 'Sound on' : 'Sound off'}>
             {soundOn ? <span className="reference-sound-bars" aria-hidden="true"><i /><i /><i /><i /></span> : <VolumeX size={16} />}
