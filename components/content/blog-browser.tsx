@@ -29,10 +29,6 @@ export function BlogBrowser({ posts }: { posts: BlogEntry[] }) {
   )[number]>('All')
   const [activeTag, setActiveTag] = useState('All')
 
-  if (posts.length === 0) {
-    return <EmptyBlogState />
-  }
-
   const tagOptions = useMemo(() => {
     return ['All', ...new Set(posts.flatMap((post) => post.tags))]
   }, [posts])
@@ -55,6 +51,10 @@ export function BlogBrowser({ posts }: { posts: BlogEntry[] }) {
 
   const popularPosts = posts.filter((post) => post.popular || post.featured).slice(0, 3)
 
+  if (posts.length === 0) {
+    return <EmptyBlogState />
+  }
+
   return (
     <section className="relative overflow-hidden bg-background text-foreground">
       <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
@@ -76,6 +76,7 @@ export function BlogBrowser({ posts }: { posts: BlogEntry[] }) {
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder="Search articles, tags, or topics"
+                  aria-label="Search articles, tags, or topics"
                   className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/50"
                 />
               </label>
@@ -91,6 +92,8 @@ export function BlogBrowser({ posts }: { posts: BlogEntry[] }) {
                 return (
                   <button
                     key={category}
+                    type="button"
+                    aria-pressed={active}
                     onClick={() => setActiveCategory(category)}
                     className={`rounded-full border px-4 py-2 text-sm transition ${
                       active
@@ -110,6 +113,8 @@ export function BlogBrowser({ posts }: { posts: BlogEntry[] }) {
                 return (
                   <button
                     key={tag}
+                    type="button"
+                    aria-pressed={active}
                     onClick={() => setActiveTag(tag)}
                     className={`rounded-full border px-3 py-1.5 text-xs transition ${
                       active
@@ -230,6 +235,11 @@ export function BlogBrowser({ posts }: { posts: BlogEntry[] }) {
                     </div>
                   </motion.article>
                 ))}
+                {filteredPosts.length === 0 ? (
+                  <p className="border border-border bg-card p-5 text-sm text-muted-foreground">
+                    No articles match those filters. Try another search or category.
+                  </p>
+                ) : null}
               </div>
             </section>
           </div>
@@ -258,22 +268,17 @@ export function BlogBrowser({ posts }: { posts: BlogEntry[] }) {
             </div>
 
             <div className="rounded-[30px] border border-border bg-card/50 p-5 backdrop-blur-xl transition-colors duration-300">
-              <h3 className="text-lg font-semibold text-foreground">
-                Newsletter
-              </h3>
+              <h3 className="text-lg font-semibold text-foreground">Get in touch</h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                A clean subscription panel for updates, launches, and writing
-                drops.
+                There is no newsletter signup connected yet. For a conversation
+                about a post or project, email Ali directly.
               </p>
-              <div className="mt-4 space-y-3">
-                <input
-                  placeholder="Email address"
-                  className="w-full rounded-2xl border border-border bg-muted/20 px-4 py-3 text-sm text-foreground outline-none placeholder:text-muted-foreground/50 transition-colors duration-300"
-                />
-                <button className="w-full rounded-2xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm font-medium text-primary transition hover:bg-primary/20">
-                  Subscribe
-                </button>
-              </div>
+              <a
+                href="mailto:btwaliraza110@gmail.com?subject=Hello%20Ali"
+                className="mt-4 inline-flex border border-border bg-muted/20 px-4 py-3 text-sm font-medium text-foreground transition hover:bg-muted/40"
+              >
+                Email Ali
+              </a>
             </div>
           </aside>
         </div>

@@ -7,25 +7,30 @@
 :root {
   color-scheme: dark;
 
-  --color-canvas: #0c0d0c;
-  --color-surface: #141514;
-  --color-surface-raised: #1b1c1a;
-  --color-surface-inset: #101110;
+  --color-canvas: #171a16;
+  --color-surface: #252923;
+  --color-surface-raised: #353b32;
+  --color-surface-inset: #11140f;
   --color-ink: #f2eee5;
   --color-ink-soft: #c9c4b9;
   --color-muted: #9d978b;
   --color-faint: #6f6c64;
   --color-line: rgba(242, 238, 229, 0.16);
   --color-line-strong: rgba(242, 238, 229, 0.28);
-  --color-accent: #c7a24a;
-  --color-accent-strong: #e0b451;
+  --color-accent: #c9a34a;
+  --color-accent-strong: #e0b857;
   --color-accent-ink: #17130c;
   --color-paper: #f1ede3;
+  --color-grass: #54853a;
+  --color-dirt: #614633;
+  --color-stone: #555953;
+  --color-wood: #684a2e;
 
   --font-display-role: var(--font-display-sans), Impact, sans-serif;
   --font-editorial-role: var(--font-display), Georgia, serif;
   --font-interface-role: var(--font-body), Arial, sans-serif;
   --font-technical-role: var(--font-technical), monospace;
+  --font-pixel-role: 'Minecraft', var(--font-technical), monospace;
 
   --text-display-xl: clamp(5.5rem, 14vw, 12rem);
   --text-display-lg: clamp(3rem, 7vw, 6rem);

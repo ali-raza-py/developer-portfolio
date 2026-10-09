@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -15,10 +15,12 @@ const certifications = [
 
 /** Secondary by design — a quiet list, never a certificate wall. */
 export function Certifications() {
+  const reduced = useReducedMotion()
+
   return (
     <section
       id="certifications"
-      className="border-b border-border px-6 py-20 sm:px-10 lg:px-16 lg:py-24"
+      className="minecraft-certifications-section border-b border-border px-6 py-20 sm:px-10 lg:px-16 lg:py-24"
     >
       <div className="mx-auto max-w-[100rem]">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
@@ -35,8 +37,8 @@ export function Certifications() {
           </div>
 
           <motion.ul
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={reduced ? false : { opacity: 0, y: 18 }}
+            whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6, ease: EASE }}
             className="grid gap-px border border-border bg-border sm:grid-cols-2"

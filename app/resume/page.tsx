@@ -3,10 +3,9 @@ import { ArrowDown, ArrowUpRight, Download } from 'lucide-react'
 
 import { SiteHeader } from '@/components/content/site-header'
 import { SiteFooter } from '@/components/portfolio/site-footer'
-import { siteConfig } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: `Resume | ${siteConfig.name}`,
+  title: 'Resume',
   description: 'Resume and background of Ali Raza, a computer science student building software, AI tools, and full-stack systems.',
   alternates: { canonical: '/resume' },
 }
@@ -18,9 +17,10 @@ const skillGroups = [
 ]
 
 const projects = [
-  ['MediCare AI', 'Next.js · React · TypeScript · Python · PaddleOCR · Groq AI', 'AI-powered medical document intelligence prototype built for the Alibaba Cloud AI Hackathon Pakistan 2026.'],
-  ['AI-HUB', 'Next.js · Python · AI tooling research', 'A 102-tool AI reference generated from a single validated registry.'],
-  ['Algorify', 'Python · Algorithms · Visualization', 'An event-driven sorting laboratory for understanding data structures and algorithms.'],
+  { name: 'MediCare AI', stack: 'Next.js · React · TypeScript · Python · PaddleOCR · Groq AI', description: 'AI-powered medical document intelligence prototype built for the Alibaba Cloud AI Hackathon Pakistan 2026.', href: 'https://medicare-ai-sigma.vercel.app/' },
+  { name: 'AI-HUB', stack: 'Next.js · Python · AI tooling research', description: 'A 102-tool AI reference generated from a single validated registry.', href: 'https://ali-raza-py.github.io/AI-HUB/' },
+  { name: 'Algorify', stack: 'Python · Algorithms · Visualization', description: 'An event-driven sorting laboratory for understanding data structures and algorithms.', href: 'https://v0-algovizer.vercel.app/' },
+  { name: 'DSA Vizer', stack: 'Python · Flask · Algorithms · Visualization', description: 'Interactive data structures and algorithms visualizer.', href: 'https://aliraza786.pythonanywhere.com/l' },
 ]
 
 const certifications = [
@@ -83,8 +83,15 @@ export default function ResumePage() {
             <section className="resume-section resume-wide">
               <p className="type-meta">04 / Selected projects</p>
               <div className="resume-project-list">
-                {projects.map(([name, stack, description], index) => (
-                  <article key={name}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{name}</h3><p>{description}</p><small>{stack}</small></div></article>
+                {projects.map((project, index) => (
+                  <article key={project.name}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <div>
+                      <h3><a href={project.href} target="_blank" rel="noopener noreferrer">{project.name} ↗</a></h3>
+                      <p>{project.description}</p>
+                      <small>{project.stack}</small>
+                    </div>
+                  </article>
                 ))}
               </div>
             </section>

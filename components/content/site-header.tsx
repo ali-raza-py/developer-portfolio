@@ -1,25 +1,32 @@
 'use client'
 
+import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { projects } from '@/lib/projects'
-import { cn } from '@/lib/utils'
+import { AmbientAudioControls } from '@/components/ambient-audio'
 import { ProjectsDropdown } from '@/components/content/projects-dropdown'
+import { navProjects } from '@/lib/projects'
+import { cn } from '@/lib/utils'
+
+const sections = [
+  { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'journey', label: 'Journey' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'contact', label: 'Contact' },
+]
 
 export function SiteHeader({ className }: { className?: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const items = [
-    { href: '/#intro', label: 'Intro' },
-    { href: '/#about', label: 'About' },
-    ...projects.slice(0, 4).map((project) => ({
-      href: project.slug === 'algorify' ? `/projects/${project.slug}` : `/#${project.slug}`,
-      label: project.title,
-    })),
-    { href: '/#contact', label: 'Contact' },
-  ]
+  const pathname = usePathname()
+  const sectionHref = (id: string) => {
+    if (id === 'top') return '/'
+    const screen = id === 'journey' ? 'experience' : id
+    return `/?screen=${screen}`
+  }
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
@@ -28,72 +35,92 @@ export function SiteHeader({ className }: { className?: string }) {
     }
   }, [menuOpen])
 
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    document.addEventListener('keydown', closeOnEscape)
+    return () => document.removeEventListener('keydown', closeOnEscape)
+  }, [])
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
+
+  const closeMenu = () => setMenuOpen(false)
+
   return (
     <>
-      <header className={cn('fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-5', className)}>
-        <div className="flex items-center rounded-full border border-white/15 bg-[#151515]/80 p-1.5 shadow-2xl backdrop-blur-xl">
-          <nav className="hidden items-center gap-1 md:flex">
-            <Link href="/#about" className="rounded-full px-4 py-2 text-xs text-white/70 transition-colors hover:text-white">About</Link>
-            <ProjectsDropdown triggerClassName="rounded-full px-4 py-2 text-xs text-white/70 transition-colors hover:text-white aria-expanded:text-white" />
+      <header className={cn('game-nav-wrap', className)}>
+        <div className="game-nav">
+          <Link href="/" className="game-nav-brand" aria-label="Ali Raza home">
+            <span className="game-brand-cube" aria-hidden="true" />
+            <span>ALI RAZA</span>
+          </Link>
+          <nav className="game-nav-links" aria-label="Main navigation">
+            <Link href={sectionHref('about')}>About</Link>
+            <ProjectsDropdown triggerClassName="game-nav-projects" />
+            <Link href={sectionHref('journey')} className="game-nav-journey">Journey</Link>
+            <Link href={sectionHref('skills')}>Skills</Link>
+            <Link href="/blog">Blog</Link>
+            <Link href="/resume">Resume</Link>
           </nav>
-          <span aria-hidden="true" className="mx-1 hidden h-7 w-px bg-white/10 md:block" />
+          <AmbientAudioControls compact />
+          <Link href={sectionHref('contact')} className="game-nav-contact">
+            Contact <span aria-hidden="true">↗</span>
+          </Link>
           <button
             type="button"
+            className="game-nav-menu-button"
             aria-expanded={menuOpen}
-            aria-controls="portfolio-menu"
+            aria-controls="game-mobile-menu"
             onClick={() => setMenuOpen((open) => !open)}
-            className="flex items-center gap-3 rounded-full px-5 py-3 text-sm font-semibold text-[#f4f0e7] transition-colors hover:bg-white/10 md:hidden"
           >
-            {menuOpen ? <X size={18} strokeWidth={1.8} /> : <Menu size={18} strokeWidth={1.8} />}
+            {menuOpen ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
             <span>{menuOpen ? 'Close' : 'Menu'}</span>
           </button>
-          <ProjectsDropdown
-            menuOpen={menuOpen}
-            onNavigate={() => setMenuOpen(false)}
-            triggerClassName="rounded-full px-4 py-3 text-sm font-semibold text-[#f4f0e7] transition-colors hover:bg-white/10 md:hidden"
-          />
-          <span aria-hidden="true" className="mx-1 h-9 w-px bg-white/10 md:hidden" />
-          <span aria-hidden="true" className="hidden size-9 items-center justify-center rounded-full bg-[#242424] text-[#c7a24a] md:flex">
-            <span className="flex items-end gap-0.5">
-              <i className="h-2 w-1 bg-current" /><i className="h-4 w-1 bg-current" /><i className="h-3 w-1 bg-current" /><i className="h-5 w-1 bg-current" />
-            </span>
-          </span>
-          <Link href="/#contact" className="hidden rounded-full bg-[#c7a24a] px-4 py-2.5 text-xs font-semibold text-[#0b0b0b] transition-transform hover:scale-105 md:block">Say hello ↗</Link>
-          <Link
-            href="/#contact"
-            aria-label="Contact Ali Raza"
-            className="flex size-11 items-center justify-center rounded-full bg-[#242424] text-[#c7a24a] transition-transform hover:scale-105 md:hidden"
-          >
-            <span className="flex items-end gap-0.5" aria-hidden="true">
-              <i className="h-3 w-1 bg-current" />
-              <i className="h-5 w-1 bg-current" />
-              <i className="h-4 w-1 bg-current" />
-              <i className="h-6 w-1 bg-current" />
-            </span>
-          </Link>
         </div>
       </header>
 
-      <motion.div
-        id="portfolio-menu"
-        initial={false}
-        animate={{ opacity: menuOpen ? 1 : 0, pointerEvents: menuOpen ? 'auto' : 'none' }}
-        className="fixed inset-0 z-40 flex items-center justify-center bg-[#0b0b0b]/95 px-6 backdrop-blur-2xl"
-      >
-        <nav aria-label="Portfolio menu" className="grid w-full max-w-2xl gap-2">
-          {items.map((item, index) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setMenuOpen(false)}
-              className="group flex items-baseline justify-between border-b border-white/10 py-3 text-4xl font-semibold uppercase tracking-[-0.04em] text-[#f4f0e7] transition-colors hover:text-[#c7a24a] sm:text-6xl"
-            >
-              <span>{item.label}</span>
-              <span className="font-mono text-xs text-white/35">0{index + 1}</span>
-            </Link>
-          ))}
-        </nav>
-      </motion.div>
+      <AnimatePresence>
+        {menuOpen ? (
+          <motion.div
+            id="game-mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Portfolio menu"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.18 }}
+            className="game-mobile-menu"
+          >
+            <nav aria-label="Portfolio navigation">
+              <Link href={sectionHref('top')} onClick={closeMenu}>Start</Link>
+              {sections.map((section) => (
+                <Link key={section.id} href={sectionHref(section.id)} onClick={closeMenu}>
+                  {section.label}
+                </Link>
+              ))}
+              <Link href="/projects" onClick={closeMenu}>Project archive</Link>
+              {navProjects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href={project.href}
+                  target={project.href.startsWith('/') ? undefined : '_blank'}
+                  rel={project.href.startsWith('/') ? undefined : 'noopener noreferrer'}
+                  onClick={closeMenu}
+                >
+                  <span>{project.name}</span>
+                  <small>{project.description}</small>
+                </Link>
+              ))}
+              <Link href="/blog" onClick={closeMenu}>Blog</Link>
+              <Link href="/resume" onClick={closeMenu}>Resume</Link>
+            </nav>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   )
 }

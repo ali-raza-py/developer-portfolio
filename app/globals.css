@@ -1,6 +1,14 @@
 @import 'tailwindcss';
 @import '../styles/tokens.css';
 
+@font-face {
+  font-family: 'Minecraft';
+  src: url('/Minecraft.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --ink: var(--color-ink);
   --muted: var(--color-muted);
@@ -324,3 +332,3433 @@ button { font: inherit; }
 .reference-project-card { background: var(--color-surface); }
 .reference-project-visual { background: var(--color-surface-raised); }
 .reference-playing-card { border-radius: var(--radius-md); }
+
+/* Minecraft-inspired world, inventory panels, and shared route chrome. */
+html,
+body {
+  min-height: 100%;
+  background: #1a211b;
+}
+
+body {
+  background: #1a211b url('/images/minecraft-forest-reference.png') center center / cover fixed;
+  background-attachment: fixed;
+}
+
+.reference-site {
+  position: relative;
+  z-index: 0;
+  overflow: clip;
+  background: transparent;
+}
+
+.reference-site::before {
+  content: none;
+}
+
+.reference-nav-wrap,
+.game-nav-wrap {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  padding: .75rem 1rem;
+  pointer-events: none;
+}
+
+.home-game-nav {
+  display: none;
+}
+
+.game-nav {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  width: max-content;
+  max-width: min(100%, 78rem);
+  padding: .4rem;
+  border: 2px solid #090b09;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.1), transparent 40%),
+    repeating-linear-gradient(0deg, #41463f 0 7px, #393d37 7px 14px);
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,.22), inset -2px -2px 0 rgba(0,0,0,.45), 0 8px 0 rgba(0,0,0,.32);
+  pointer-events: auto;
+}
+
+.game-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .5rem .75rem;
+  color: #f2eee5;
+  font-family: var(--font-pixel-role);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .05em;
+  white-space: nowrap;
+  text-shadow: 1px 1px #10120f;
+}
+
+.game-brand-cube {
+  position: relative;
+  width: 1.3rem;
+  aspect-ratio: 1;
+  border: 2px solid #172118;
+  background:
+    linear-gradient(#66a441 0 30%, #523c26 30% 100%);
+  box-shadow: inset 2px 2px rgba(255,255,255,.28), inset -2px -2px rgba(0,0,0,.28);
+  transform: rotate(-8deg);
+}
+
+.game-nav-links {
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+}
+
+.game-nav-links > a,
+.game-nav-projects,
+.game-nav-contact,
+.game-nav-menu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 2.35rem;
+  padding: .55rem .7rem;
+  border: 2px solid #171a16;
+  background: linear-gradient(#686d67, #4b504a);
+  box-shadow: inset 1px 1px rgba(255,255,255,.3), inset -2px -2px rgba(0,0,0,.3), 0 2px 0 #252923;
+  color: #f6f2e8;
+  font-family: var(--font-pixel-role);
+  font-size: .62rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-shadow: 1px 1px #171a16;
+  transition: filter 120ms steps(2, end), transform 120ms steps(2, end), box-shadow 120ms steps(2, end);
+}
+
+.game-nav-links > a:hover,
+.game-nav-projects:hover,
+.game-nav-projects[aria-expanded="true"],
+.game-nav-contact:hover,
+.game-nav-menu-button:hover {
+  filter: brightness(1.18);
+  color: #fff;
+}
+
+.game-nav-links > a:active,
+.game-nav-projects:active,
+.game-nav-contact:active,
+.game-nav-menu-button:active {
+  transform: translateY(2px);
+  box-shadow: inset 2px 2px rgba(0,0,0,.25), 0 0 0 #252923;
+}
+
+.game-nav-contact {
+  background: linear-gradient(#729449, #4c702d);
+  white-space: nowrap;
+}
+
+.game-nav .game-nav-projects {
+  min-height: 2.35rem;
+  padding: .55rem .7rem;
+}
+
+.game-nav [role="menu"] {
+  margin-top: .45rem;
+  padding: .35rem;
+  border: 3px solid #11140f;
+  border-radius: 0;
+  background: #252a24;
+  box-shadow: inset 2px 2px rgba(255,255,255,.12), inset -3px -3px rgba(0,0,0,.4), 5px 5px 0 rgba(0,0,0,.3);
+}
+
+.game-nav [role="menuitem"] {
+  border-radius: 0;
+  border: 1px solid transparent;
+}
+
+.game-nav [role="menuitem"]:hover,
+.game-nav [role="menuitem"]:focus-visible {
+  border-color: #cfad59;
+  border-radius: 0;
+  background: #3f4934;
+}
+
+.game-nav [role="menuitem"] > span:first-child {
+  border-radius: 0;
+  border-color: #686e63;
+  background: #383e36;
+}
+
+.game-nav-menu-button {
+  display: none;
+  cursor: pointer;
+}
+
+.game-mobile-menu {
+  position: fixed;
+  inset: 5.25rem 1rem auto;
+  z-index: 59;
+  max-height: calc(100dvh - 6rem);
+  overflow: auto;
+  padding: 1rem;
+  border: 3px solid #11140f;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 15px, rgba(0,0,0,.08) 16px),
+    #292d27;
+  box-shadow: inset 2px 2px rgba(255,255,255,.16), inset -3px -3px rgba(0,0,0,.38), 0 12px 28px rgba(0,0,0,.45);
+}
+
+.game-mobile-menu nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .5rem;
+}
+
+.game-mobile-menu a {
+  display: grid;
+  gap: .25rem;
+  min-height: 3rem;
+  align-content: center;
+  padding: .65rem;
+  border: 2px solid #11140f;
+  background: linear-gradient(#555a53, #3c403a);
+  box-shadow: inset 1px 1px rgba(255,255,255,.2), inset -2px -2px rgba(0,0,0,.32);
+  color: #f1eee5;
+  font-family: var(--font-pixel-role);
+  font-size: .68rem;
+  line-height: 1.35;
+}
+
+.game-mobile-menu a:hover {
+  background: linear-gradient(#668044, #4b642f);
+}
+
+.game-mobile-menu a small {
+  color: #d0cbbd;
+  font-family: var(--font-interface-role);
+  font-size: .68rem;
+  line-height: 1.35;
+}
+
+.ambient-audio {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .25rem .4rem;
+  border: 2px solid #1b1e19;
+  background: #292d28;
+  color: #f2eee5;
+}
+
+.ambient-audio-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  min-height: 2rem;
+  padding: .35rem .45rem;
+  border: 1px solid #141713;
+  background: linear-gradient(#585d56, #40443e);
+  color: #ece8dd;
+  cursor: pointer;
+  font-family: var(--font-pixel-role);
+  font-size: .55rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ambient-audio-toggle[aria-pressed="true"] {
+  color: #d9e8ae;
+}
+
+.ambient-audio-volume {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  color: #d6d2c8;
+  font-family: var(--font-technical-role);
+  font-size: .58rem;
+}
+
+.ambient-audio-volume input {
+  width: 4.25rem;
+  height: .8rem;
+  accent-color: #91b45c;
+  cursor: pointer;
+}
+
+.ambient-audio-status:empty {
+  display: none;
+}
+
+.ambient-audio-status:not(:empty) {
+  position: absolute;
+  top: calc(100% + .35rem);
+  right: 0;
+  z-index: 5;
+  width: min(18rem, 85vw);
+  padding: .5rem;
+  border: 2px solid #11140f;
+  background: #5f3028;
+  color: #fff;
+  font: .75rem/1.45 var(--font-interface-role);
+}
+
+.reference-hero {
+  isolation: isolate;
+  max-width: none;
+  min-height: 100svh;
+  padding: 9rem max(5vw, 1.5rem) 4rem;
+  background: linear-gradient(180deg, #6684ab 0%, #a8b8bd 56%, #536c38 56.2%, #3a562b 68%, #5b4027 68.2%, #33271c 100%);
+}
+
+.reference-hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: '';
+  background:
+    linear-gradient(#c6d4d8 0 12px, transparent 12px 100%) 13% 21% / 148px 42px no-repeat,
+    linear-gradient(90deg, transparent 0 22px, #c6d4d8 22px 112px, transparent 112px) 13% 21% / 148px 42px no-repeat,
+    linear-gradient(#c6d4d8 0 11px, transparent 11px 100%) 68% 14% / 190px 37px no-repeat,
+    linear-gradient(90deg, transparent 0 30px, #c6d4d8 30px 146px, transparent 146px) 68% 14% / 190px 37px no-repeat,
+    linear-gradient(#d9e0d9 0 10px, transparent 10px 100%) 88% 31% / 120px 34px no-repeat,
+    linear-gradient(90deg, transparent 0 18px, #d9e0d9 18px 94px, transparent 94px) 88% 31% / 120px 34px no-repeat,
+    linear-gradient(180deg, rgba(32,50,70,.08), transparent 58%);
+  image-rendering: pixelated;
+}
+
+.reference-hero::after {
+  position: absolute;
+  right: -4%;
+  bottom: 0;
+  left: -4%;
+  z-index: 0;
+  height: 42%;
+  content: '';
+  background:
+    repeating-linear-gradient(90deg, transparent 0 62px, rgba(23,34,19,.38) 63px 64px),
+    repeating-linear-gradient(0deg, transparent 0 62px, rgba(23,34,19,.35) 63px 64px),
+    linear-gradient(180deg, #587839 0 16%, #745035 16.5% 100%);
+  clip-path: polygon(0 20%, 11% 20%, 11% 7%, 19% 7%, 19% 27%, 30% 27%, 30% 11%, 39% 11%, 39% 36%, 51% 36%, 51% 13%, 61% 13%, 61% 29%, 73% 29%, 73% 5%, 84% 5%, 84% 22%, 94% 22%, 94% 0, 100% 0, 100% 100%, 0 100%);
+  box-shadow: inset 0 9px 0 #84a94c;
+}
+
+.reference-hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 45rem;
+  padding: 1.5rem;
+  border: 3px solid #1a211b;
+  background: rgba(27, 31, 27, .82);
+  box-shadow: inset 3px 3px rgba(255,255,255,.12), inset -4px -4px rgba(0,0,0,.45), 8px 8px 0 rgba(0,0,0,.24);
+}
+
+.reference-eyebrow,
+.reference-file-label,
+.type-meta {
+  font-family: var(--font-pixel-role);
+  font-size: .64rem;
+  letter-spacing: .08em;
+  line-height: 1.55;
+}
+
+.reference-hero h1,
+.reference-panel-copy h2,
+.reference-section-heading h2,
+.reference-contact h2,
+.reference-lab-card h3 {
+  font-family: var(--font-display-role);
+  letter-spacing: -.03em;
+  text-shadow: 3px 3px 0 #29261e, 5px 5px 0 rgba(0,0,0,.35);
+}
+
+.reference-hero h1 {
+  font-size: clamp(4.5rem, 12vw, 9rem);
+  color: #fffdf3;
+}
+
+.reference-hero-portrait {
+  position: relative;
+  z-index: 1;
+  min-height: 32rem;
+}
+
+.reference-hero-portrait img {
+  width: min(82%, 27rem);
+  opacity: .94;
+  filter: drop-shadow(9px 9px 0 rgba(0,0,0,.3));
+  mix-blend-mode: normal;
+  max-width: 90rem;
+  margin: 1rem auto 0;
+  color: #d4d0c3;
+}
+
+.reference-project-note span {
+  color: #e0b857;
+  font-family: var(--font-pixel-role);
+}
+
+.reference-hero-portrait-ring {
+  width: min(78%, 29rem);
+  border: 8px solid #4a4f48;
+  border-radius: 0;
+  background: rgba(28, 33, 28, .18);
+  box-shadow: inset 4px 4px rgba(255,255,255,.18), inset -5px -5px rgba(0,0,0,.3), 10px 10px 0 rgba(0,0,0,.28);
+  transform: rotate(-2deg);
+}
+
+.reference-hero-portrait::after {
+  content: none;
+}
+
+.reference-lede,
+.reference-panel-copy > p:not(.reference-file-label),
+.reference-section-heading > p {
+  color: #d7d5c9;
+}
+
+.reference-button,
+.reference-project-actions a,
+.reference-project-detail-toggle,
+.reference-lab-command button,
+.reference-contact-copy-button {
+  border-radius: 0;
+  border: 2px solid #121510;
+  background: linear-gradient(#777b73, #51564f);
+  box-shadow: inset 2px 2px rgba(255,255,255,.25), inset -2px -2px rgba(0,0,0,.34), 3px 3px 0 #11140f;
+  color: #fffdf2;
+  font-family: var(--font-pixel-role);
+  font-size: .65rem;
+  font-weight: 700;
+  text-shadow: 1px 1px #171a16;
+}
+
+.reference-button:hover,
+.reference-project-actions a:hover,
+.reference-project-detail-toggle:hover,
+.reference-lab-command button:hover {
+  filter: brightness(1.18);
+  transform: translateY(-1px);
+}
+
+.reference-button:active,
+.reference-project-actions a:active,
+.reference-project-detail-toggle:active,
+.reference-lab-command button:active {
+  transform: translateY(2px);
+  box-shadow: inset 2px 2px rgba(0,0,0,.25);
+}
+
+.reference-button-gold {
+  border-color: #34270f;
+  background: linear-gradient(#e4bd58, #b48731);
+  color: #211b10;
+  text-shadow: 1px 1px rgba(255,255,255,.25);
+}
+
+.reference-panel,
+.reference-lab,
+.reference-projects,
+.reference-contact,
+.minecraft-journey-section,
+.minecraft-certifications-section,
+.reference-achievements {
+  max-width: none;
+  margin: 0;
+  border-block: 3px solid #121510;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(0,0,0,.13) 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(0,0,0,.13) 32px),
+    linear-gradient(135deg, #30362d, #252a24);
+  box-shadow: inset 0 4px 0 rgba(255,255,255,.07), inset 0 -5px 0 rgba(0,0,0,.2);
+}
+
+.reference-panel,
+.reference-lab,
+.reference-projects,
+.reference-contact,
+.minecraft-journey-section,
+.minecraft-certifications-section {
+  padding: clamp(3.5rem, 7vw, 6rem) max(5vw, 1.25rem);
+}
+
+.reference-about,
+.reference-skills,
+.reference-lab,
+.reference-projects,
+.minecraft-journey-section,
+.minecraft-certifications-section {
+  scroll-margin-top: 6rem;
+}
+
+.reference-panel-copy h2,
+.reference-section-heading h2 {
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  line-height: .92;
+}
+
+.reference-panel-art {
+  min-height: 23rem;
+}
+
+.reference-playing-card {
+  border: 3px solid #151813;
+  border-radius: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 15px, rgba(0,0,0,.1) 16px),
+    linear-gradient(135deg, #555a52, #333831);
+  box-shadow: inset 3px 3px rgba(255,255,255,.17), inset -4px -4px rgba(0,0,0,.42), 6px 6px 0 rgba(0,0,0,.25);
+}
+
+.reference-playing-card strong {
+  font-family: var(--font-pixel-role);
+  text-shadow: 2px 2px #11140f;
+}
+
+.reference-facts li::before {
+  content: '■';
+}
+
+.reference-skill-explorer,
+.reference-project-stage,
+.reference-project-detail,
+.reference-lab-card,
+.reference-contact-links,
+.signature-deck {
+  border: 3px solid #11140f;
+  border-radius: 0;
+  background-color: #262b25;
+  box-shadow: inset 3px 3px rgba(255,255,255,.12), inset -4px -4px rgba(0,0,0,.42), 7px 7px 0 rgba(0,0,0,.27);
+}
+
+.reference-skill-explorer {
+  gap: 3px;
+  padding: 4px;
+}
+
+.reference-skill-categories,
+.reference-skill-list {
+  gap: 3px;
+  padding: 3px;
+  background: #161a15;
+}
+
+.reference-skill-categories button,
+.reference-skill-list button,
+.reference-lab-menu button,
+.reference-project-selector button {
+  border: 2px solid #161913;
+  border-radius: 0;
+  background: linear-gradient(#4d524b, #383d37);
+  color: #e5e2d7;
+  box-shadow: inset 1px 1px rgba(255,255,255,.14), inset -2px -2px rgba(0,0,0,.28);
+  font-family: var(--font-interface-role);
+}
+
+.reference-skill-categories button:hover,
+.reference-skill-categories button.is-active,
+.reference-skill-list button:hover,
+.reference-skill-list button.is-active,
+.reference-lab-menu button:hover,
+.reference-lab-menu button.is-active,
+.reference-project-selector button:hover,
+.reference-project-selector button.is-active {
+  padding-left: 1rem;
+  border-color: #d2ae55;
+  background: linear-gradient(#6e754f, #4b5738);
+  color: #fff;
+  transform: none;
+}
+
+.reference-skill-inspector {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 23px, rgba(0,0,0,.1) 24px),
+    #20251f;
+}
+
+.reference-skill-inspector h3 {
+  font-family: var(--font-display-role);
+  letter-spacing: 0;
+}
+
+.reference-lab-card {
+  min-height: 22rem;
+  border-radius: 0;
+  background: linear-gradient(135deg, #4b6137, #292e25 65%);
+}
+
+.reference-lab-card h3 {
+  font-size: clamp(1.9rem, 4vw, 3.4rem);
+}
+
+.reference-lab-menu button {
+  margin-bottom: .2rem;
+}
+
+.reference-lab-command {
+  border-radius: 0;
+  border-color: #11140f;
+  background: #171b16;
+}
+
+.reference-projects {
+  background:
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(0,0,0,.16) 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(0,0,0,.16) 32px),
+    #1b201b;
+}
+
+.reference-project-ticker {
+  border-block: 3px solid #1c2817;
+  background: #75994a;
+  color: #f8f3e4;
+  transform: none;
+}
+
+.reference-project-ticker-track {
+  animation-duration: 38s;
+}
+
+.reference-project-ticker span {
+  font-family: var(--font-pixel-role);
+  font-size: .8rem;
+}
+
+.reference-project-selector {
+  gap: 4px;
+  border: 3px solid #11140f;
+  background: #11140f;
+}
+
+.reference-project-selector button {
+  min-height: 7rem;
+  padding: .85rem;
+  text-shadow: 1px 1px #171a16;
+}
+
+.reference-project-selector button strong {
+  overflow-wrap: anywhere;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.82rem, 1.4vw, 1.15rem);
+  letter-spacing: 0;
+}
+
+.reference-project-selector button small {
+  color: #d0cbbd;
+  line-height: 1.4;
+}
+
+.reference-project-stage {
+  gap: 1rem;
+  padding: .55rem;
+}
+
+.reference-project-stage-visual {
+  min-height: 27rem;
+  background: #20251e;
+}
+
+.reference-project-stage-copy h3 {
+  font-family: var(--font-display-role);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: 0;
+  text-shadow: 2px 2px #11140f;
+}
+
+.reference-project-stage-copy > p:not(.reference-file-label) {
+  color: #ddd9cc;
+}
+
+.reference-tags span {
+  border-radius: 0;
+  border-color: #6a705f;
+  background: #353b32;
+  color: #f1eee5;
+  font-family: var(--font-technical-role);
+}
+
+.reference-project-detail {
+  gap: 3px;
+  background-color: #151913;
+}
+
+.reference-project-detail > div {
+  background:
+    repeating-linear-gradient(0deg, transparent 0 23px, rgba(0,0,0,.12) 24px),
+    #2b3029;
+}
+
+.signature-deck-section {
+  min-height: 115svh;
+  border-bottom: 3px solid #11140f;
+  background: linear-gradient(180deg, #293027, #1c211b);
+}
+
+.signature-deck-heading h2,
+.reference-achievements h2 {
+  font-family: var(--font-display-role);
+  font-size: clamp(2rem, 5vw, 4rem);
+  letter-spacing: 0;
+  text-shadow: 2px 2px #11140f;
+}
+
+.signature-deck-card {
+  border: 3px solid #151813;
+  border-radius: 0;
+  box-shadow: inset 3px 3px rgba(255,255,255,.18), inset -4px -4px rgba(0,0,0,.35), 7px 7px 0 rgba(0,0,0,.35);
+}
+
+.signature-deck-card strong {
+  font-family: var(--font-pixel-role);
+  font-size: clamp(1.4rem, 4vw, 3rem);
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.reference-contact {
+  background:
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(0,0,0,.13) 32px),
+    #343a31;
+  color: var(--color-ink);
+}
+
+.reference-contact .reference-file-label,
+.reference-contact-copy > p:last-child {
+  color: #d2d0c5;
+}
+
+.reference-contact-copy h2 {
+  max-width: 12ch;
+  font-size: clamp(3rem, 7vw, 6rem);
+}
+
+.reference-contact-links {
+  padding: 0 1rem;
+}
+
+.reference-contact-link {
+  color: #f4f0e7;
+}
+
+.reference-contact-link small {
+  color: #d0cbbd;
+}
+
+.reference-contact-copy-button {
+  width: max-content;
+  margin-block: 1rem;
+  padding: .7rem .9rem;
+  cursor: pointer;
+}
+
+.reference-footer,
+.site-footer {
+  border-top: 3px solid #11140f;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(0,0,0,.12) 32px),
+    #242a23;
+  color: #d5d1c6;
+  font-family: var(--font-technical-role);
+}
+
+.minecraft-journey-section,
+.minecraft-certifications-section {
+  background:
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(0,0,0,.12) 32px),
+    #252b24;
+}
+
+.minecraft-journey-section h2,
+.minecraft-certifications-section h2 {
+  font-family: var(--font-display-role);
+  letter-spacing: 0;
+  text-shadow: 2px 2px #11140f;
+}
+
+.minecraft-journey-section li > div,
+.minecraft-certifications-section li {
+  padding: 1rem;
+  border: 2px solid #121510;
+  background: linear-gradient(#3a4038, #2b302a);
+  box-shadow: inset 1px 1px rgba(255,255,255,.1), inset -2px -2px rgba(0,0,0,.3);
+}
+
+.minecraft-journey-section li h3,
+.minecraft-certifications-section li > span {
+  font-family: var(--font-pixel-role);
+}
+
+.minecraft-certifications-section ul {
+  gap: 4px;
+  border: 3px solid #11140f;
+  background: #11140f;
+}
+
+.reference-achievements {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(2rem, 5vw, 4rem) max(5vw, 1.25rem);
+}
+
+.reference-achievements > div {
+  max-width: 48rem;
+}
+
+.reference-achievements h2 {
+  margin: .75rem 0;
+  color: #fffdf3;
+  line-height: 1.05;
+}
+
+.reference-achievements p:last-child {
+  max-width: 45rem;
+  color: #d7d5c9;
+  line-height: 1.7;
+}
+
+.reference-achievements .reference-button {
+  flex-shrink: 0;
+}
+
+.reference-reveal {
+  transition-duration: .45s;
+}
+
+.reference-hero {
+  display: grid;
+  width: 100%;
+  min-height: 100svh;
+  align-content: center;
+  justify-items: center;
+  overflow: hidden;
+  padding: 2.5rem 1rem 5rem;
+  background:
+    linear-gradient(180deg, rgba(21, 28, 25, .28), rgba(14, 19, 17, .48)),
+    url('/images/minecraft-forest-reference.png') center 52% / cover no-repeat;
+}
+
+.reference-hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: '';
+  background: rgba(20, 25, 24, .08);
+  backdrop-filter: blur(2px) brightness(.78);
+}
+
+.reference-hero::after {
+  content: none;
+}
+
+.reference-main-menu {
+  width: min(100%, 42rem);
+  padding: clamp(1rem, 3vh, 2rem);
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.reference-main-menu h1 {
+  margin: 0 0 .25rem;
+  font-size: clamp(4rem, 10vw, 7.5rem);
+  line-height: 1.15;
+  letter-spacing: .015em;
+  text-shadow: 4px 4px 0 #37342e, 7px 7px 0 #11130f, 0 9px 18px rgba(0,0,0,.65);
+}
+
+.reference-main-menu .reference-eyebrow {
+  margin: 0;
+  font-size: clamp(.65rem, 1.5vw, .82rem);
+}
+
+.reference-main-menu .reference-lede {
+  margin: .3rem 0 1.2rem;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.85rem, 1.7vw, 1.05rem);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.reference-main-menu-buttons {
+  grid-template-columns: 1fr;
+  gap: .45rem;
+  width: min(100%, 28rem);
+}
+
+.reference-main-menu-buttons .reference-button,
+.reference-main-menu-buttons .reference-button:nth-child(-n+3) {
+  grid-column: auto;
+  min-height: 3.2rem;
+  padding: .65rem 1rem;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.95rem, 2vw, 1.1rem);
+}
+
+.reference-main-menu-buttons .reference-button-gold {
+  border-color: #121510;
+  background:
+    linear-gradient(rgba(255,255,255,.08), rgba(0,0,0,.13)),
+    repeating-linear-gradient(0deg, #777a75 0 4px, #6d706b 4px 8px);
+  color: #fffdf3;
+  text-shadow: 1px 2px #222;
+}
+
+.reference-main-menu-buttons .reference-button:last-child {
+  grid-column: auto;
+}
+
+.reference-main-menu-buttons .reference-button:hover,
+.reference-main-menu-buttons .reference-button-gold:hover {
+  background:
+    linear-gradient(rgba(255,255,255,.16), rgba(0,0,0,.08)),
+    repeating-linear-gradient(0deg, #898b86 0 4px, #7f817c 4px 8px);
+}
+
+.reference-main-menu-bottom {
+  display: grid;
+  grid-template-columns: 3.3rem 1fr 1fr 3.3rem;
+  gap: .45rem;
+  width: min(100%, 28rem);
+  margin-top: .45rem;
+}
+
+.reference-main-menu-bottom .reference-button,
+.reference-main-menu-socials a {
+  min-height: 3.1rem;
+  border: 3px solid #11140f;
+  background:
+    linear-gradient(rgba(255,255,255,.08), rgba(0,0,0,.12)),
+    repeating-linear-gradient(0deg, #777a75 0 4px, #6d706b 4px 8px);
+  box-shadow: inset 2px 2px rgba(255,255,255,.3), inset -3px -3px rgba(0,0,0,.4), 2px 2px 0 rgba(0,0,0,.35);
+  color: #fffdf3;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.9rem, 1.8vw, 1rem);
+  text-shadow: 1px 2px #222;
+}
+
+.reference-main-menu-bottom .reference-social-icon {
+  display: grid;
+  min-height: 3.1rem;
+  place-items: center;
+  border: 3px solid #11140f;
+  background:
+    linear-gradient(rgba(255,255,255,.08), rgba(0,0,0,.12)),
+    repeating-linear-gradient(0deg, #777a75 0 4px, #6d706b 4px 8px);
+  box-shadow: inset 2px 2px rgba(255,255,255,.3), inset -3px -3px rgba(0,0,0,.4), 2px 2px 0 rgba(0,0,0,.35);
+  color: #fffdf3;
+}
+
+.reference-main-menu-bottom .reference-social-icon:hover,
+.reference-main-menu-bottom .reference-button:hover {
+  filter: brightness(1.16);
+}
+
+.reference-world-status {
+  right: 1rem;
+  bottom: .75rem;
+  left: 1rem;
+}
+
+.reference-world-status > span {
+  flex: 1;
+  font-size: .75rem;
+}
+
+.reference-world-status > a {
+  width: 2.75rem;
+  height: 2.4rem;
+  padding: .35rem;
+}
+
+.reference-hero-portrait,
+.reference-hero-portrait-ring {
+  display: none;
+}
+
+@media (max-height: 650px) and (min-width: 521px) {
+  .reference-main-menu {
+    padding-block: .4rem;
+  }
+
+  .reference-main-menu h1 {
+    font-size: clamp(3.6rem, 10vh, 5.8rem);
+  }
+
+  .reference-main-menu-buttons .reference-button,
+  .reference-main-menu-bottom .reference-button,
+  .reference-main-menu-bottom .reference-social-icon {
+    min-height: 2.5rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .reference-hero {
+    min-height: 100svh;
+    padding: 1rem .75rem 5rem;
+    background-position: 58% center;
+  }
+
+  .reference-main-menu {
+    width: min(100%, 29rem);
+    padding: .5rem .25rem;
+  }
+
+  .reference-main-menu h1 {
+    font-size: clamp(3.15rem, 14vw, 4.5rem);
+  }
+
+  .reference-main-menu-buttons {
+    width: min(100%, 24rem);
+    gap: .38rem;
+  }
+
+  .reference-main-menu-buttons .reference-button {
+    min-height: 2.75rem;
+  }
+
+  .reference-main-menu-bottom {
+    width: min(100%, 24rem);
+    grid-template-columns: 2.8rem 1fr 1fr 2.8rem;
+    gap: .35rem;
+  }
+
+  .reference-main-menu-bottom .reference-button,
+  .reference-main-menu-bottom .reference-social-icon {
+    min-height: 2.75rem;
+  }
+
+  .reference-world-status {
+    right: .6rem;
+    left: .6rem;
+  }
+
+  .reference-world-status > span {
+    font-size: .6rem;
+  }
+}
+
+/* Keep the other routes in the same Minecraft world. */
+.reference-site::before {
+  display: none;
+}
+
+.reference-hero-portrait,
+.reference-hero-portrait-ring {
+  display: revert;
+}
+
+.reference-hero:not(#top) {
+  background-image:
+    linear-gradient(180deg, rgba(21, 28, 25, .55), rgba(14, 19, 17, .72)),
+    url('/images/minecraft-forest-reference.png');
+}
+
+.reference-hero:not(#top)::before {
+  content: none;
+}
+
+.reference-hero:not(#top)::after {
+  content: none;
+}
+
+.reference-hero#top .reference-hero-portrait,
+.reference-hero#top .reference-hero-portrait-ring {
+  display: none;
+}
+
+/*
+ * Additional block texture overlay is intentionally restrained so
+ * the supplied Minecraft scene remains visible behind the page panels.
+ */
+.minecraft-blog-page,
+.minecraft-blog-article,
+.minecraft-project-archive,
+.minecraft-case-study,
+.resume-page {
+  background: linear-gradient(rgba(16, 20, 18, .66), rgba(16, 20, 18, .76));
+}
+
+@media (max-width: 520px) {
+  .reference-hero:not(#top) {
+    min-height: auto;
+  }
+}
+
+/* Hero main menu should use the entire viewport rather than a left aligned column. */
+.reference-site #top {
+  width: 100vw;
+  max-width: none;
+  min-height: 100svh;
+  margin-inline: calc(50% - 50vw);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-main-menu-bottom .reference-social-icon,
+  .reference-main-menu-bottom .reference-button {
+    transition: none;
+  }
+}
+
+body {
+  background: #1a211b url('/images/minecraft-forest-reference.png') center center / cover fixed;
+}
+
+.reference-site::before {
+  display: none;
+}
+
+.reference-site #top {
+  position: relative;
+  isolation: isolate;
+  width: 100vw;
+  max-width: none;
+  min-height: 100svh;
+  margin-inline: calc(50% - 50vw);
+  padding: 2rem 1rem 5rem;
+  grid-template-columns: 1fr;
+  background:
+    linear-gradient(180deg, rgba(19, 25, 22, .28), rgba(13, 18, 16, .48)),
+    url('/images/minecraft-forest-reference.png') center 52% / cover no-repeat;
+}
+
+.reference-site #top::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: '';
+  background: rgba(20, 25, 24, .08);
+  backdrop-filter: blur(2px) brightness(.78);
+}
+
+.reference-site #top::after {
+  content: none;
+}
+
+.reference-site #top .reference-main-menu {
+  z-index: 1;
+  width: min(100%, 42rem);
+  padding: clamp(1rem, 3vh, 2rem);
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.reference-site #top .reference-main-menu h1 {
+  margin: 0 0 .25rem;
+  font-size: clamp(4rem, 10vw, 7.5rem);
+  line-height: 1.15;
+  letter-spacing: .015em;
+  text-shadow: 4px 4px 0 #37342e, 7px 7px 0 #11130f, 0 9px 18px rgba(0,0,0,.65);
+}
+
+.reference-site #top .reference-main-menu .reference-lede {
+  margin: .3rem 0 1.2rem;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.85rem, 1.7vw, 1.05rem);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.reference-site #top .reference-main-menu-buttons {
+  grid-template-columns: 1fr;
+  gap: .45rem;
+  width: min(100%, 28rem);
+}
+
+.reference-site #top .reference-main-menu-buttons .reference-button,
+.reference-site #top .reference-main-menu-buttons .reference-button:nth-child(-n+3),
+.reference-site #top .reference-main-menu-buttons .reference-button:last-child {
+  grid-column: auto;
+  min-height: 3.2rem;
+  padding: .65rem 1rem;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.95rem, 2vw, 1.1rem);
+}
+
+.reference-site #top .reference-main-menu-buttons .reference-button-gold {
+  border-color: #121510;
+  background:
+    linear-gradient(rgba(255,255,255,.08), rgba(0,0,0,.13)),
+    repeating-linear-gradient(0deg, #777a75 0 4px, #6d706b 4px 8px);
+  color: #fffdf3;
+  text-shadow: 1px 2px #222;
+}
+
+.reference-site #top .reference-main-menu-bottom {
+  display: grid;
+  grid-template-columns: 3.3rem 1fr 1fr 3.3rem;
+  gap: .45rem;
+  width: min(100%, 28rem);
+  margin-top: .45rem;
+}
+
+.reference-site #top .reference-main-menu-bottom .reference-button,
+.reference-site #top .reference-main-menu-bottom .reference-social-icon {
+  display: grid;
+  min-height: 3.1rem;
+  place-items: center;
+  border: 3px solid #11140f;
+  background:
+    linear-gradient(rgba(255,255,255,.08), rgba(0,0,0,.12)),
+    repeating-linear-gradient(0deg, #777a75 0 4px, #6d706b 4px 8px);
+  box-shadow: inset 2px 2px rgba(255,255,255,.3), inset -3px -3px rgba(0,0,0,.4), 2px 2px 0 rgba(0,0,0,.35);
+  color: #fffdf3;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.9rem, 1.8vw, 1rem);
+  text-shadow: 1px 2px #222;
+}
+
+.reference-site #top .reference-main-menu-bottom .reference-social-icon {
+  padding: .5rem;
+}
+
+.reference-site #top .reference-main-menu-bottom .reference-button:hover,
+.reference-site #top .reference-main-menu-bottom .reference-social-icon:hover {
+  filter: brightness(1.16);
+}
+
+.reference-site #top .reference-world-status {
+  right: 1rem;
+  bottom: .75rem;
+  left: 1rem;
+}
+
+.reference-site #top .reference-world-status > span {
+  flex: 1;
+  font-size: .75rem;
+}
+
+.reference-site #top .reference-world-status > a {
+  width: 2.75rem;
+  height: 2.4rem;
+  padding: .35rem;
+}
+
+.minecraft-blog-page,
+.minecraft-blog-article,
+.minecraft-project-archive,
+.minecraft-case-study,
+.resume-page {
+  background: linear-gradient(rgba(16, 20, 18, .66), rgba(16, 20, 18, .76));
+}
+
+@media (max-height: 650px) and (min-width: 521px) {
+  .reference-site #top .reference-main-menu {
+    padding-block: .4rem;
+  }
+
+  .reference-site #top .reference-main-menu h1 {
+    font-size: clamp(3.6rem, 10vh, 5.8rem);
+  }
+
+  .reference-site #top .reference-main-menu-buttons .reference-button,
+  .reference-site #top .reference-main-menu-bottom .reference-button,
+  .reference-site #top .reference-main-menu-bottom .reference-social-icon {
+    min-height: 2.5rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .reference-site #top {
+    min-height: 100svh;
+    padding: 1rem .75rem 5rem;
+    background-position: 58% center;
+  }
+
+  .reference-site #top .reference-main-menu {
+    width: min(100%, 29rem);
+    padding: .5rem .25rem;
+  }
+
+  .reference-site #top .reference-main-menu h1 {
+    font-size: clamp(3.15rem, 14vw, 4.5rem);
+  }
+
+  .reference-site #top .reference-main-menu-buttons,
+  .reference-site #top .reference-main-menu-bottom {
+    width: min(100%, 24rem);
+  }
+
+  .reference-site #top .reference-main-menu-buttons {
+    gap: .38rem;
+  }
+
+  .reference-site #top .reference-main-menu-buttons .reference-button,
+  .reference-site #top .reference-main-menu-bottom .reference-button,
+  .reference-site #top .reference-main-menu-bottom .reference-social-icon {
+    min-height: 2.75rem;
+  }
+
+  .reference-site #top .reference-main-menu-bottom {
+    grid-template-columns: 2.8rem 1fr 1fr 2.8rem;
+    gap: .35rem;
+  }
+
+  .reference-site #top .reference-world-status {
+    right: .6rem;
+    left: .6rem;
+  }
+
+  .reference-site #top .reference-world-status > span {
+    font-size: .6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-site #top .reference-main-menu-bottom .reference-button,
+  .reference-site #top .reference-main-menu-bottom .reference-social-icon {
+    transition: none;
+  }
+}
+
+.minecraft-world {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  height: 100svh;
+  min-height: 32rem;
+  flex-direction: column;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(16, 24, 25, .45), rgba(18, 27, 21, .5) 55%, rgba(14, 18, 15, .78)),
+    url('/images/minecraft-forest-reference.png') center / cover no-repeat;
+  color: #f5f1e6;
+}
+
+.minecraft-world::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: '';
+  background:
+    linear-gradient(90deg, rgba(16, 22, 20, .28), transparent 24% 76%, rgba(16, 22, 20, .28)),
+    linear-gradient(0deg, rgba(12, 17, 14, .24), transparent 35% 65%, rgba(12, 17, 14, .28));
+}
+
+.minecraft-world-hud,
+.minecraft-world-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  min-height: 3.6rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .6rem clamp(.75rem, 2vw, 1.5rem);
+  border-bottom: 3px solid #121510;
+  background: linear-gradient(180deg, rgba(49, 55, 49, .97), rgba(35, 40, 35, .97));
+  box-shadow: inset 0 1px rgba(255,255,255,.18), 0 4px 10px rgba(0,0,0,.25);
+}
+
+.minecraft-world-brand,
+.minecraft-world-hud-label,
+.minecraft-world-footer,
+.minecraft-back-button {
+  font-family: var(--font-pixel-role);
+}
+
+.minecraft-world-brand {
+  display: inline-flex;
+  min-width: 9rem;
+  align-items: center;
+  gap: .65rem;
+  color: #fffdf3;
+  font-size: .78rem;
+  text-shadow: 1px 2px #111;
+}
+
+.minecraft-world-cube {
+  position: relative;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid #11140f;
+  background: linear-gradient(180deg, #619542 0 34%, #795336 35% 100%);
+  box-shadow: inset 2px 2px rgba(255,255,255,.2), 2px 2px rgba(0,0,0,.25);
+}
+
+.minecraft-world-hud-label {
+  color: #d3d0c5;
+  font-size: .59rem;
+  letter-spacing: .08em;
+  text-align: center;
+}
+
+.minecraft-back-button,
+.minecraft-secondary-button,
+.minecraft-primary-button {
+  display: inline-flex;
+  min-height: 2.6rem;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  padding: .6rem .9rem;
+  border: 3px solid #11140f;
+  background:
+    linear-gradient(rgba(255,255,255,.08), rgba(0,0,0,.12)),
+    repeating-linear-gradient(0deg, #777a75 0 4px, #6d706b 4px 8px);
+  box-shadow: inset 2px 2px rgba(255,255,255,.26), inset -3px -3px rgba(0,0,0,.36), 2px 2px 0 rgba(0,0,0,.3);
+  color: #fffdf3;
+  font-family: var(--font-pixel-role);
+  font-size: .68rem;
+  text-shadow: 1px 1px #1b1d19;
+  cursor: pointer;
+  transition: filter .12s steps(2, end), transform .12s steps(2, end);
+}
+
+.minecraft-back-button:hover,
+.minecraft-secondary-button:hover,
+.minecraft-primary-button:hover {
+  filter: brightness(1.17);
+}
+
+.minecraft-back-button:active,
+.minecraft-secondary-button:active,
+.minecraft-primary-button:active,
+.minecraft-world-destination:active {
+  transform: translateY(2px);
+  box-shadow: inset 2px 2px rgba(0,0,0,.28), inset -2px -2px rgba(255,255,255,.1);
+}
+
+.minecraft-world-viewport {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  justify-content: center;
+  padding: clamp(.75rem, 2.5vh, 1.5rem) clamp(.75rem, 3vw, 2rem);
+}
+
+.minecraft-world-home {
+  display: flex;
+  width: min(100%, 60rem);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(.75rem, 2vh, 1.3rem);
+  overflow-y: auto;
+  padding: .35rem .5rem;
+  text-align: center;
+}
+
+.minecraft-world-branding {
+  text-shadow: 2px 3px 0 #171a14, 0 5px 16px rgba(0,0,0,.7);
+}
+
+.minecraft-world-eyebrow {
+  margin: 0;
+  color: #e1d7aa;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.55rem, 1.3vw, .72rem);
+  letter-spacing: .08em;
+  line-height: 1.7;
+}
+
+.minecraft-world-branding h1 {
+  margin: .3rem 0;
+  color: #fffdf3;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(3.25rem, 9vw, 7.1rem);
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: .01em;
+  text-shadow: 4px 4px 0 #37342e, 7px 7px 0 #11130f, 0 9px 18px rgba(0,0,0,.65);
+}
+
+.minecraft-world-branding > p:last-child {
+  margin: .2rem 0 0;
+  color: #fffdf3;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.65rem, 1.6vw, .9rem);
+  line-height: 1.8;
+  text-shadow: 1px 2px #171a14;
+}
+
+.minecraft-world-destinations {
+  display: grid;
+  width: min(100%, 51rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .45rem;
+}
+
+.minecraft-world-destination {
+  position: relative;
+  display: grid;
+  min-height: 3.65rem;
+  grid-template-columns: 1.65rem minmax(0, 1fr) 1.15rem;
+  align-items: center;
+  gap: .25rem .6rem;
+  padding: .55rem .8rem;
+  border: 3px solid #151813;
+  background:
+    linear-gradient(rgba(255,255,255,.09), rgba(0,0,0,.17)),
+    repeating-linear-gradient(0deg, #686c66 0 5px, #5b5f59 5px 10px);
+  box-shadow: inset 2px 2px rgba(255,255,255,.23), inset -3px -3px rgba(0,0,0,.42), 3px 3px 0 rgba(0,0,0,.3);
+  color: #fffdf3;
+  text-align: left;
+  cursor: pointer;
+  transition: filter .13s steps(2, end), transform .13s steps(2, end), box-shadow .13s steps(2, end);
+}
+
+.minecraft-world-destination:hover,
+.minecraft-world-destination:focus-visible {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+}
+
+.minecraft-world-destination > svg:first-child {
+  grid-row: span 2;
+  color: #f1d77e;
+}
+
+.minecraft-world-destination > span {
+  align-self: end;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.64rem, 1.4vw, .82rem);
+  line-height: 1.4;
+  text-shadow: 1px 1px #1b1d19;
+}
+
+.minecraft-world-destination small {
+  grid-column: 2;
+  align-self: start;
+  color: #dedbd1;
+  font-family: var(--font-interface-role);
+  font-size: .67rem;
+  line-height: 1.3;
+}
+
+.minecraft-destination-arrow {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.minecraft-world-quicklinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .45rem 1rem;
+}
+
+.minecraft-world-quicklinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  color: #f5f1e6;
+  font-family: var(--font-pixel-role);
+  font-size: .58rem;
+  text-shadow: 1px 2px #141713;
+}
+
+.minecraft-world-quicklinks a:hover {
+  color: #ffe28a;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.minecraft-world-footer {
+  min-height: 2.35rem;
+  border-top: 3px solid #151813;
+  border-bottom: 0;
+  padding-block: .4rem;
+  color: #dedbd1;
+  font-size: .53rem;
+  letter-spacing: .05em;
+  text-shadow: 1px 1px #111;
+}
+
+.minecraft-screen {
+  display: flex;
+  width: min(100%, 76rem);
+  min-height: 0;
+  flex-direction: column;
+  border: 4px solid #151813;
+  background: rgba(28, 34, 29, .95);
+  box-shadow: inset 3px 3px rgba(255,255,255,.12), inset -4px -4px rgba(0,0,0,.35), 6px 6px 0 rgba(0,0,0,.34);
+}
+
+.minecraft-screen-heading {
+  display: flex;
+  min-height: 5.8rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem clamp(1rem, 3vw, 1.75rem);
+  border-bottom: 3px solid #11140f;
+  background: linear-gradient(180deg, #383e37, #2b302b);
+}
+
+.minecraft-screen-heading h1 {
+  margin: .3rem 0 0;
+  color: #fffdf3;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(1.25rem, 4vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.3;
+  text-shadow: 2px 2px #111;
+}
+
+.minecraft-screen-content {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  scrollbar-color: #7b806f #1b201a;
+}
+
+.minecraft-screen-intro {
+  max-width: 55rem;
+  margin: 0 0 1rem;
+  color: #d8d4c8;
+  font-size: .95rem;
+  line-height: 1.65;
+}
+
+.minecraft-about-screen {
+  display: grid;
+  grid-template-columns: minmax(13rem, .75fr) minmax(0, 1.25fr);
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.minecraft-about-portrait,
+.minecraft-inventory-panel,
+.minecraft-achievement-slot,
+.minecraft-contact-slot,
+.minecraft-article-slot {
+  border: 3px solid #10130f;
+  background: #2c322c;
+  box-shadow: inset 2px 2px rgba(255,255,255,.09), inset -3px -3px rgba(0,0,0,.28);
+}
+
+.minecraft-about-portrait {
+  display: grid;
+  min-height: 18rem;
+  place-items: center;
+  align-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.minecraft-about-portrait img {
+  width: min(78%, 15rem);
+  aspect-ratio: 1;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(5px 5px 0 rgba(0,0,0,.36));
+}
+
+.minecraft-about-portrait span,
+.minecraft-achievement-slot > span,
+.minecraft-article-slot > div > span {
+  color: #d4ca9e;
+  font-family: var(--font-pixel-role);
+  font-size: .57rem;
+  line-height: 1.6;
+}
+
+.minecraft-inventory-panel {
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.minecraft-inventory-panel h2 {
+  margin: 0 0 .85rem;
+  color: #f5f1e6;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.9rem, 2vw, 1.1rem);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.minecraft-inventory-panel p {
+  color: #d5d1c6;
+  line-height: 1.7;
+}
+
+.minecraft-fact-slots {
+  display: grid;
+  gap: .5rem;
+  margin: 1.2rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.minecraft-fact-slots li,
+.minecraft-skill-slots span,
+.minecraft-project-stack span {
+  padding: .6rem .7rem;
+  border: 2px solid #131611;
+  background: #414740;
+  color: #f1eee3;
+  font-size: .82rem;
+  line-height: 1.5;
+}
+
+.minecraft-primary-button {
+  width: fit-content;
+  min-height: 2.8rem;
+  text-decoration: none;
+}
+
+.minecraft-project-inventory {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: .75rem;
+  margin: .8rem 0 1.2rem;
+}
+
+.minecraft-project-item {
+  display: grid;
+  min-height: 9.5rem;
+  justify-items: center;
+  align-content: center;
+  gap: .55rem;
+  padding: .8rem;
+  border: 3px solid #11140f;
+  background: linear-gradient(145deg, #424a40, #2c322c);
+  box-shadow: inset 2px 2px rgba(255,255,255,.13), inset -3px -3px rgba(0,0,0,.34), 3px 3px 0 rgba(0,0,0,.25);
+  color: #f5f1e6;
+  cursor: pointer;
+  transition: transform .13s steps(2, end), filter .13s steps(2, end);
+}
+
+.minecraft-project-item:hover,
+.minecraft-project-item:focus-visible {
+  transform: translateY(-3px);
+  filter: brightness(1.18);
+}
+
+.minecraft-project-item-icon {
+  display: grid;
+  width: 3.15rem;
+  height: 3.15rem;
+  place-items: center;
+  border: 3px solid #171a15;
+  background: linear-gradient(145deg, #77816d, #454d42);
+  color: #ffe28a;
+  font-family: var(--font-pixel-role);
+  font-size: 1.4rem;
+  box-shadow: inset 2px 2px rgba(255,255,255,.18), inset -3px -3px rgba(0,0,0,.3), 3px 3px rgba(0,0,0,.2);
+}
+
+.minecraft-project-item strong {
+  font-family: var(--font-pixel-role);
+  font-size: .72rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.minecraft-project-item small {
+  color: #d2cec2;
+  font-size: .7rem;
+  text-align: center;
+}
+
+.minecraft-project-detail {
+  display: grid;
+  grid-template-columns: minmax(12rem, .8fr) minmax(0, 1.2fr);
+  align-items: start;
+  gap: 1rem;
+}
+
+.minecraft-project-media {
+  width: 100%;
+  max-height: 26rem;
+  border: 3px solid #10130f;
+  background: #11140f;
+  object-fit: contain;
+}
+
+.minecraft-project-description {
+  margin: 0 0 .85rem;
+  font-size: .9rem;
+  line-height: 1.7;
+}
+
+.minecraft-project-stack,
+.minecraft-skill-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin: .7rem 0 1rem;
+}
+
+.minecraft-project-stack span,
+.minecraft-skill-slots span {
+  padding: .35rem .5rem;
+  font-size: .7rem;
+}
+
+.minecraft-skill-slots .minecraft-skill-slot {
+  padding: .35rem .5rem;
+  border: 2px solid #131611;
+  background: #414740;
+  color: #f1eee3;
+  font-size: .7rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.minecraft-skill-slots .minecraft-skill-slot:hover,
+.minecraft-skill-slots .minecraft-skill-slot[aria-pressed="true"] {
+  border-color: #d2b45e;
+  background: #59604f;
+}
+
+.minecraft-skill-inspector {
+  grid-column: 1 / -1;
+}
+
+.minecraft-skill-inspector .minecraft-world-eyebrow {
+  margin: 0;
+}
+
+.minecraft-skill-inspector > p:not(.minecraft-world-eyebrow) {
+  margin: .55rem 0;
+}
+
+.minecraft-skill-inspector > strong {
+  color: #e4d18f;
+  font-size: .78rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.minecraft-project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+
+.minecraft-status-note {
+  color: #d4ca9e;
+  font-size: .82rem;
+}
+
+.minecraft-skill-inventory {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: .75rem;
+}
+
+.minecraft-skill-inventory > .minecraft-screen-intro {
+  grid-column: 1 / -1;
+}
+
+.minecraft-skill-inventory .minecraft-inventory-panel h2 span {
+  color: #d1b254;
+  font-size: .72em;
+}
+
+.minecraft-journey-inventory {
+  display: grid;
+  align-content: start;
+  gap: .6rem;
+  margin: 0;
+  list-style: none;
+}
+
+.minecraft-journey-inventory li {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  align-items: start;
+  gap: 1rem;
+}
+
+.minecraft-stage-index {
+  display: grid;
+  width: 2.7rem;
+  height: 2.7rem;
+  place-items: center;
+  border: 3px solid #11140f;
+  background: #555d50;
+  color: #f5df98;
+  font-family: var(--font-pixel-role);
+  font-size: .72rem;
+}
+
+.minecraft-journey-inventory li h2 {
+  margin: 0;
+  font-family: var(--font-pixel-role);
+  font-size: .9rem;
+  font-weight: 400;
+}
+
+.minecraft-journey-inventory li p {
+  margin: .35rem 0;
+  color: #d5d1c6;
+  font-size: .85rem;
+  line-height: 1.55;
+}
+
+.minecraft-journey-inventory li small {
+  color: #d4ca9e;
+  font-size: .72rem;
+}
+
+.minecraft-achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: .75rem;
+}
+
+.minecraft-achievement-slot {
+  display: flex;
+  min-height: 11rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .6rem;
+  padding: 1rem;
+}
+
+.minecraft-achievement-slot > svg {
+  color: #e5ca6e;
+}
+
+.minecraft-achievement-slot h2 {
+  margin: 0;
+  font-family: var(--font-pixel-role);
+  font-size: .8rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.minecraft-achievement-slot p {
+  margin: 0;
+  color: #d5d1c6;
+  font-size: .8rem;
+  line-height: 1.55;
+}
+
+.minecraft-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: .7rem;
+}
+
+.minecraft-contact-grid > .minecraft-screen-intro {
+  grid-column: 1 / -1;
+}
+
+.minecraft-contact-slot {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 1.5rem minmax(0, 1fr) 1rem;
+  align-items: center;
+  gap: .45rem .7rem;
+  padding: .9rem;
+  color: #f5f1e6;
+}
+
+.minecraft-contact-slot > svg:first-child,
+.minecraft-linkedin-mark {
+  grid-row: span 2;
+  color: #e5ca6e;
+}
+
+.minecraft-linkedin-mark {
+  font-family: var(--font-pixel-role);
+  font-size: 1.1rem;
+}
+
+.minecraft-contact-slot span:not(.minecraft-linkedin-mark) {
+  color: #c9c4b9;
+  font-family: var(--font-pixel-role);
+  font-size: .58rem;
+}
+
+.minecraft-contact-slot strong {
+  overflow-wrap: anywhere;
+  font-size: .78rem;
+  font-weight: 500;
+}
+
+.minecraft-article-inventory {
+  display: grid;
+  align-content: start;
+  gap: .65rem;
+}
+
+.minecraft-article-slot {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr) 1.25rem;
+  align-items: center;
+  gap: .85rem;
+  padding: .65rem;
+  color: #f5f1e6;
+}
+
+.minecraft-article-slot img {
+  width: 100%;
+  height: 5.5rem;
+  border: 2px solid #11140f;
+  object-fit: cover;
+}
+
+.minecraft-article-slot h2 {
+  margin: .35rem 0;
+  font-family: var(--font-pixel-role);
+  font-size: .8rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.minecraft-article-slot p {
+  margin: 0;
+  color: #d5d1c6;
+  font-size: .78rem;
+  line-height: 1.5;
+}
+
+.minecraft-screen-enter {
+  animation: minecraft-screen-enter .18s steps(3, end) both;
+}
+
+@keyframes minecraft-screen-enter {
+  from { opacity: 0; transform: translateY(5px) scale(.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.minecraft-world [class*="ambient-audio"] {
+  font-family: var(--font-pixel-role);
+}
+
+@media (max-width: 620px) {
+  .minecraft-world {
+    min-height: 28rem;
+  }
+
+  .minecraft-world-hud {
+    min-height: 3.25rem;
+    gap: .4rem;
+    padding-inline: .55rem;
+  }
+
+  .minecraft-world-brand {
+    min-width: auto;
+    font-size: .6rem;
+  }
+
+  .minecraft-world-hud-label {
+    display: none;
+  }
+
+  .minecraft-world-hud .ambient-audio-volume {
+    display: none;
+  }
+
+  .minecraft-world-viewport {
+    padding: .55rem;
+  }
+
+  .minecraft-world-home {
+    gap: .65rem;
+  }
+
+  .minecraft-world-destinations {
+    gap: .35rem;
+  }
+
+  .minecraft-world-destination {
+    min-height: 3.15rem;
+    grid-template-columns: 1.25rem minmax(0, 1fr) .9rem;
+    column-gap: .35rem;
+    padding: .4rem;
+  }
+
+  .minecraft-world-destination > svg:first-child {
+    width: 16px;
+  }
+
+  .minecraft-world-destination > span {
+    font-size: .58rem;
+  }
+
+  .minecraft-world-destination small {
+    display: none;
+  }
+
+  .minecraft-world-quicklinks {
+    gap: .4rem .7rem;
+  }
+
+  .minecraft-world-quicklinks a {
+    font-size: .52rem;
+  }
+
+  .minecraft-world-footer {
+    min-height: 2rem;
+    font-size: .42rem;
+  }
+
+  .minecraft-screen-heading {
+    min-height: 4.9rem;
+    padding: .65rem .8rem;
+  }
+
+  .minecraft-screen-heading .minecraft-secondary-button {
+    min-height: 2.25rem;
+    padding: .35rem;
+    font-size: .5rem;
+  }
+
+  .minecraft-about-screen,
+  .minecraft-project-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .minecraft-about-portrait {
+    min-height: 13rem;
+  }
+
+  .minecraft-about-portrait img {
+    width: min(55%, 10rem);
+  }
+
+  .minecraft-skill-inventory,
+  .minecraft-contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .minecraft-skill-inventory > .minecraft-screen-intro,
+  .minecraft-contact-grid > .minecraft-screen-intro {
+    grid-column: auto;
+  }
+
+  .minecraft-article-slot {
+    grid-template-columns: 5rem minmax(0, 1fr) 1rem;
+    gap: .5rem;
+  }
+
+  .minecraft-article-slot img {
+    height: 4rem;
+  }
+
+  .minecraft-article-slot h2 {
+    font-size: .67rem;
+  }
+
+  .minecraft-article-slot p {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .minecraft-screen-enter {
+    animation: none;
+  }
+
+  .minecraft-world-destination,
+  .minecraft-back-button,
+  .minecraft-secondary-button,
+  .minecraft-primary-button,
+  .minecraft-project-item {
+    transition: none;
+  }
+}
+
+.minecraft-world-home {
+  gap: clamp(1rem, 2.7vh, 1.65rem);
+}
+
+.minecraft-world-destinations {
+  width: min(100%, 34rem);
+  grid-template-columns: 1fr;
+  gap: .48rem;
+}
+
+.minecraft-world-destination {
+  display: flex;
+  min-height: 3.45rem;
+  justify-content: center;
+  padding: .6rem 1rem;
+  text-align: center;
+}
+
+.minecraft-world-destination > span {
+  align-self: center;
+  font-size: clamp(.75rem, 1.7vw, .95rem);
+}
+
+.minecraft-world-quicklinks {
+  display: grid;
+  width: min(100%, 34rem);
+  grid-template-columns: 3.4rem 1fr 1fr 3.4rem;
+  gap: .45rem;
+  margin-top: -.35rem;
+}
+
+.minecraft-world-quicklinks a,
+.minecraft-world-quicklinks button {
+  display: flex;
+  min-height: 3.2rem;
+  align-items: center;
+  justify-content: center;
+  padding: .4rem;
+  border: 3px solid #151813;
+  background:
+    linear-gradient(rgba(255,255,255,.09), rgba(0,0,0,.17)),
+    repeating-linear-gradient(0deg, #686c66 0 5px, #5b5f59 5px 10px);
+  box-shadow: inset 2px 2px rgba(255,255,255,.23), inset -3px -3px rgba(0,0,0,.42), 2px 2px 0 rgba(0,0,0,.28);
+  color: #fffdf3;
+  font-size: clamp(.66rem, 1.4vw, .83rem);
+  text-shadow: 1px 1px #1b1d19;
+  cursor: pointer;
+  transition: filter .13s steps(2, end), transform .13s steps(2, end);
+}
+
+.minecraft-world-quicklinks button {
+  font-family: inherit;
+}
+
+.minecraft-world-quicklinks a:hover,
+.minecraft-world-quicklinks a:focus-visible,
+.minecraft-world-quicklinks button:hover,
+.minecraft-world-quicklinks button:focus-visible {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+}
+
+.minecraft-world-footer {
+  min-height: 3rem;
+  align-items: flex-end;
+}
+
+.minecraft-world-footer-controls {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+
+.minecraft-settings-button {
+  display: grid;
+  width: 2.5rem;
+  height: 2.35rem;
+  place-items: center;
+  border: 3px solid #11140f;
+  background: linear-gradient(#70756e, #545a53);
+  box-shadow: inset 2px 2px rgba(255,255,255,.2), inset -2px -2px rgba(0,0,0,.35);
+  color: #fffdf3;
+  cursor: pointer;
+}
+
+.minecraft-world-footer-controls > span,
+.minecraft-world-footer-disclaimer {
+  font-size: .55rem;
+  line-height: 1.5;
+}
+
+.minecraft-settings-options {
+  display: grid;
+  width: min(100%, 30rem);
+  gap: .55rem;
+}
+
+.minecraft-settings-options .minecraft-world-destination {
+  width: 100%;
+  font-family: var(--font-pixel-role);
+  font-size: .85rem;
+  text-decoration: none;
+}
+
+@media (max-width: 620px) {
+  .minecraft-world-destinations,
+  .minecraft-world-quicklinks {
+    width: min(100%, 25rem);
+  }
+
+  .minecraft-world-destinations {
+    gap: .38rem;
+  }
+
+  .minecraft-world-destination {
+    min-height: 2.8rem;
+  }
+
+  .minecraft-world-destination > span {
+    font-size: .72rem;
+  }
+
+  .minecraft-world-quicklinks {
+    grid-template-columns: 2.7rem 1fr 1fr 2.7rem;
+    gap: .35rem;
+  }
+
+  .minecraft-world-quicklinks a,
+  .minecraft-world-quicklinks button {
+    min-height: 2.65rem;
+    font-size: .7rem;
+  }
+
+  .minecraft-world-footer {
+    min-height: 2.7rem;
+    align-items: center;
+    padding-inline: .5rem;
+  }
+
+  .minecraft-world-footer-controls {
+    gap: .35rem;
+  }
+
+  .minecraft-world-footer-controls > span,
+  .minecraft-world-footer-disclaimer {
+    max-width: 8.5rem;
+    font-size: .43rem;
+  }
+
+  .minecraft-world-footer-controls .ambient-audio {
+    gap: .05rem;
+  }
+
+  .minecraft-world-footer-controls .ambient-audio-volume {
+    display: none;
+  }
+
+  .minecraft-world-footer-controls .ambient-audio-toggle {
+    min-height: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .minecraft-world-quicklinks a,
+  .minecraft-world-quicklinks button {
+    transition: none;
+  }
+}
+
+.minecraft-skill-inventory {
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+  padding: clamp(.7rem, 1.8vw, 1.2rem);
+}
+
+.minecraft-enchanting-top {
+  display: grid;
+  min-height: 18rem;
+  grid-template-columns: minmax(13rem, .62fr) minmax(0, 1.38fr);
+  gap: .65rem;
+}
+
+.minecraft-enchanting-book-panel {
+  display: flex;
+  min-height: 18rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 1rem;
+  border: 3px solid #898989;
+  outline: 2px solid #2c2c2c;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 14px, rgba(255,255,255,.07) 15px),
+    #aaa9a9;
+  color: #282828;
+  text-align: center;
+}
+
+.minecraft-enchanting-book-panel h2 {
+  max-width: 100%;
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.85rem, 1.6vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.minecraft-enchanting-runes {
+  margin-top: .35rem;
+  color: #8567b7;
+  font-family: var(--font-pixel-role);
+  font-size: .72rem;
+  letter-spacing: .12em;
+}
+
+.minecraft-floating-book {
+  display: block;
+  width: clamp(5.5rem, 10vw, 8rem);
+  height: clamp(4.5rem, 8vw, 6.5rem);
+  margin: .3rem auto;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 7px 3px rgba(35, 26, 9, .3));
+  animation: minecraft-book-float 2.6s ease-in-out infinite;
+}
+
+.minecraft-enchanting-book-panel > p {
+  max-width: 21rem;
+  margin: .35rem 0;
+  color: #333;
+  font-size: .75rem;
+  line-height: 1.45;
+}
+
+.minecraft-enchanting-book-panel > small {
+  margin-top: .25rem;
+  color: #514774;
+  font-family: var(--font-pixel-role);
+  font-size: .55rem;
+}
+
+.minecraft-enchanting-book-panel > strong {
+  max-width: 100%;
+  margin-top: .2rem;
+  color: #34302b;
+  font-size: .68rem;
+  font-weight: 600;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.minecraft-skill-folders {
+  display: grid;
+  min-height: 0;
+  align-content: stretch;
+  gap: .35rem;
+}
+
+.minecraft-skill-folder {
+  display: grid;
+  min-height: 3.5rem;
+  grid-template-columns: 3rem minmax(0, 1fr) 1.7rem;
+  align-items: center;
+  gap: .65rem;
+  padding: .4rem .55rem;
+  border: 2px solid #11120f;
+  background:
+    linear-gradient(rgba(255,255,255,.035), rgba(0,0,0,.08)),
+    #1d1b16;
+  color: #f5f1e6;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .12s steps(2, end), background-color .12s steps(2, end), transform .12s steps(2, end);
+}
+
+.minecraft-skill-folder:hover,
+.minecraft-skill-folder.is-active {
+  border-color: #b6b1a6;
+  background-color: #302e26;
+}
+
+.minecraft-skill-folder.is-active {
+  box-shadow: inset 3px 0 #9c7fc6;
+}
+
+.minecraft-folder-item,
+.minecraft-skill-book-slot {
+  display: grid;
+  width: 2.8rem;
+  height: 2.8rem;
+  place-items: center;
+  border: 2px solid #777;
+  background: #777;
+  box-shadow: inset 2px 2px rgba(255,255,255,.18), inset -2px -2px rgba(0,0,0,.18);
+}
+
+.minecraft-folder-item img {
+  width: 2.35rem;
+  height: 2.35rem;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.minecraft-folder-copy {
+  display: grid;
+  min-width: 0;
+  gap: .2rem;
+}
+
+.minecraft-folder-copy strong {
+  color: #f0e7c0;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.58rem, 1.2vw, .76rem);
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.minecraft-folder-copy small {
+  color: #aaa69b;
+  font-family: var(--font-pixel-role);
+  font-size: .5rem;
+}
+
+.minecraft-folder-level {
+  color: #58dd1f;
+  font-family: var(--font-pixel-role);
+  font-size: .78rem;
+  text-align: right;
+  text-shadow: 0 0 4px rgba(65, 235, 18, .45);
+}
+
+.minecraft-enchanted-items {
+  min-height: 8.5rem;
+  padding: .6rem;
+  border: 3px solid #12120f;
+  background: #302d25;
+  box-shadow: inset 0 1px rgba(255,255,255,.08);
+}
+
+.minecraft-enchanted-items-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .5rem;
+  margin: 0 0 .45rem;
+}
+
+.minecraft-enchanted-items-heading h2 {
+  margin: 0;
+  color: #fffdf3;
+  font-family: var(--font-pixel-role);
+  font-size: .8rem;
+  font-weight: 400;
+}
+
+.minecraft-enchanted-items-heading > span {
+  color: #c5b88f;
+  font-size: .62rem;
+}
+
+.minecraft-enchanted-items .minecraft-skill-slots {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .4rem;
+  margin: 0;
+}
+
+.minecraft-enchanted-items .minecraft-skill-slot {
+  display: flex;
+  min-width: 0;
+  min-height: 3.4rem;
+  align-items: center;
+  justify-content: flex-start;
+  gap: .45rem;
+  padding: .35rem;
+  border: 2px solid #484438;
+  background: #514b3b;
+  color: #fffdf3;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.5rem, .95vw, .7rem);
+  line-height: 1.4;
+  text-align: left;
+}
+
+.minecraft-enchanted-items .minecraft-skill-slot:hover,
+.minecraft-enchanted-items .minecraft-skill-slot[aria-pressed="true"] {
+  border-color: #c1b590;
+  background: #625a45;
+}
+
+.minecraft-skill-book-slot {
+  width: 2.35rem;
+  height: 2.35rem;
+  flex: 0 0 2.35rem;
+  background: #888;
+}
+
+.minecraft-skill-book-slot img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+@keyframes minecraft-book-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-5px) rotate(2deg); }
+}
+
+@media (max-width: 680px) {
+  .minecraft-enchanting-top {
+    min-height: auto;
+    grid-template-columns: minmax(6.5rem, .62fr) minmax(0, 1.38fr);
+    gap: .4rem;
+  }
+
+  .minecraft-enchanting-book-panel {
+    min-height: 14rem;
+    padding: .5rem;
+  }
+
+  .minecraft-enchanting-book-panel h2 {
+    font-size: .68rem;
+  }
+
+  .minecraft-floating-book {
+    width: 5rem;
+    height: 4rem;
+  }
+
+  .minecraft-enchanting-book-panel > p {
+    font-size: .64rem;
+  }
+
+  .minecraft-enchanting-book-panel > strong {
+    font-size: .58rem;
+  }
+
+  .minecraft-skill-folder {
+    min-height: 3rem;
+    grid-template-columns: 2.25rem minmax(0, 1fr) 1rem;
+    gap: .35rem;
+    padding: .25rem;
+  }
+
+  .minecraft-folder-item {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .minecraft-folder-item img {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .minecraft-folder-copy strong {
+    font-size: .48rem;
+  }
+
+  .minecraft-folder-copy small {
+    font-size: .43rem;
+  }
+
+  .minecraft-folder-level {
+    font-size: .6rem;
+  }
+
+  .minecraft-enchanted-items .minecraft-skill-slots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .minecraft-floating-book {
+    animation: none;
+  }
+
+  .minecraft-skill-folder,
+  .minecraft-enchanted-items .minecraft-skill-slot {
+    transition: none;
+  }
+}
+
+.minecraft-world-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  background:
+    linear-gradient(rgba(16, 24, 25, .66), rgba(14, 18, 15, .78)),
+    url('/images/minecraft-forest-reference.png') center / cover no-repeat;
+  color: #fffdf3;
+  font-family: var(--font-pixel-role);
+  text-shadow: 1px 2px #111;
+  animation: minecraft-loading-fade .18s steps(2, end) reverse both;
+}
+
+.minecraft-loading-block {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid #11140f;
+  background: linear-gradient(180deg, #6a9e40 0 32%, #765136 33% 100%);
+  box-shadow: inset 3px 3px rgba(255,255,255,.2), inset -3px -3px rgba(0,0,0,.35), 4px 4px rgba(0,0,0,.3);
+  animation: minecraft-loading-hop .55s steps(2, end) infinite alternate;
+}
+
+.minecraft-loading-label {
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.minecraft-loading-track {
+  width: min(13rem, 60vw);
+  height: .72rem;
+  padding: 2px;
+  border: 2px solid #10130f;
+  background: #252821;
+  box-shadow: inset 1px 1px rgba(0,0,0,.5), 2px 2px rgba(0,0,0,.28);
+}
+
+.minecraft-loading-track > span {
+  display: block;
+  width: 38%;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, #82b94d 0 8px, #67953c 8px 12px);
+  animation: minecraft-loading-progress .48s steps(4, end) infinite alternate;
+}
+
+@keyframes minecraft-loading-hop {
+  from { transform: translateY(3px); }
+  to { transform: translateY(-4px); }
+}
+
+@keyframes minecraft-loading-progress {
+  from { width: 22%; }
+  to { width: 100%; }
+}
+
+@keyframes minecraft-loading-fade {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .minecraft-world-loading,
+  .minecraft-loading-block,
+  .minecraft-loading-track > span {
+    animation: none;
+  }
+
+  .minecraft-world-loading {
+    background: rgba(20, 25, 21, .92);
+  }
+}
+
+.reference-main-menu {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  width: min(100%, 44rem);
+  padding: clamp(1rem, 3vw, 2rem);
+  text-align: center;
+  background: rgba(13, 16, 16, .28);
+  backdrop-filter: blur(2px);
+}
+
+.reference-main-menu .reference-eyebrow {
+  color: #fffdf3;
+  text-shadow: 1px 2px #222;
+}
+
+.reference-main-menu .reference-eyebrow span {
+  display: none;
+}
+
+.reference-main-menu h1 {
+  margin: .2rem 0 .45rem;
+  color: #f7f4e9;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(3.5rem, 12vw, 7.25rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: .025em;
+  text-shadow: 4px 4px 0 #262722, 7px 7px 0 #11130f, 0 9px 16px rgba(0,0,0,.48);
+}
+
+.reference-main-menu .reference-lede {
+  margin: 0 0 1.3rem;
+  color: #f5f0e2;
+  font-size: clamp(.95rem, 2vw, 1.2rem);
+  font-weight: 700;
+  text-shadow: 1px 2px #1a1c19;
+}
+
+.reference-main-menu-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+  width: min(100%, 28rem);
+}
+
+.reference-main-menu-buttons .reference-button {
+  min-height: 3.1rem;
+  width: 100%;
+  font-size: clamp(.85rem, 2vw, 1.08rem);
+}
+
+.reference-project-heading-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .8rem;
+}
+
+.reference-project-heading-actions .reference-button {
+  width: fit-content;
+}
+
+.reference-main-menu-buttons .reference-button:nth-child(-n+3),
+.reference-main-menu-buttons .reference-button:last-child {
+  grid-column: 1 / -1;
+}
+
+.reference-main-menu-socials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .6rem;
+  margin-top: .9rem;
+}
+
+.reference-main-menu-socials a,
+.reference-world-status > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  padding: .55rem .75rem;
+  border: 2px solid #141711;
+  background: #343a34;
+  box-shadow: inset 1px 1px rgba(255,255,255,.18), inset -2px -2px rgba(0,0,0,.32);
+  color: #f3f0e5;
+  font-family: var(--font-pixel-role);
+  font-size: .72rem;
+  text-shadow: 1px 1px #151713;
+}
+
+.reference-main-menu-socials a:hover,
+.reference-world-status > a:hover {
+  background: #4e6540;
+}
+
+.reference-world-status {
+  position: absolute;
+  right: 1.25rem;
+  bottom: .85rem;
+  left: 1.25rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  color: #f5f0e2;
+  font-family: var(--font-pixel-role);
+  font-size: .63rem;
+  text-shadow: 1px 2px #11130f;
+}
+
+.reference-world-status .ambient-audio {
+  flex-shrink: 0;
+  border-color: #11140f;
+  background: #252a25;
+}
+
+.reference-world-status > span {
+  text-align: center;
+}
+
+.reference-about-portrait-card {
+  position: relative;
+  display: grid;
+  width: min(100%, 23rem);
+  min-height: 25rem;
+  justify-items: center;
+  align-content: center;
+  gap: 1rem;
+  overflow: hidden;
+  border: 4px solid #11140f;
+  background:
+    linear-gradient(180deg, transparent 60%, rgba(0,0,0,.5)),
+    repeating-linear-gradient(0deg, transparent 0 30px, rgba(0,0,0,.16) 31px),
+    #3b4737;
+  box-shadow: inset 3px 3px rgba(255,255,255,.18), inset -4px -4px rgba(0,0,0,.38), 8px 8px 0 rgba(0,0,0,.27);
+}
+
+.reference-about-portrait-card img {
+  position: relative;
+  z-index: 1;
+  width: min(75%, 16rem);
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: drop-shadow(5px 5px 0 rgba(0,0,0,.35));
+  cursor: pointer;
+}
+
+.reference-about-portrait-card > span {
+  position: relative;
+  z-index: 2;
+  color: #fffdf3;
+  font-family: var(--font-pixel-role);
+  font-size: .75rem;
+  text-align: center;
+  text-shadow: 1px 1px #111;
+}
+
+.reference-about-portrait-card .reference-hero-portrait-ring {
+  width: min(76%, 18rem);
+  border: 5px solid #60675b;
+}
+
+.reference-about-portrait-card img.is-glitching {
+  opacity: .82;
+  filter: contrast(1.6) hue-rotate(18deg);
+  animation: portrait-glitch .62s steps(2, end);
+}
+
+.reference-articles {
+  padding: clamp(3.5rem, 7vw, 6rem) max(5vw, 1.25rem);
+  border-block: 3px solid #11140f;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(0,0,0,.14) 32px),
+    #202620;
+  box-shadow: inset 0 4px 0 rgba(255,255,255,.06), inset 0 -5px 0 rgba(0,0,0,.2);
+}
+
+.reference-articles .reference-section-heading {
+  align-items: center;
+}
+
+.reference-articles .reference-section-heading h2 {
+  margin: .4rem 0 0;
+}
+
+.reference-article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+  max-width: 90rem;
+  margin: auto;
+}
+
+.reference-article-card {
+  overflow: hidden;
+  border: 3px solid #11140f;
+  background: #2e342c;
+  box-shadow: inset 2px 2px rgba(255,255,255,.11), inset -3px -3px rgba(0,0,0,.34), 5px 5px 0 rgba(0,0,0,.23);
+}
+
+.reference-article-cover {
+  position: relative;
+  display: block;
+  height: clamp(8rem, 17vw, 14rem);
+  overflow: hidden;
+  background: #283128;
+}
+
+.reference-article-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: auto;
+  transition: transform .25s steps(3, end), filter .25s steps(3, end);
+  filter: saturate(.78) contrast(1.08);
+}
+
+.reference-article-cover:hover img {
+  transform: scale(1.04);
+  filter: saturate(1) contrast(1.1);
+}
+
+.reference-article-cover > span {
+  position: absolute;
+  right: .55rem;
+  bottom: .55rem;
+  padding: .35rem .5rem;
+  border: 1px solid #171a15;
+  background: rgba(24,28,23,.9);
+  color: #f3f0e5;
+  font-family: var(--font-pixel-role);
+  font-size: .58rem;
+}
+
+.reference-article-copy {
+  display: flex;
+  min-height: 14rem;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.reference-article-copy .reference-file-label {
+  min-height: 1.4rem;
+  margin: 0;
+  color: #d6d0bc;
+  font-size: .58rem;
+}
+
+.reference-article-copy h3 {
+  margin: .5rem 0;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  line-height: 1.3;
+  text-shadow: 1px 1px #111;
+}
+
+.reference-article-copy h3 a:hover {
+  color: #e0b857;
+}
+
+.reference-article-copy > p:not(.reference-file-label) {
+  margin: 0 0 1rem;
+  color: #d5d2c6;
+  font-size: .86rem;
+  line-height: 1.55;
+}
+
+.reference-article-open {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  width: max-content;
+  margin-top: auto;
+  padding-top: .7rem;
+  border-top: 1px solid #687060;
+  color: #e0b857;
+  font-family: var(--font-pixel-role);
+  font-size: .7rem;
+}
+
+.reference-article-empty {
+  grid-column: 1/-1;
+  padding: 1.5rem;
+  border: 2px solid #11140f;
+  background: #2e342c;
+  color: #e8e4d8;
+}
+
+.reference-project-stage,
+.reference-project-detail,
+.reference-article-card {
+  animation: none;
+}
+
+@media (max-width: 800px) {
+  .reference-article-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reference-article-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .reference-world-status > span {
+    display: none;
+  }
+
+  .reference-world-status {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 520px) {
+  .reference-main-menu {
+    padding: .8rem .25rem;
+  }
+
+  .reference-main-menu h1 {
+    font-size: clamp(2.9rem, 15vw, 4.4rem);
+  }
+
+  .reference-main-menu .reference-eyebrow {
+    font-size: .51rem;
+  }
+
+  .reference-main-menu-buttons {
+    width: min(100%, 23rem);
+    gap: .42rem;
+  }
+
+  .reference-project-heading-actions {
+    align-items: flex-start;
+    margin-top: 1rem;
+  }
+
+  .reference-main-menu-buttons .reference-button {
+    min-height: 2.85rem;
+  }
+
+  .reference-article-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-article-card:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
+  .reference-article-cover {
+    height: 12rem;
+  }
+
+  .reference-article-copy {
+    min-height: 12rem;
+  }
+
+  .reference-world-status {
+    right: .5rem;
+    left: .5rem;
+    gap: .35rem;
+  }
+
+  .reference-world-status .ambient-audio-toggle span {
+    display: none;
+  }
+}
+
+main.min-h-screen:not(.reference-site) {
+  padding-top: 5.5rem;
+  background: transparent;
+}
+
+main.min-h-screen.bg-background {
+  background: transparent;
+}
+
+main.min-h-screen > section:not(.reference-site) {
+  border-color: rgba(12, 15, 11, .9);
+}
+
+main.min-h-screen > section h1,
+main.min-h-screen > section h2,
+main.min-h-screen > section h3 {
+  text-shadow: 2px 2px 0 rgba(0,0,0,.3);
+}
+
+main.min-h-screen > section h1,
+main.min-h-screen > section h2 {
+  font-family: var(--font-display-role);
+  letter-spacing: 0;
+}
+
+main.min-h-screen [class*="rounded-"] {
+  border-radius: 0;
+}
+
+main.min-h-screen [class*="bg-card"] {
+  background-color: #292e28;
+  box-shadow: inset 2px 2px rgba(255,255,255,.08), inset -3px -3px rgba(0,0,0,.25);
+}
+
+main.min-h-screen [class*="border-border"] {
+  border-color: #575d54;
+}
+
+main.min-h-screen button:not(.game-nav-menu-button),
+main.min-h-screen [role="button"] {
+  cursor: pointer;
+}
+
+main.min-h-screen article,
+main.min-h-screen aside > div {
+  border-color: #555b51;
+}
+
+main.min-h-screen input,
+main.min-h-screen textarea {
+  border-radius: 0;
+  border-color: #74796f;
+  background-color: #1b201a;
+}
+
+.resume-page {
+  padding-top: 0 !important;
+  background: transparent;
+}
+
+.resume-section,
+.resume-grid,
+.resume-highlight,
+.resume-skill-grid > div,
+.resume-certifications li {
+  border-color: #151813;
+  background-color: #292f28;
+}
+
+.resume-section {
+  box-shadow: inset 2px 2px rgba(255,255,255,.06), inset -3px -3px rgba(0,0,0,.25);
+}
+
+.resume-section h2,
+.resume-intro h1 {
+  font-family: var(--font-display-role);
+  letter-spacing: 0;
+  text-shadow: 2px 2px #11140f;
+}
+
+.resume-list article,
+.resume-project-list article {
+  border-color: #596052;
+}
+
+.resume-list h3,
+.resume-project-list h3 {
+  font-family: var(--font-pixel-role);
+  font-size: .9rem;
+}
+
+.resume-actions .reference-button {
+  text-decoration: none;
+}
+
+.blog-browser,
+.markdown-article {
+  color: var(--color-ink);
+}
+
+.blog-browser a,
+.markdown-article a {
+  text-underline-offset: .2em;
+}
+
+.site-footer {
+  padding: 2rem max(5vw, 1.25rem);
+}
+
+.site-footer .display,
+.site-footer .type-display {
+  font-family: var(--font-pixel-role);
+  font-size: 1.5rem;
+  letter-spacing: 0;
+}
+
+:focus-visible {
+  outline: 3px solid #f1cf71;
+  outline-offset: 3px;
+}
+
+@media (max-width: 1050px) {
+  .game-nav-links > a[href*="skills"] {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .game-nav-wrap {
+    justify-content: flex-end;
+  }
+
+  .game-nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .game-nav-links,
+  .game-nav-contact {
+    display: none;
+  }
+
+  .game-nav-menu-button {
+    display: inline-flex;
+  }
+
+  .game-mobile-menu nav {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-hero {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-top: 7.5rem;
+  }
+
+  .reference-hero-copy {
+    max-width: 45rem;
+  }
+
+  .reference-hero-portrait {
+    min-height: 22rem;
+    margin-top: -1rem;
+  }
+
+  .reference-hero-portrait img {
+    width: min(70%, 19rem);
+  }
+
+  .reference-hero-portrait-ring {
+    width: min(66%, 22rem);
+  }
+
+  .reference-achievements {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  main.min-h-screen:not(.reference-site) {
+    padding-top: 5rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .game-nav-wrap {
+    padding: .55rem;
+  }
+
+  .game-nav-brand {
+    padding-inline: .35rem;
+    font-size: .62rem;
+  }
+
+  .ambient-audio {
+    gap: .15rem;
+    padding: .15rem;
+  }
+
+  .ambient-audio-toggle {
+    gap: .2rem;
+    padding-inline: .3rem;
+    font-size: .48rem;
+  }
+
+  .ambient-audio-volume input {
+    width: 2.6rem;
+  }
+
+  .ambient-audio-volume {
+    gap: .15rem;
+    font-size: .5rem;
+  }
+
+  .game-nav-menu-button {
+    gap: .25rem;
+    padding-inline: .45rem;
+    font-size: .55rem;
+  }
+
+  .reference-hero {
+    padding-inline: 1rem;
+  }
+
+  .reference-hero-copy {
+    padding: 1rem;
+  }
+
+  .reference-hero h1 {
+    font-size: clamp(4rem, 19vw, 6.3rem);
+  }
+
+  .reference-panel,
+  .reference-lab,
+  .reference-projects,
+  .reference-contact,
+  .minecraft-journey-section,
+  .minecraft-certifications-section {
+    padding: 3.5rem 1rem;
+  }
+
+  .reference-project-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reference-project-selector button {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .reference-project-stage-visual {
+    min-height: 16rem;
+  }
+
+  .reference-contact-link strong {
+    overflow-wrap: anywhere;
+  }
+
+  .game-mobile-menu {
+    inset-inline: .55rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-project-ticker-track {
+    animation: none;
+  }
+
+  .reference-hero-portrait img,
+  .game-nav-links > a,
+  .game-nav-contact,
+  .game-nav-menu-button {
+    transition: none;
+  }
+}
+
+.minecraft-route .display,
+.minecraft-route .tech-label,
+.minecraft-route h1,
+.minecraft-route h2,
+.minecraft-route h3,
+.resume-page .type-display,
+.resume-page .type-editorial,
+.minecraft-blog-page h1,
+.minecraft-blog-page h2,
+.minecraft-blog-page h3,
+.minecraft-blog-article h1,
+.minecraft-blog-article h2,
+.minecraft-blog-article h3 {
+  font-family: var(--font-pixel-role);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.minecraft-project-archive h1,
+.resume-page .type-display {
+  font-size: clamp(2.8rem, 8vw, 6.5rem);
+  line-height: 1.2;
+}
+
+.minecraft-project-entry {
+  margin-block: 1rem;
+  padding: clamp(1rem, 3vw, 2rem);
+  border: 3px solid #11140f;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(0,0,0,.12) 32px),
+    linear-gradient(#353b33, #282d27);
+  box-shadow: inset 2px 2px rgba(255,255,255,.12), inset -3px -3px rgba(0,0,0,.3), 0 5px 0 rgba(0,0,0,.28);
+}
+
+.minecraft-project-entry article > span:first-child {
+  font-family: var(--font-pixel-role);
+}
+
+.minecraft-blog-page [class*="rounded-"],
+.minecraft-blog-article [class*="rounded-"] {
+  border-radius: 0;
+  backdrop-filter: none;
+}
+
+.minecraft-blog-page button {
+  border: 2px solid #11140f;
+  background: linear-gradient(#444a42, #30352f);
+  box-shadow: inset 1px 1px rgba(255,255,255,.12), inset -2px -2px rgba(0,0,0,.3);
+  color: #e8e4d8;
+}
+
+.minecraft-blog-page button[aria-pressed="true"] {
+  background: linear-gradient(#718e43, #506831);
+  color: #fffdf3;
+}
+
+.minecraft-blog-page input {
+  color: #f2eee5;
+}
+
+.minecraft-blog-article h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.3;
+}
+
+.minecraft-blog-article .markdown-article {
+  line-height: 1.8;
+}
+
+.minecraft-blog-page a,
+.minecraft-blog-article a,
+.minecraft-route a {
+  text-underline-offset: .2em;
+}
+
+@media (max-width: 520px) {
+  .minecraft-project-archive h1,
+  .resume-page .type-display {
+    font-size: clamp(2.35rem, 12vw, 4rem);
+  }
+
+  .minecraft-project-entry {
+    padding: 1rem;
+  }
+}

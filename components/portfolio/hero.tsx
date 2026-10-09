@@ -58,7 +58,7 @@ export function Hero() {
         >
           <motion.p {...rise(0.05)} className="tech-label flex items-center gap-3">
             <span aria-hidden="true" className="h-px w-10 bg-accent/70" />
-            Aster Vale — Portfolio 2026
+            Ali Raza — Software Developer
           </motion.p>
 
           <motion.h1
@@ -103,7 +103,7 @@ export function Hero() {
               </span>
             </Link>
             <a
-              href="https://github.com/your-handle"
+              href="https://github.com/ali-raza-py"
               target="_blank"
               rel="noreferrer"
               data-cursor="open"
@@ -123,9 +123,9 @@ export function Hero() {
             {...rise(0.54)}
             className="mt-12 max-w-xs font-mono text-[10px] leading-5 tracking-[0.14em] text-muted-foreground/70"
           >
-              BASED IN LONDON • AVAILABLE FOR SELECT CLIENTS
+            BASED IN KARACHI, PAKISTAN
             <br />
-              DESIGN / ENGINEERING / PRODUCT THINKING
+            SOFTWARE / AI / SYSTEMS
           </motion.p>
         </motion.div>
         {/* RIGHT: the 3D portrait object */}

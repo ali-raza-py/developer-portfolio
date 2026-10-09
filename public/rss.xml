@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
-<channel>
-  <title>Aster Vale Notes</title>
-  <link>https://example.com/blog</link>
-  <description>Markdown-first developer notes and product writing.</description>
+  <channel>
+  <title>Ali Raza — Developer Notes</title>
+  <link>https://ali-raza-py.me/blog</link>
+  <description>Notes on building software, learning algorithms, and shipping projects.</description>
   <item>
     <title>Building Content-First Portfolios That Stay Fresh</title>
-    <link>https://example.com/blog/building-content-first-portfolios</link>
-    <guid>https://example.com/blog/building-content-first-portfolios</guid>
+    <link>https://ali-raza-py.me/blog/building-content-first-portfolios</link>
+    <guid>https://ali-raza-py.me/blog/building-content-first-portfolios</guid>
     <description>Why markdown-based portfolios scale better than manual editing and how to ship one cleanly.</description>
     <pubDate>Fri, 10 Jul 2026 00:00:00 GMT</pubDate>
   </item>
   <item>
     <title>How I Ship Fast with Python and Data Workflows</title>
-    <link>https://example.com/blog/ship-fast-with-nextjs</link>
-    <guid>https://example.com/blog/ship-fast-with-nextjs</guid>
+    <link>https://ali-raza-py.me/blog/ship-fast-with-nextjs</link>
+    <guid>https://ali-raza-py.me/blog/ship-fast-with-nextjs</guid>
     <description>A practical look at how I structure pages, content, and deployment for quick iteration.</description>
     <pubDate>Sun, 28 Jun 2026 00:00:00 GMT</pubDate>
   </item>
   <item>
     <title>Markdown-First Workflows for Student Developers</title>
-    <link>https://example.com/blog/markdown-first-workflows</link>
-    <guid>https://example.com/blog/markdown-first-workflows</guid>
+    <link>https://ali-raza-py.me/blog/markdown-first-workflows</link>
+    <guid>https://ali-raza-py.me/blog/markdown-first-workflows</guid>
     <description>How markdown gives you a reliable publishing system with zero backend overhead.</description>
     <pubDate>Sat, 30 May 2026 00:00:00 GMT</pubDate>
   </item>
   <item>
     <title>Career Notes from Building Projects in Public</title>
-    <link>https://example.com/blog/career-notes-from-building-projects</link>
-    <guid>https://example.com/blog/career-notes-from-building-projects</guid>
+    <link>https://ali-raza-py.me/blog/career-notes-from-building-projects</link>
+    <guid>https://ali-raza-py.me/blog/career-notes-from-building-projects</guid>
     <description>What recruiters notice when they review a portfolio built with real effort and consistency.</description>
     <pubDate>Tue, 05 May 2026 00:00:00 GMT</pubDate>
   </item>

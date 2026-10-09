@@ -123,6 +123,8 @@ export function ProjectsDropdown({
                 <Link
                   key={project.slug}
                   href={project.href}
+                  target={project.href.startsWith('/') ? undefined : '_blank'}
+                  rel={project.href.startsWith('/') ? undefined : 'noopener noreferrer'}
                   role="menuitem"
                   onClick={() => {
                     setOpen(false)

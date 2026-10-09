@@ -581,8 +581,7 @@ export const navProjects: NavProject[] = [
     slug: 'dsa-vizer',
     name: 'DSA Vizer',
     description: 'Data structures & algorithms visualizer',
-    // No case-study page yet — DSA Vizer is showcased in the homepage project selector.
-    href: '/#projects',
+    href: 'https://aliraza786.pythonanywhere.com/l',
   },
   {
     slug: 'code-yaar',

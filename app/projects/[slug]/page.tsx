@@ -89,7 +89,7 @@ export default async function CaseStudyPage({
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen">
+      <main className="minecraft-route minecraft-case-study min-h-screen">
         {/* Masthead */}
         <section className="grain relative border-b border-border px-6 pb-16 pt-12 sm:px-10 lg:px-16 lg:pb-20 lg:pt-16">
           <div className="relative mx-auto max-w-[100rem]">

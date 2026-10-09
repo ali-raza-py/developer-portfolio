@@ -50,10 +50,11 @@ export const portfolioProjects: PortfolioProject[] = [
     description: 'Interactive data structures and algorithms visualizer for learning patterns and trade-offs.',
     stack: ['Python', 'Flask', 'Algorithms', 'Visualization'],
     status: 'Details pending verification',
+    url: 'https://aliraza786.pythonanywhere.com/l',
     accent: 'blue',
   },
   {
-    name: 'Field Notes',
+    name: 'Code Yaar',
     slug: 'code-yaar',
     description: caseStudyBySlug.get('code-yaar')?.shortDescription ?? 'A learning product for building momentum through small, realistic technical projects.',
     stack: caseStudyBySlug.get('code-yaar')?.stack.slice(0, 4) ?? ['Next.js', 'UX', 'Community', 'Education'],

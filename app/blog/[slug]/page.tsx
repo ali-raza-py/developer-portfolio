@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, CalendarDays, Share2 } from 'lucide-react'
 import { MarkdownContent } from '@/components/content/markdown-content'
 import { ReadingProgressBar } from '@/components/content/progress-bar'
 import { SiteHeader } from '@/components/content/site-header'
+import { SiteFooter } from '@/components/portfolio/site-footer'
 import { TableOfContents } from '@/components/content/toc'
 import { type BlogEntry, formatDate } from '@/lib/content'
 import { getAllBlogPosts, getBlogPostBySlug } from '@/lib/content.server'
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   if (!post) return {}
 
-  const title = post.seoTitle ?? `${post.title} | ${siteConfig.name} Blog`
+  const title = post.seoTitle ?? `${post.title} — Article`
   const description = post.seoDescription ?? post.description
 
   return {
@@ -95,7 +96,8 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
+    <>
+      <main className="minecraft-blog-article min-h-screen bg-background text-foreground transition-colors duration-300">
       <ReadingProgressBar />
       <SiteHeader />
 
@@ -201,19 +203,16 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
             <TableOfContents headings={post.headings} />
 
             <div className="rounded-[30px] border border-border bg-card p-5 backdrop-blur-xl">
-              <h2 className="text-lg font-semibold text-foreground">Newsletter</h2>
+              <h2 className="text-lg font-semibold text-foreground">Get in touch</h2>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                Add your newsletter subscription integration here to capture readers.
+                There is no newsletter signup connected yet. Send a note to discuss this article or a project.
               </p>
-              <div className="mt-4 space-y-3">
-                <input
-                  placeholder="Email address"
-                  className="w-full rounded-2xl border border-border bg-muted/20 px-4 py-3 text-sm text-foreground outline-none placeholder:text-muted-foreground/50"
-                />
-                <button className="w-full rounded-2xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm font-medium text-primary transition hover:bg-primary/20">
-                  Subscribe
-                </button>
-              </div>
+              <a
+                href="mailto:btwaliraza110@gmail.com?subject=Hello%20Ali"
+                className="mt-4 inline-flex border border-border bg-muted/20 px-4 py-3 text-sm font-medium text-foreground transition hover:bg-muted/40"
+              >
+                Email Ali
+              </a>
             </div>
 
             <div className="rounded-[30px] border border-border bg-card p-5 backdrop-blur-xl">
@@ -231,6 +230,8 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
       </section>
 
       <script type="application/ld+json" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-    </main>
+      </main>
+      <SiteFooter />
+    </>
   )
 }

@@ -3,6 +3,7 @@ import { Anton, Geist_Mono, Instrument_Serif, Inter, Montserrat } from 'next/fon
 import './globals.css'
 
 import { ThemeProvider } from '@/components/theme-provider'
+import { AmbientAudioProvider } from '@/components/ambient-audio'
 import { Cursor } from '@/components/cursor'
 import { SmoothScroll } from '@/components/smooth-scroll'
 import { siteConfig } from '@/lib/site'
@@ -54,16 +55,16 @@ export const metadata: Metadata = {
   keywords: [
     'Ali Raza',
     'developer portfolio',
-    'product designer',
-    'full-stack developer',
+    'software developer',
+    'computer science student',
     'Next.js',
     'AI tools',
-    'experiential design',
-    'creative developer',
+    'software engineering',
+    'AI tools',
   ],
   icons: {
-    icon: '/ar-icon.svg',
-    apple: '/apple-icon.png',
+    icon: '/minecraft-pickaxe-favicon.png',
+    apple: '/minecraft-pickaxe-favicon.png',
   },
   alternates: {
     canonical: '/',
@@ -76,8 +77,8 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [
       {
-        url: '/images/portrait-placeholder.svg',
-        alt: 'Abstract portrait illustration',
+        url: '/images/ali-raza-profile.png',
+        alt: 'Ali Raza',
       },
     ],
   },
@@ -85,12 +86,12 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
-    images: ['/images/portrait-placeholder.svg'],
+    images: ['/images/ali-raza-profile.png'],
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0C0D0C',
+  themeColor: '#27342a',
 }
 
 export default function RootLayout({
@@ -101,26 +102,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${instrumentSerif.variable} ${geistMono.variable} ${montserrat.variable} ${anton.variable}`}
+      className={`${inter.variable} ${instrumentSerif.variable} ${geistMono.variable} ${montserrat.variable} ${anton.variable} dark`}
       style={{ colorScheme: 'dark' }}
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                document.documentElement.classList.add('dark');
-              } catch (e) {}
-            `,
-          }}
-        />
-      </head>
       <body className="antialiased">
-        <ThemeProvider>
-          <SmoothScroll />
-          <Cursor />
-          {children}
-        </ThemeProvider>
+        <AmbientAudioProvider>
+          <ThemeProvider>
+            <SmoothScroll />
+            <Cursor />
+            {children}
+          </ThemeProvider>
+        </AmbientAudioProvider>
       </body>
     </html>
   )

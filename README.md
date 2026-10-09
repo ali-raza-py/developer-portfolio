@@ -1,17 +1,19 @@
-# Aster Vale Portfolio
+# Ali Raza — Developer Portfolio
 
-Official portfolio of Aster Vale showcasing product design, web engineering, technical blogs, and case studies.
+Official portfolio of Ali Raza: software developer exploring AI and building useful software systems.
 
-**Author:** Aster Vale  
-**Website:** https://example.com
+**Author:** Ali Raza
+
+**Website:** https://ali-raza-py.me
 
 ## Overview
 
 This is a professional developer portfolio built with Next.js 16, Tailwind CSS, and a markdown-driven content system. It features:
 
-- **Fast & Static:** Deployed to GitHub Pages with static export
+- **Fast & Static:** Exported as a static site for GitHub Pages
 - **Markdown Content:** Projects and blog articles managed as markdown files
-- **Dark/Light Theme:** Smooth theme switching with localStorage persistence
+- **Minecraft-inspired design:** Pixel-influenced headings, block panels, and voxel landscape styling
+- **Ambient audio:** Existing ambient track with user-controlled playback and volume
 - **Responsive Design:** Mobile-first approach with Tailwind CSS
 - **SEO Optimized:** Automatic sitemap, robots.txt, and RSS generation
 
@@ -57,7 +59,7 @@ app/                    # Next.js app directory
 └── layout.tsx          # Root layout with theme detection
 
 components/             # React components
-├── portfolio/          # Homepage sections (hero, education, etc.)
+├── portfolio/          # Homepage sections and portfolio content
 ├── content/            # Blog & projects browsers
 └── ui/                 # Reusable UI components
 
@@ -73,7 +75,7 @@ scripts/                # Build scripts (SEO generation)
 
 ## Features
 
-- **Theme System:** Light mode by default, dark mode available with localStorage persistence
+- **Theme System:** Dark theme with persisted color preference
 - **Empty States:** Graceful "Coming Soon" states when no blog/project content exists
 - **Markdown Engine:** Gray-matter for frontmatter, React Markdown with remark/rehype plugins
 - **Reading Time:** Automatic calculation for blog articles
@@ -90,4 +92,4 @@ scripts/                # Build scripts (SEO generation)
 
 ## License
 
-Personal portfolio of Aster Vale. All rights reserved.
+Personal portfolio of Ali Raza. All rights reserved.

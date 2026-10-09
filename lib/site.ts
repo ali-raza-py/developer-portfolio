@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: 'Ali Raza',
-  url: 'https://example.com',
-  title: 'Ali Raza — Software Engineering Student',
+  url: 'https://ali-raza-py.me',
+  title: 'Ali Raza — Software Developer',
   description:
-    'Portfolio of Ali Raza — a computer science student building useful software, AI tools, and full-stack systems.',
+    'Portfolio of Ali Raza — a software developer exploring AI and building useful software systems.',
 }

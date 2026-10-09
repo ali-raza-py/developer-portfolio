@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 
 import { SectionHeading } from './section-heading'
 
@@ -41,8 +41,10 @@ const stages = [
 
 /** Progression instead of invented years of experience. */
 export function Journey() {
+  const reduced = useReducedMotion()
+
   return (
-    <section id="journey" className="border-b border-border px-6 py-24 sm:px-10 lg:px-16 lg:py-32">
+    <section id="journey" className="minecraft-journey-section border-b border-border px-6 py-24 sm:px-10 lg:px-16 lg:py-32">
       <div className="mx-auto max-w-[100rem]">
         <SectionHeading
           eyebrow="Learning journey"
@@ -60,8 +62,8 @@ export function Journey() {
           {stages.map((stage, index) => (
             <motion.li
               key={stage.name}
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={reduced ? false : { opacity: 0, x: -16 }}
+              whileInView={reduced ? undefined : { opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.55, delay: index * 0.07, ease: EASE }}
               className="group relative grid grid-cols-[2rem_1fr] gap-x-6 pb-10 last:pb-0"

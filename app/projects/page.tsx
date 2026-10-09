@@ -4,12 +4,11 @@ import Link from 'next/link'
 import { SiteHeader } from '@/components/content/site-header'
 import { SiteFooter } from '@/components/portfolio/site-footer'
 import { type Project, experiments, projects } from '@/lib/projects'
-import { siteConfig } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: `Work — Project Archive | ${siteConfig.name}`,
+  title: 'Project Archive',
   description:
-    'Case studies and repositories from Aster Vale: Northstar AI, Signal Forge, Field Notes, and Prism Atlas — architecture, engineering decisions, and honest outcomes.',
+    'Project case studies and repositories by Ali Raza, including MediCare AI, AI-HUB, Algorify, and other software experiments.',
   alternates: {
     canonical: '/projects',
   },
@@ -28,7 +27,7 @@ function ProjectEntry({ project }: { project: Project }) {
     <Link
       href={`/projects/${project.slug}`}
       data-cursor="view"
-      className="group block border-b border-border py-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 lg:py-16"
+      className="minecraft-project-entry group block border-b border-border py-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 lg:py-16"
     >
       <article className="grid items-start gap-8 lg:grid-cols-[auto_1fr_auto] lg:gap-12">
         <span className="display text-6xl leading-none text-muted-foreground/40 transition-all duration-500 group-hover:translate-x-1 group-hover:text-accent lg:text-7xl">
@@ -101,7 +100,7 @@ export default function ProjectsPage() {
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen">
+      <main className="minecraft-route minecraft-project-archive min-h-screen">
         {/* Archive header */}
         <section className="border-b border-border px-6 pb-14 pt-16 sm:px-10 lg:px-16">
           <div className="mx-auto max-w-[100rem]">

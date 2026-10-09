@@ -327,7 +327,7 @@ export function PortraitPanel() {
       </div>
 
       <figcaption className="mt-6 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-        <span>Fig. 01 — Aster Vale</span>
+        <span>Fig. 01 — Ali Raza</span>
         {!reduced && <span className="text-accent">Drag to rotate</span>}
       </figcaption>
     </div>

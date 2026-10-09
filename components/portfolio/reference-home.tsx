@@ -1,13 +1,26 @@
 'use client'
 
-import { ArrowDown, ArrowUpRight, Copy, GitBranch, Menu, VolumeX, X } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, Copy, GitBranch, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
+import { SiteHeader } from '@/components/content/site-header'
+import { AmbientAudioControls } from '@/components/ambient-audio'
 import { portfolioProjects } from '@/lib/portfolio-projects'
 import { projects as caseStudyProjects } from '@/lib/projects'
+import { Certifications } from '@/components/portfolio/certifications'
+import { Journey } from '@/components/portfolio/journey'
 import { SignatureDeck } from '@/components/portfolio/signature-deck'
-import { ProjectsDropdown } from '@/components/content/projects-dropdown'
+import { formatDate, type BlogCategory } from '@/lib/content'
+
+type HomeArticle = {
+  slug: string
+  title: string
+  description: string
+  date: string
+  category: BlogCategory
+  coverImage: string
+}
 
 const selectedProjects = ['medicare-ai', 'ai-hub', 'algorify', 'dsa-vizer'].map((slug, index) => {
   const project = caseStudyProjects.find((item) => item.slug === slug)
@@ -24,10 +37,10 @@ const selectedProjects = ['medicare-ai', 'ai-hub', 'algorify', 'dsa-vizer'].map(
     features: project?.features.slice(0, 3) ?? ['Project details pending verification'],
     image: project?.images[0],
     video: project?.video,
-    videoFit: project?.video ? 'contain' : 'cover',
+    videoFit: project?.video ? ('contain' as const) : ('cover' as const),
     playbackRate: slug === 'medicare-ai' ? 2 : 1,
     githubUrl: project?.githubUrl,
-    liveUrl: project?.liveUrl,
+    liveUrl: project?.liveUrl ?? fallback?.url,
     status: project?.statusLabel ?? fallback?.status ?? 'Details pending',
     accent: index === 0 ? 'accent' : index === 1 ? 'paper' : 'surface',
   }
@@ -109,30 +122,16 @@ const skillGroups = [
   },
 ] as const
 
-export function ReferenceHome() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [soundOn, setSoundOn] = useState(false)
-  const [activeSection, setActiveSection] = useState('top')
-  const [activeSkillCategory, setActiveSkillCategory] = useState(skillGroups[0].category)
-  const [activeSkillName, setActiveSkillName] = useState(skillGroups[0].skills[0].name)
+export function ReferenceHome({ articles }: { articles: HomeArticle[] }) {
+  const [activeSkillCategory, setActiveSkillCategory] = useState<string>(skillGroups[0].category)
+  const [activeSkillName, setActiveSkillName] = useState<string>(skillGroups[0].skills[0].name)
   const [selectedProjectSlug, setSelectedProjectSlug] = useState(selectedProjects[0].slug)
   const [projectDetailOpen, setProjectDetailOpen] = useState(false)
   const [miniFocus, setMiniFocus] = useState<'frontend' | 'ai' | 'systems'>('frontend')
-  const [copied, setCopied] = useState(false)
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'failed'>('idle')
   const [portraitGlitch, setPortraitGlitch] = useState(false)
-  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
-    const sections = ['top', 'about', 'projects', 'contact']
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-        if (visible) setActiveSection(visible.target.id)
-      },
-      { rootMargin: '-35% 0px -55% 0px', threshold: [0.1, 0.4, 0.7] },
-    )
     const revealObserver = new IntersectionObserver(
       (entries) => entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -142,38 +141,11 @@ export function ReferenceHome() {
       }),
       { threshold: 0.12 },
     )
-    sections.forEach((id) => {
-      const element = document.getElementById(id)
-      if (element) sectionObserver.observe(element)
-    })
     document.querySelectorAll('.reference-reveal').forEach((element) => revealObserver.observe(element))
     return () => {
-      sectionObserver.disconnect()
       revealObserver.disconnect()
-      audioRef.current?.pause()
-      audioRef.current = null
     }
   }, [])
-
-  const closeMenu = () => setMenuOpen(false)
-
-  const toggleSound = async () => {
-    if (soundOn) {
-      audioRef.current?.pause()
-      if (audioRef.current) audioRef.current.currentTime = 0
-      setSoundOn(false)
-      localStorage.setItem('ambient-sound', 'off')
-      return
-    }
-
-    const audio = audioRef.current ?? new Audio('/audio/dreiton.mp3')
-    audio.loop = true
-    audio.volume = 0.22
-    await audio.play()
-    audioRef.current = audio
-    setSoundOn(true)
-    localStorage.setItem('ambient-sound', 'on')
-  }
   const miniProjects = {
     frontend: {
       label: 'Frontend craft',
@@ -211,11 +183,18 @@ export function ReferenceHome() {
     setActiveSkillName(group.skills[0].name)
   }
 
-  const copyMiniCommand = async () => {
-    await navigator.clipboard?.writeText(selectedMiniProject.command)
-    setCopied(true)
-    window.setTimeout(() => setCopied(false), 1800)
+  const copyText = async (value: string) => {
+    try {
+      if (!navigator.clipboard) throw new Error('Clipboard access is unavailable')
+      await navigator.clipboard.writeText(value)
+      setCopyStatus('copied')
+    } catch {
+      setCopyStatus('failed')
+    }
+    window.setTimeout(() => setCopyStatus('idle'), 1800)
   }
+
+  const copyMiniCommand = () => copyText(selectedMiniProject.command)
 
   const triggerPortraitGlitch = () => {
     setPortraitGlitch(true)
@@ -224,66 +203,58 @@ export function ReferenceHome() {
 
   return (
     <main className="reference-site">
-      <header className="reference-nav-wrap">
-        <nav className="reference-nav reference-reveal" aria-label="Primary navigation">
-          <div className="reference-mobile-toggle">
-            <button type="button" onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-label="Toggle menu">
-              {menuOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
-          </div>
-          <div className={`reference-nav-links ${menuOpen ? 'is-open' : ''}`}>
-            <a href="#about" onClick={closeMenu} className={activeSection === 'about' ? 'is-active' : ''} aria-current={activeSection === 'about' ? 'location' : undefined}>About</a>
-            <ProjectsDropdown
-              triggerClassName={`reference-nav-projects${activeSection === 'projects' ? ' is-active' : ''}`}
-              menuOpen={menuOpen}
-              onNavigate={closeMenu}
-            />
-          </div>
-          <button type="button" className={`reference-sound ${soundOn ? 'is-on' : ''}`} onClick={toggleSound} aria-pressed={soundOn} aria-label={soundOn ? 'Turn ambient sound off' : 'Turn ambient sound on'} title={soundOn ? 'Sound on' : 'Sound off'}>
-            {soundOn ? <span className="reference-sound-bars" aria-hidden="true"><i /><i /><i /><i /></span> : <VolumeX size={16} />}
-            <span className="reference-sound-label">{soundOn ? 'PLAYING' : 'MUTED'}</span>
-          </button>
-          <a className="reference-hello" href="#contact" onClick={closeMenu}>Say hello <ArrowUpRight size={16} /></a>
-        </nav>
-      </header>
+      <SiteHeader className="home-game-nav" />
 
       <section className="reference-hero" id="top">
-        <div className="reference-hero-copy reference-reveal">
-          <p className="reference-eyebrow"><span /> Ali Raza · portfolio 2026</p>
-          <h1>ALI<br />RAZA<span>.</span></h1>
-          <p className="reference-lede">I build useful software, explore AI, and turn ambitious ideas into working systems.</p>
-          <div className="reference-actions">
-            <a className="reference-button reference-button-gold" href="#projects">See the projects <ArrowDown size={18} /></a>
-            <a className="reference-button" href="#contact">Say hello <ArrowUpRight size={18} /></a>
+        <div className="reference-main-menu reference-reveal">
+          <p className="reference-eyebrow"><span /> SOFTWARE DEVELOPER · KARACHI, PAKISTAN</p>
+          <h1>ALI RAZA</h1>
+          <p className="reference-lede">
+            Software Developer · Exploring AI
+          </p>
+          <nav className="reference-main-menu-buttons" aria-label="Explore the portfolio">
+            <a className="reference-button" href="#journey">Experience</a>
+            <a className="reference-button reference-button-gold" href="#projects">Projects <ArrowDown size={16} aria-hidden="true" /></a>
+            <a className="reference-button" href="#about">About Me</a>
+          </nav>
+          <div className="reference-main-menu-bottom" aria-label="More portfolio sections and social profiles">
+            <a className="reference-social-icon" href="https://github.com/ali-raza-py" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <span aria-hidden="true">GH</span>
+            </a>
+            <Link className="reference-button" href="/blog">Blog</Link>
+            <a className="reference-button" href="#skills">Skills</a>
+            <a className="reference-social-icon" href="https://www.linkedin.com/in/ali-r-a8a144391" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <span aria-hidden="true">in</span>
+            </a>
           </div>
         </div>
-        <div className="reference-hero-portrait reference-reveal">
-          <div className="reference-hero-portrait-ring" aria-hidden="true" />
-          <img
-            src="/images/ali-raza-profile.png"
-            alt="Ali Raza side-profile portrait"
-            role="button"
-            tabIndex={0}
-            className={portraitGlitch ? 'is-glitching' : ''}
-            aria-label="Trigger portrait glitch effect"
-            onClick={triggerPortraitGlitch}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault()
-                triggerPortraitGlitch()
-              }
-            }}
-          />
+        <div className="reference-world-status">
+          <AmbientAudioControls />
+          <span>PORTFOLIO · KARACHI, PAKISTAN</span>
+          <a href="mailto:btwaliraza110@gmail.com?subject=Hello%20Ali" aria-label="Email Ali Raza"><Mail size={17} aria-hidden="true" /></a>
         </div>
-        <div className="reference-scroll-mark">SCROLL <ArrowDown size={16} /></div>
       </section>
 
       <section className="reference-about reference-panel" id="about">
         <div className="reference-panel-art reference-reveal">
-          <div className="reference-card-stack">
-            <div className="reference-playing-card card-white"><small>01 ♦</small><strong>ABOUT</strong><span>Who I am.</span></div>
-            <div className="reference-playing-card card-green"><small>02 ♣</small><strong>PROJECTS</strong><span>Work that ships.</span></div>
-            <div className="reference-playing-card card-violet"><small>03 ♥</small><strong>SKILLS</strong><span>How I build.</span></div>
+          <div className="reference-about-portrait-card">
+            <div className="reference-hero-portrait-ring" aria-hidden="true" />
+            <img
+              src="/images/ali-raza-profile.png"
+              alt="Ali Raza side-profile portrait"
+              role="button"
+              tabIndex={0}
+              className={portraitGlitch ? 'is-glitching' : ''}
+              aria-label="Trigger portrait glitch effect"
+              onClick={triggerPortraitGlitch}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  triggerPortraitGlitch()
+                }
+              }}
+            />
+            <span>ALI RAZA · SOFTWARE DEVELOPER</span>
           </div>
         </div>
         <div className="reference-panel-copy reference-reveal">
@@ -347,6 +318,23 @@ export function ReferenceHome() {
         </div>
       </section>
 
+      <Journey />
+      <Certifications />
+
+      <section className="reference-achievements" aria-labelledby="achievements-heading">
+        <div>
+          <p className="reference-file-label">BUILD MILESTONE</p>
+          <h2 id="achievements-heading">A project built for a real challenge.</h2>
+          <p>
+            MediCare AI was built as a documented medical-document intelligence prototype for the
+            Alibaba Cloud AI Hackathon Pakistan 2026.
+          </p>
+        </div>
+        <Link href="/projects/medicare-ai" className="reference-button reference-button-gold">
+          Explore MediCare AI <ArrowUpRight size={16} aria-hidden="true" />
+        </Link>
+      </section>
+
       <div className="reference-project-ticker" aria-hidden="true">
         <div className="reference-project-ticker-track">
           {Array.from({ length: 2 }).flatMap((_, batch) => ['PROJECTS', 'PROJECTS', 'PROJECTS', 'PROJECTS', 'PROJECTS'].map((label, index) => (
@@ -388,7 +376,7 @@ export function ReferenceHome() {
             <div className="reference-lab-command">
               <code>{selectedMiniProject.command}</code>
               <button type="button" onClick={copyMiniCommand} aria-label="Copy starter command">
-                <Copy size={14} /> {copied ? 'Copied' : 'Copy'}
+                <Copy size={14} /> {copyStatus === 'copied' ? 'Copied' : copyStatus === 'failed' ? 'Copy failed' : 'Copy'}
               </button>
             </div>
           </article>
@@ -397,8 +385,16 @@ export function ReferenceHome() {
 
       <section className="reference-projects" id="projects">
         <div className="reference-section-heading reference-reveal">
-          <div><p className="reference-file-label">FILE 04 · PROJECT SELECTOR</p><h2>Projects<span>.</span></h2></div>
-          <p>Four project records. Select one to inspect the problem, approach, stack, and links.</p>
+          <div>
+            <p className="reference-file-label">FILE 04 · PROJECT SELECTOR</p>
+            <h2>Projects<span>.</span></h2>
+          </div>
+          <div className="reference-project-heading-actions">
+            <p>Select a project to inspect its verified details, technologies, and destinations.</p>
+            <Link href="/projects" className="reference-button">
+              Full project archive <ArrowUpRight size={15} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
         <div className="reference-project-selector reference-reveal" role="tablist" aria-label="Selected projects">
           {selectedProjects.map((project) => (
@@ -445,6 +441,37 @@ export function ReferenceHome() {
         <div className="reference-project-note"><span>Proof over polish.</span> Media is shown only when a verified project asset exists.</div>
       </section>
 
+      <section className="reference-articles" id="articles" aria-labelledby="articles-heading">
+        <div className="reference-section-heading reference-reveal">
+          <div>
+            <p className="reference-file-label">FIELD NOTES · WRITING</p>
+            <h2 id="articles-heading">Articles<span>.</span></h2>
+          </div>
+          <Link className="reference-button" href="/blog">Open article archive <ArrowUpRight size={15} aria-hidden="true" /></Link>
+        </div>
+        <div className="reference-article-grid">
+          {articles.map((article, index) => (
+            <article className="reference-article-card reference-reveal" key={article.slug}>
+              <Link href={`/blog/${article.slug}`} className="reference-article-cover">
+                <img src={article.coverImage} alt="" loading="lazy" />
+                <span>ARTICLE · 0{index + 1}</span>
+              </Link>
+              <div className="reference-article-copy">
+                <p className="reference-file-label">{article.category} · {formatDate(article.date)}</p>
+                <h3><Link href={`/blog/${article.slug}`}>{article.title}</Link></h3>
+                <p>{article.description}</p>
+                <Link className="reference-article-open" href={`/blog/${article.slug}`}>
+                  Read article <ArrowUpRight size={15} aria-hidden="true" />
+                </Link>
+              </div>
+            </article>
+          ))}
+          {articles.length === 0 ? (
+            <p className="reference-article-empty">No articles are published yet.</p>
+          ) : null}
+        </div>
+      </section>
+
       <SignatureDeck />
 
       <section className="reference-contact" id="contact">
@@ -463,16 +490,12 @@ export function ReferenceHome() {
           <a href="https://www.linkedin.com/in/ali-r-a8a144391" target="_blank" rel="noopener noreferrer" className="reference-contact-link">
             <span><small>LinkedIn</small><strong>linkedin.com/in/ali-r-a8a144391</strong></span><ArrowUpRight size={18} />
           </a>
-          <button type="button" className="reference-contact-copy-button" onClick={() => { navigator.clipboard?.writeText('btwaliraza110@gmail.com'); setCopied(true) }}>
-            <Copy size={13} /> {copied ? 'Email copied' : 'Copy email'}
+          <button type="button" className="reference-contact-copy-button" onClick={() => void copyText('btwaliraza110@gmail.com')} aria-live="polite">
+            <Copy size={13} /> {copyStatus === 'copied' ? 'Email copied' : copyStatus === 'failed' ? 'Copy failed' : 'Copy email'}
           </button>
         </div>
       </section>
       <footer className="reference-footer"><span>Ali Raza · software engineering student</span><a href="#top">Back to top ↑</a></footer>
     </main>
   )
-}
-
-function caseStudyProject(slug: string) {
-  return slug !== 'dsa-vizer'
 }

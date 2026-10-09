@@ -7,20 +7,20 @@ const EASE = [0.22, 1, 0.36, 1] as const
 const links = [
   {
     label: 'Email',
-    value: 'hello@asterstudio.dev',
-    href: 'mailto:hello@asterstudio.dev?subject=Hello%20Aster',
+    value: 'btwaliraza110@gmail.com',
+    href: 'mailto:btwaliraza110@gmail.com?subject=Hello%20Ali',
     external: false,
   },
   {
     label: 'GitHub',
-    value: 'github.com/your-handle',
-    href: 'https://github.com/your-handle',
+    value: 'github.com/ali-raza-py',
+    href: 'https://github.com/ali-raza-py',
     external: true,
   },
   {
     label: 'LinkedIn',
-    value: 'linkedin.com/company/aster-studio',
-    href: 'https://www.linkedin.com/company/aster-studio',
+    value: 'linkedin.com/in/ali-r-a8a144391',
+    href: 'https://www.linkedin.com/in/ali-r-a8a144391',
     external: true,
   },
   {
