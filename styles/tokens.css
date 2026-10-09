@@ -26,11 +26,11 @@
   --color-stone: #555953;
   --color-wood: #684a2e;
 
-  --font-display-role: var(--font-display-sans), Impact, sans-serif;
-  --font-editorial-role: var(--font-display), Georgia, serif;
-  --font-interface-role: var(--font-body), Arial, sans-serif;
-  --font-technical-role: var(--font-technical), monospace;
   --font-pixel-role: 'Minecraft', var(--font-technical), monospace;
+  --font-display-role: var(--font-pixel-role);
+  --font-editorial-role: var(--font-pixel-role);
+  --font-interface-role: var(--font-pixel-role);
+  --font-technical-role: var(--font-pixel-role);
 
   --text-display-xl: clamp(5.5rem, 14vw, 12rem);
   --text-display-lg: clamp(3rem, 7vw, 6rem);

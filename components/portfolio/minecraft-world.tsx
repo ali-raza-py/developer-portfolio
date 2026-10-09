@@ -114,13 +114,19 @@ const journeyStages = [
 ]
 
 const achievementRecords = [
-  { name: 'Alibaba Cloud AI Hackathon Pakistan 2026', note: 'MediCare AI prototype developed for the hackathon.' },
-  { name: 'Google Gemini AI — Certified Student', note: 'Issuer listed in the portfolio certification record: Google.' },
-  { name: 'Anthropic Academy — MCP', note: 'Certification listed in the portfolio learning record.' },
-  { name: 'MCP Advanced Topics', note: 'Issuer listed in the portfolio certification record: Anthropic Academy.' },
-  { name: 'GenAI Learning Badges', note: 'Issuer listed in the portfolio certification record: Google Cloud.' },
-  { name: 'Responsible AI Learning', note: 'Issuer listed in the portfolio certification record: Google.' },
-  { name: 'Python-related certifications', note: 'Various issuers, as recorded in the portfolio.' },
+  { folder: 'Hackathons', name: 'Alibaba Cloud AI Hackathon Pakistan 2026', note: 'MediCare AI prototype developed for the hackathon.' },
+  { folder: 'Certifications', name: 'Google Gemini AI — Certified Student', note: 'Issuer listed in the portfolio certification record: Google.' },
+  { folder: 'Certifications', name: 'Anthropic Academy — MCP', note: 'Certification listed in the portfolio learning record.' },
+  { folder: 'Certifications', name: 'MCP Advanced Topics', note: 'Issuer listed in the portfolio certification record: Anthropic Academy.' },
+  { folder: 'Learning badges', name: 'GenAI Learning Badges', note: 'Issuer listed in the portfolio certification record: Google Cloud.' },
+  { folder: 'Learning badges', name: 'Responsible AI Learning', note: 'Issuer listed in the portfolio certification record: Google.' },
+  { folder: 'Learning badges', name: 'Python-related certifications', note: 'Various issuers, as recorded in the portfolio.' },
+]
+
+const achievementFolders = [
+  { name: 'Hackathons', icon: '/images/inventory/diamond-axe.png' },
+  { name: 'Certifications', icon: '/images/inventory/enchanted-book.png' },
+  { name: 'Learning badges', icon: '/images/inventory/diamond-pickaxe.png' },
 ]
 
 function readScreenFromUrl(): { screen: Screen; projectSlug: string } {
@@ -160,6 +166,7 @@ export function MinecraftWorld({ articles }: { articles: WorldArticle[] }) {
   const [historyDepth, setHistoryDepth] = useState(0)
   const [activeSkillCategory, setActiveSkillCategory] = useState('Languages')
   const [selectedSkillName, setSelectedSkillName] = useState('Python')
+  const [activeAchievementFolder, setActiveAchievementFolder] = useState('Hackathons')
   const [isReady, setIsReady] = useState(false)
   const currentScreenLabel = screen === 'world' || screen === 'project' ? undefined : screenLabels[screen]
 
@@ -329,7 +336,7 @@ export function MinecraftWorld({ articles }: { articles: WorldArticle[] }) {
               <div className="minecraft-screen-content">
                 <p className="minecraft-screen-intro">Select an item to inspect its verified details, technologies, and real destinations.</p>
                 <div className="minecraft-project-inventory">
-                  {portfolioProjects.map((project, index) => {
+                  {portfolioProjects.map((project) => {
                     const record = getProject(project.slug)
                     const label = project.slug === 'code-yaar' ? 'Code Yaar' : project.name
                     return (
@@ -340,9 +347,15 @@ export function MinecraftWorld({ articles }: { articles: WorldArticle[] }) {
                         onClick={() => openScreen('project', project.slug)}
                         aria-label={`Open ${label} details`}
                       >
-                        <span className="minecraft-project-item-icon">{record?.video ? '▶' : ['✚', '✦', '◆', '⌘', '▤'][index]}</span>
-                        <strong>{label}</strong>
-                        <small>{record?.statusLabel ?? project.status}</small>
+                        <span className="minecraft-project-item-icon">
+                          {project.icon ? <img src={project.icon} alt="" loading="lazy" /> : <Blocks size={24} aria-hidden="true" />}
+                        </span>
+                        <span className="minecraft-project-item-copy">
+                          <strong>{label}</strong>
+                          <small>{record?.statusLabel ?? project.status}</small>
+                          <span>{project.description}</span>
+                        </span>
+                        <ArrowUpRight size={18} aria-hidden="true" />
                       </button>
                     )
                   })}
@@ -476,8 +489,29 @@ export function MinecraftWorld({ articles }: { articles: WorldArticle[] }) {
             {screen === 'achievements' ? (
               <div className="minecraft-screen-content">
                 <p className="minecraft-screen-intro">Milestones and certifications recorded in the portfolio. No unverified awards or metrics.</p>
+                <div className="minecraft-achievement-folders" role="group" aria-label="Achievement folders">
+                  {achievementFolders.map((folder, index) => {
+                    const itemCount = achievementRecords.filter((record) => record.folder === folder.name).length
+                    return (
+                      <button
+                        aria-pressed={activeAchievementFolder === folder.name}
+                        className={`minecraft-achievement-folder${activeAchievementFolder === folder.name ? ' is-active' : ''}`}
+                        key={folder.name}
+                        onClick={() => setActiveAchievementFolder(folder.name)}
+                        type="button"
+                      >
+                        <span className="minecraft-folder-item"><img src={folder.icon} alt="" /></span>
+                        <span className="minecraft-folder-copy">
+                          <strong>{folder.name}</strong>
+                          <small>{itemCount} items</small>
+                        </span>
+                        <span className="minecraft-folder-level" aria-hidden="true">{index + 1}</span>
+                      </button>
+                    )
+                  })}
+                </div>
                 <div className="minecraft-achievement-grid">
-                  {achievementRecords.map((record, index) => (
+                  {achievementRecords.filter((record) => record.folder === activeAchievementFolder).map((record, index) => (
                     <article className="minecraft-achievement-slot" key={record.name}>
                       <Trophy size={22} aria-hidden="true" />
                       <span>ACHIEVEMENT · {String(index + 1).padStart(2, '0')}</span>

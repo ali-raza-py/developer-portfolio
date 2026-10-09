@@ -1,0 +1,24 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @media (prefers-color-scheme: light) {
+      .bg { fill: #2d8a4e; }
+      .bar1 { fill: #baf39b; }
+      .bar2 { fill: #5fe3c1; }
+      .bar3 { fill: #f2bc78; }
+      .bar4 { fill: #e87862; }
+    }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #060a0a; }
+      .bar1 { fill: #2d8a4e; }
+      .bar2 { fill: #1a7a62; }
+      .bar3 { fill: #a07020; }
+      .bar4 { fill: #b04030; }
+    }
+  </style>
+  <rect class="bg" width="180" height="180" rx="37"/>
+  <rect class="bar1" x="34" y="80" width="18" height="66" rx="3"/>
+  <rect class="bar2" x="60" y="55" width="18" height="91" rx="3"/>
+  <rect class="bar3" x="86" y="100" width="18" height="42" rx="3"/>
+  <rect class="bar4" x="112" y="35" width="18" height="111" rx="3"/>
+  <rect class="bar1" x="138" y="70" width="18" height="76" rx="3"/>
+</svg>

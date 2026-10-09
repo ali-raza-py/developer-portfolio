@@ -8,6 +8,7 @@ export type PortfolioProject = {
   status: string
   url?: string
   githubUrl?: string
+  icon?: string
   accent: 'gold' | 'green' | 'violet' | 'blue' | 'orange'
 }
 
@@ -22,6 +23,7 @@ export const portfolioProjects: PortfolioProject[] = [
     status: 'Prototype shipped',
     url: caseStudyBySlug.get('medicare-ai')?.liveUrl,
     githubUrl: caseStudyBySlug.get('medicare-ai')?.githubUrl,
+    icon: '/images/project-icons/medicare-ai.svg',
     accent: 'green',
   },
   {
@@ -32,6 +34,7 @@ export const portfolioProjects: PortfolioProject[] = [
     status: 'Live',
     url: caseStudyBySlug.get('ai-hub')?.liveUrl,
     githubUrl: caseStudyBySlug.get('ai-hub')?.githubUrl,
+    icon: '/images/project-icons/ai-hub.svg',
     accent: 'violet',
   },
   {
@@ -42,6 +45,7 @@ export const portfolioProjects: PortfolioProject[] = [
     status: 'Live',
     url: caseStudyBySlug.get('algorify')?.liveUrl,
     githubUrl: caseStudyBySlug.get('algorify')?.githubUrl,
+    icon: '/images/project-icons/algorify.svg',
     accent: 'orange',
   },
   {
@@ -51,6 +55,7 @@ export const portfolioProjects: PortfolioProject[] = [
     stack: ['Python', 'Flask', 'Algorithms', 'Visualization'],
     status: 'Details pending verification',
     url: 'https://aliraza786.pythonanywhere.com/l',
+    icon: '/images/project-icons/dsa-vizer.ico',
     accent: 'blue',
   },
   {
