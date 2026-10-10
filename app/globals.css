@@ -1969,6 +1969,160 @@ body {
   padding: clamp(1rem, 3vw, 1.5rem);
 }
 
+.minecraft-about-contact {
+  margin-left: .5rem;
+}
+
+.minecraft-message-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  padding: clamp(.5rem, 4vw, 2rem);
+  background: rgba(5, 6, 9, .82);
+  backdrop-filter: blur(4px);
+  animation: minecraft-message-overlay-in .16s ease-out both;
+}
+
+.minecraft-message-dialog {
+  position: relative;
+  width: min(100%, 80rem);
+  padding: clamp(.5rem, 1.2vw, 1rem);
+}
+
+.minecraft-message-book {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: hidden;
+  border: 4px solid #704322;
+  background: #a8804f;
+  box-shadow: 0 8px 0 rgba(0,0,0,.3), inset 0 0 0 3px #c5a273;
+}
+
+.minecraft-message-close {
+  position: absolute;
+  top: clamp(.8rem, 2vw, 1.6rem);
+  right: clamp(.8rem, 2vw, 1.6rem);
+  z-index: 2;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #8a7d5d;
+  cursor: pointer;
+}
+
+.minecraft-message-close:hover,
+.minecraft-message-close:focus-visible {
+  color: #29251e;
+}
+
+.minecraft-message-page {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 19rem;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1rem clamp(1rem, 3vw, 1.75rem) 1.4rem;
+  background:
+    linear-gradient(90deg, transparent 1.2rem, rgba(189,174,124,.16) 1.25rem, transparent 1.3rem),
+    #f8f2dc;
+}
+
+.minecraft-message-page + .minecraft-message-page {
+  border-left: 3px solid #b4986a;
+  box-shadow: inset 5px 0 8px -8px #30291d;
+}
+
+.minecraft-message-page-label {
+  color: #8f8261;
+  font-family: var(--font-pixel-role);
+  font-size: .7rem;
+  text-align: center;
+}
+
+.minecraft-message-field {
+  display: grid;
+  gap: .35rem;
+  color: #8a7d5d;
+  font-family: var(--font-pixel-role);
+  font-size: .63rem;
+  letter-spacing: .06em;
+}
+
+.minecraft-message-field input,
+.minecraft-message-field textarea {
+  width: 100%;
+  min-width: 0;
+  padding: .45rem .2rem .6rem;
+  border: 0;
+  border-bottom: 2px solid #e2d8b7;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: #28251e;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.7rem, 1.5vw, .88rem);
+  letter-spacing: 0;
+}
+
+.minecraft-message-field input:focus,
+.minecraft-message-field textarea:focus {
+  border-bottom-color: #9b774b;
+}
+
+.minecraft-message-field input::placeholder,
+.minecraft-message-field textarea::placeholder {
+  color: #aaa084;
+  opacity: 1;
+}
+
+.minecraft-message-body {
+  flex: 1;
+}
+
+.minecraft-message-field textarea {
+  min-height: 10rem;
+  flex: 1;
+  resize: vertical;
+  line-height: 2.1rem;
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(2.1rem - 2px), #e2d8b7 calc(2.1rem - 2px), #e2d8b7 2.1rem);
+  background-position: 0 .55rem;
+  background-attachment: local;
+}
+
+.minecraft-message-counter {
+  color: #8a7d5d;
+  font-family: var(--font-pixel-role);
+  font-size: .55rem;
+  text-align: right;
+}
+
+.minecraft-message-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  padding: 1rem .25rem 0;
+}
+
+.minecraft-message-actions .minecraft-secondary-button,
+.minecraft-message-actions .minecraft-primary-button {
+  min-height: 2.6rem;
+  font-size: .62rem;
+}
+
+@keyframes minecraft-message-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .minecraft-inventory-panel h2 {
   margin: 0 0 .85rem;
   color: #f5f1e6;
@@ -2010,22 +2164,23 @@ body {
 
 .minecraft-project-inventory {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
-  gap: .75rem;
+  grid-template-columns: 1fr;
+  gap: .55rem;
   margin: .8rem 0 1.2rem;
 }
 
 .minecraft-project-item {
   display: grid;
-  min-height: 9.5rem;
-  justify-items: center;
-  align-content: center;
-  gap: .55rem;
-  padding: .8rem;
+  min-height: 5.75rem;
+  grid-template-columns: 3.6rem minmax(0, 1fr) 1.25rem;
+  align-items: center;
+  gap: .75rem;
+  padding: .65rem .8rem;
   border: 3px solid #11140f;
   background: linear-gradient(145deg, #424a40, #2c322c);
   box-shadow: inset 2px 2px rgba(255,255,255,.13), inset -3px -3px rgba(0,0,0,.34), 3px 3px 0 rgba(0,0,0,.25);
   color: #f5f1e6;
+  text-align: left;
   cursor: pointer;
   transition: transform .13s steps(2, end), filter .13s steps(2, end);
 }
@@ -2038,28 +2193,47 @@ body {
 
 .minecraft-project-item-icon {
   display: grid;
-  width: 3.15rem;
-  height: 3.15rem;
+  width: 3.2rem;
+  height: 3.2rem;
   place-items: center;
   border: 3px solid #171a15;
   background: linear-gradient(145deg, #77816d, #454d42);
   color: #ffe28a;
-  font-family: var(--font-pixel-role);
-  font-size: 1.4rem;
   box-shadow: inset 2px 2px rgba(255,255,255,.18), inset -3px -3px rgba(0,0,0,.3), 3px 3px rgba(0,0,0,.2);
 }
 
-.minecraft-project-item strong {
-  font-family: var(--font-pixel-role);
-  font-size: .72rem;
-  line-height: 1.5;
-  text-align: center;
+.minecraft-project-item-icon img {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+  image-rendering: pixelated;
 }
 
-.minecraft-project-item small {
+.minecraft-project-item-copy {
+  display: grid;
+  min-width: 0;
+  gap: .2rem;
+}
+
+.minecraft-project-item-copy strong {
+  font-family: var(--font-pixel-role);
+  font-size: .78rem;
+  line-height: 1.5;
+}
+
+.minecraft-project-item-copy small {
   color: #d2cec2;
-  font-size: .7rem;
-  text-align: center;
+  font-size: .62rem;
+}
+
+.minecraft-project-item-copy > span {
+  color: #ddd9cc;
+  font-size: .68rem;
+  line-height: 1.5;
+}
+
+.minecraft-project-item > svg {
+  color: #e5ca6e;
 }
 
 .minecraft-project-detail {
@@ -2211,6 +2385,40 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
   gap: .75rem;
+}
+
+.minecraft-achievement-folders {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: .4rem;
+  margin-bottom: .85rem;
+}
+
+.minecraft-achievement-folder {
+  display: grid;
+  min-height: 3.5rem;
+  grid-template-columns: 3rem minmax(0, 1fr) 1.7rem;
+  align-items: center;
+  gap: .65rem;
+  padding: .4rem .55rem;
+  border: 2px solid #11120f;
+  background:
+    linear-gradient(rgba(255,255,255,.035), rgba(0,0,0,.08)),
+    #1d1b16;
+  color: #f5f1e6;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .12s steps(2, end), background-color .12s steps(2, end), transform .12s steps(2, end);
+}
+
+.minecraft-achievement-folder:hover,
+.minecraft-achievement-folder.is-active {
+  border-color: #b6b1a6;
+  background-color: #302e26;
+}
+
+.minecraft-achievement-folder.is-active {
+  box-shadow: inset 3px 0 #9c7fc6;
 }
 
 .minecraft-achievement-slot {
@@ -2417,6 +2625,32 @@ body {
   .minecraft-about-screen,
   .minecraft-project-detail {
     grid-template-columns: 1fr;
+  }
+
+  .minecraft-message-dialog {
+    padding: .2rem;
+  }
+
+  .minecraft-message-book {
+    grid-template-columns: 1fr;
+  }
+
+  .minecraft-message-page {
+    min-height: 14rem;
+    padding: .75rem 1rem;
+  }
+
+  .minecraft-message-page + .minecraft-message-page {
+    border-top: 3px solid #b4986a;
+    border-left: 0;
+  }
+
+  .minecraft-message-field textarea {
+    min-height: 7rem;
+  }
+
+  .minecraft-about-contact {
+    margin: .55rem 0 0;
   }
 
   .minecraft-about-portrait {
@@ -2784,7 +3018,7 @@ body {
 .minecraft-folder-copy strong {
   color: #f0e7c0;
   font-family: var(--font-pixel-role);
-  font-size: clamp(.58rem, 1.2vw, .76rem);
+  font-size: clamp(.7rem, 1.2vw, .82rem);
   font-weight: 400;
   line-height: 1.45;
 }
@@ -2792,7 +3026,7 @@ body {
 .minecraft-folder-copy small {
   color: #aaa69b;
   font-family: var(--font-pixel-role);
-  font-size: .5rem;
+  font-size: .58rem;
 }
 
 .minecraft-folder-level {
@@ -2851,7 +3085,7 @@ body {
   background: #514b3b;
   color: #fffdf3;
   font-family: var(--font-pixel-role);
-  font-size: clamp(.5rem, .95vw, .7rem);
+  font-size: clamp(.65rem, .95vw, .76rem);
   line-height: 1.4;
   text-align: left;
 }
@@ -2894,7 +3128,7 @@ body {
   }
 
   .minecraft-enchanting-book-panel h2 {
-    font-size: .68rem;
+    font-size: .82rem;
   }
 
   .minecraft-floating-book {
@@ -2903,14 +3137,15 @@ body {
   }
 
   .minecraft-enchanting-book-panel > p {
-    font-size: .64rem;
+    font-size: .72rem;
   }
 
   .minecraft-enchanting-book-panel > strong {
-    font-size: .58rem;
+    font-size: .64rem;
   }
 
-  .minecraft-skill-folder {
+  .minecraft-skill-folder,
+  .minecraft-achievement-folder {
     min-height: 3rem;
     grid-template-columns: 2.25rem minmax(0, 1fr) 1rem;
     gap: .35rem;
@@ -2928,11 +3163,11 @@ body {
   }
 
   .minecraft-folder-copy strong {
-    font-size: .48rem;
+    font-size: .65rem;
   }
 
   .minecraft-folder-copy small {
-    font-size: .43rem;
+    font-size: .52rem;
   }
 
   .minecraft-folder-level {
@@ -2950,6 +3185,7 @@ body {
   }
 
   .minecraft-skill-folder,
+  .minecraft-achievement-folder,
   .minecraft-enchanted-items .minecraft-skill-slot {
     transition: none;
   }
@@ -3399,6 +3635,145 @@ body {
 
   .reference-world-status .ambient-audio-toggle span {
     display: none;
+  }
+}
+
+.minecraft-world {
+  background:
+    linear-gradient(180deg, rgba(16, 24, 25, .2), rgba(18, 27, 21, .28) 55%, rgba(14, 18, 15, .48)),
+    #171a14;
+}
+
+.minecraft-world::before {
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(16, 22, 20, .18), transparent 24% 76%, rgba(16, 22, 20, .18)),
+    linear-gradient(0deg, rgba(12, 17, 14, .12), transparent 35% 65%, rgba(16, 22, 20, .16));
+}
+
+.minecraft-world::after {
+  position: absolute;
+  inset: -2%;
+  z-index: -2;
+  pointer-events: none;
+  content: '';
+  background: url('/images/ali-raza-panorama.jpg') center / cover no-repeat;
+  filter: blur(5px) saturate(.86);
+  transform: scale(1.08);
+  animation: minecraft-panorama-drift 42s ease-in-out infinite alternate;
+}
+
+.minecraft-world[data-screen="world"] .minecraft-world-viewport {
+  padding: clamp(.75rem, 2.5vh, 1.5rem) clamp(.75rem, 3vw, 2rem);
+}
+
+.minecraft-world[data-screen="world"] .minecraft-world-home {
+  justify-content: flex-start;
+  gap: clamp(1rem, 2.7vh, 1.65rem);
+  overflow: visible;
+  padding: clamp(1rem, 4vh, 2rem) .5rem .35rem;
+}
+
+.minecraft-world[data-screen="world"] .minecraft-world-branding {
+  position: relative;
+  padding: .35rem 0 1.1rem;
+}
+
+.minecraft-world-title-image {
+  display: block;
+  width: min(44vw, 42rem);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 10px rgba(0,0,0,.25));
+}
+
+.minecraft-world-bubble {
+  position: absolute;
+  right: 0;
+  bottom: 1.15rem;
+  z-index: 1;
+  color: #ffed00;
+  font-family: var(--font-pixel-role);
+  font-size: clamp(.65rem, 1.6vw, 1rem);
+  line-height: 1.25;
+  text-shadow: 2px 2px 0 #4b4a19, 3px 3px 0 rgba(0,0,0,.5);
+  transform: translateX(18%) rotate(-12deg);
+}
+
+.minecraft-world[data-screen="world"] .minecraft-world-footer {
+  min-height: 3.3rem;
+  align-items: flex-end;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.minecraft-world[data-screen="world"] .minecraft-world-footer-controls {
+  flex-shrink: 0;
+}
+
+.minecraft-world[data-screen="world"] .minecraft-world-footer-disclaimer {
+  max-width: min(36rem, 48vw);
+  text-align: right;
+}
+
+.minecraft-world[data-screen="world"] .minecraft-world-destinations {
+  width: min(100%, 30rem);
+}
+
+.minecraft-world[data-screen="world"] .minecraft-world-quicklinks {
+  width: min(100%, 30rem);
+}
+
+.minecraft-world-loading {
+  background:
+    linear-gradient(rgba(16, 24, 25, .45), rgba(14, 18, 15, .58)),
+    url('/images/ali-raza-panorama.jpg') center / cover no-repeat;
+  backdrop-filter: blur(4px);
+}
+
+@keyframes minecraft-panorama-drift {
+  from { transform: scale(1.08) translateX(-1%); }
+  to { transform: scale(1.14) translateX(1%); }
+}
+
+@media (max-width: 620px) {
+  .minecraft-world[data-screen="world"] .minecraft-world-viewport {
+    padding: .55rem;
+  }
+
+  .minecraft-world[data-screen="world"] .minecraft-world-home {
+    gap: .8rem;
+    padding-top: 1rem;
+  }
+
+  .minecraft-world-title-image {
+    width: min(78vw, 28rem);
+  }
+
+  .minecraft-world-bubble {
+    right: 0;
+    bottom: 1.05rem;
+    font-size: .62rem;
+    transform: translateX(8%) rotate(-12deg);
+  }
+
+  .minecraft-world[data-screen="world"] .minecraft-world-footer {
+    min-height: 3.1rem;
+    gap: .3rem;
+  }
+
+  .minecraft-world[data-screen="world"] .minecraft-world-footer-disclaimer {
+    max-width: 9rem;
+    font-size: .4rem;
+    line-height: 1.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .minecraft-world::after {
+    animation: none;
+    transform: scale(1.08);
   }
 }
 

@@ -7,8 +7,10 @@ import {
   Blocks,
   Code2,
   Mail,
+  Send,
   Settings,
   Trophy,
+  X,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
@@ -168,6 +170,7 @@ export function MinecraftWorld({ articles }: { articles: WorldArticle[] }) {
   const [selectedSkillName, setSelectedSkillName] = useState('Python')
   const [activeAchievementFolder, setActiveAchievementFolder] = useState('Hackathons')
   const [isReady, setIsReady] = useState(false)
+  const [isContactOpen, setIsContactOpen] = useState(false)
   const currentScreenLabel = screen === 'world' || screen === 'project' ? undefined : screenLabels[screen]
 
   useEffect(() => {
@@ -230,11 +233,15 @@ export function MinecraftWorld({ articles }: { articles: WorldArticle[] }) {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && screen !== 'world') goBack()
+      if (event.key === 'Escape' && isContactOpen) {
+        setIsContactOpen(false)
+      } else if (event.key === 'Escape' && screen !== 'world') {
+        goBack()
+      }
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [goBack, screen])
+  }, [goBack, isContactOpen, screen])
 
   const selectedProject = portfolioProjects.find((item) => item.slug === projectSlug)
   const selectedCaseStudy = getProject(projectSlug)
@@ -242,7 +249,7 @@ export function MinecraftWorld({ articles }: { articles: WorldArticle[] }) {
   const selectedSkill = activeSkillGroup.skills.find((skill) => skill.name === selectedSkillName) ?? activeSkillGroup.skills[0]
 
   return (
-    <main className="minecraft-world" data-ready={isReady} aria-busy={!isReady}>
+    <main className="minecraft-world" data-screen={screen} data-ready={isReady} aria-busy={!isReady}>
       {!isReady ? (
         <div className="minecraft-world-loading" role="status" aria-live="polite">
           <span className="minecraft-loading-block" aria-hidden="true" />
@@ -252,29 +259,31 @@ export function MinecraftWorld({ articles }: { articles: WorldArticle[] }) {
           </span>
         </div>
       ) : null}
-      <header className="minecraft-world-hud">
-        <Link href="/" className="minecraft-world-brand" aria-label="Return to Ali Raza's portfolio world">
-          <span className="minecraft-world-cube" aria-hidden="true" />
-          <span>ALI RAZA</span>
-        </Link>
-        {screen !== 'world' ? (
+      {screen !== 'world' ? (
+        <header className="minecraft-world-hud">
+          <Link href="/" className="minecraft-world-brand" aria-label="Return to Ali Raza's portfolio world">
+            <span className="minecraft-world-cube" aria-hidden="true" />
+            <span>ALI RAZA</span>
+          </Link>
           <button className="minecraft-back-button" type="button" onClick={goBack}>
             <ArrowLeft size={16} aria-hidden="true" />
             <span>Back</span>
           </button>
-        ) : (
-          <span className="minecraft-world-hud-label">SURVIVAL MODE · PORTFOLIO WORLD</span>
-        )}
-        {screen !== 'world' ? <AmbientAudioControls compact /> : null}
-      </header>
+          <AmbientAudioControls compact />
+        </header>
+      ) : null}
 
       <section className="minecraft-world-viewport" aria-label="Portfolio game interface">
         {screen === 'world' ? (
           <div className="minecraft-world-home minecraft-screen-enter">
             <div className="minecraft-world-branding">
-              <p className="minecraft-world-eyebrow">SOFTWARE DEVELOPER · KARACHI, PAKISTAN</p>
-              <h1>ALI RAZA</h1>
-              <p>Exploring AI. Building useful software systems.</p>
+              <img
+                className="minecraft-world-title-image"
+                src="/images/ali-raza-title.png"
+                alt="Ali Raza Portfolio"
+                fetchPriority="high"
+              />
+              <span className="minecraft-world-bubble">CS @ ALI RAZA</span>
             </div>
             <nav className="minecraft-world-destinations" aria-label="Explore Ali Raza's portfolio">
               {destinations.map(({ screen: destinationScreen, label }) => (
@@ -328,6 +337,9 @@ export function MinecraftWorld({ articles }: { articles: WorldArticle[] }) {
                     <li>AI/ML, cloud, DevOps, and cybersecurity in study</li>
                   </ul>
                   <Link className="minecraft-primary-button" href="/resume">Download CV <ArrowUpRight size={15} aria-hidden="true" /></Link>
+                  <button className="minecraft-primary-button minecraft-about-contact" onClick={() => setIsContactOpen(true)} type="button">
+                    Contact <Mail size={15} aria-hidden="true" />
+                  </button>
                 </div>
               </div>
             ) : null}
@@ -568,25 +580,84 @@ export function MinecraftWorld({ articles }: { articles: WorldArticle[] }) {
         )}
       </section>
 
-      <footer className="minecraft-world-footer">
+      {isContactOpen ? (
+        <div
+          className="minecraft-message-overlay"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setIsContactOpen(false)
+          }}
+        >
+          <form
+            className="minecraft-message-dialog"
+            aria-label="Send Ali a message"
+            aria-modal="true"
+            onSubmit={(event) => {
+              event.preventDefault()
+              const formData = new FormData(event.currentTarget)
+              const email = String(formData.get('email') ?? '').trim()
+              const subject = String(formData.get('subject') ?? '').trim()
+              const message = String(formData.get('message') ?? '').trim()
+              const body = `From: ${email}\n\n${message}`
+              window.location.href = `mailto:btwaliraza110@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+            }}
+            role="dialog"
+          >
+            <button
+              className="minecraft-message-close"
+              onClick={() => setIsContactOpen(false)}
+              type="button"
+              aria-label="Close message form"
+            >
+              <X size={20} aria-hidden="true" />
+            </button>
+            <div className="minecraft-message-book">
+              <div className="minecraft-message-page">
+                <span className="minecraft-message-page-label">PAGE 1 OF 2</span>
+                <label className="minecraft-message-field">
+                  <span>EMAIL</span>
+                  <input autoComplete="email" autoFocus maxLength={254} name="email" placeholder="you@example.com" required type="email" />
+                </label>
+                <label className="minecraft-message-field">
+                  <span>SUBJECT</span>
+                  <input maxLength={120} name="subject" placeholder="What would you like to discuss?" required />
+                </label>
+              </div>
+              <div className="minecraft-message-page">
+                <span className="minecraft-message-page-label">PAGE 2 OF 2</span>
+                <label className="minecraft-message-field minecraft-message-body">
+                  <span>MESSAGE</span>
+                  <textarea maxLength={800} name="message" placeholder="Write your message..." required rows={7} />
+                </label>
+                <span className="minecraft-message-counter">MAX 800 CHARACTERS</span>
+              </div>
+            </div>
+            <div className="minecraft-message-actions">
+              <button className="minecraft-secondary-button" onClick={() => setIsContactOpen(false)} type="button">Cancel</button>
+              <button className="minecraft-primary-button" type="submit">Sign &amp; Send <Send size={15} aria-hidden="true" /></button>
+            </div>
+          </form>
+        </div>
+      ) : null}
+
       {screen === 'world' ? (
-        <>
+        <footer className="minecraft-world-footer">
           <div className="minecraft-world-footer-controls">
-            <button type="button" className="minecraft-settings-button" onClick={() => openScreen('settings')} aria-label="Open more portfolio options">
+            <button type="button" className="minecraft-settings-button" onClick={() => openScreen('settings')} aria-label="Open portfolio settings">
               <Settings size={18} aria-hidden="true" />
             </button>
             <AmbientAudioControls compact />
-            <span>PORTFOLIO WORLD</span>
+            <span>PORTFOLIO V1.2</span>
           </div>
-          <span className="minecraft-world-footer-disclaimer">Not an official Minecraft product.</span>
-        </>
+          <span className="minecraft-world-footer-disclaimer">
+            © {new Date().getFullYear()} Ali Raza. Not an official Minecraft product. Not affiliated with Mojang or Microsoft.
+          </span>
+        </footer>
       ) : (
-        <>
+        <footer className="minecraft-world-footer">
           <span>{`CURRENT SCREEN · ${screen.toUpperCase()}`}</span>
           <span>ALI RAZA · PORTFOLIO WORLD</span>
-        </>
+        </footer>
       )}
-      </footer>
     </main>
   )
 }
