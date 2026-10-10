@@ -73,20 +73,23 @@ export const metadata: Metadata = {
     type: 'website',
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: siteConfig.title,
-    description: siteConfig.description,
+    title: 'Ali Raza | Minecraft Portfolio',
+    description: "Explore Ali Raza's Minecraft-themed portfolio - a computer science student and software developer building AI and full-stack applications.",
     images: [
       {
-        url: '/images/ali-raza-profile.png',
-        alt: 'Ali Raza',
+        url: 'https://ali-raza-py.me/images/ali-raza-social-cover.jpg',
+        width: 1200,
+        height: 627,
+        type: 'image/jpeg',
+        alt: 'Ali Raza Portfolio - Minecraft-themed developer portfolio',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: siteConfig.title,
-    description: siteConfig.description,
-    images: ['/images/ali-raza-profile.png'],
+    title: 'Ali Raza | Minecraft Portfolio',
+    description: "Explore Ali Raza's Minecraft-themed portfolio - a computer science student and software developer building AI and full-stack applications.",
+    images: ['https://ali-raza-py.me/images/ali-raza-social-cover.jpg'],
   },
 }
 
